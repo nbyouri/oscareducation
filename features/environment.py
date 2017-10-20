@@ -1,9 +1,8 @@
-from browser import Browser
+from datetime import datetime
 from selenium import webdriver
 
 
 def before_all(context):
-
     # PhantomJS is used there (headless browser - meaning we can execute tests in a command-line environment,
     # which is what we want for use with SemaphoreCI
     # For debugging purposes, you can use the Firefox driver instead.
@@ -24,3 +23,11 @@ def after_all(context):
 def before_feature(context, feature):
     # Code to be executed each time a feature is going to be tested
     pass
+
+
+# After a single step
+def after_step(context, step):
+    if step.status == 'failed':
+        # Screenshots where that step failed
+        context.browser.save_screenshot('features/failures/screenshots/'
+                                        + str(datetime.now()) + '-' + step.name + '.png')
