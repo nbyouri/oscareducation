@@ -1,7 +1,31 @@
 language: python
-install:
-  - pip install pyyaml
 python:
   - "2.7"
+
+services:
+  - postgresql
+
+before_install:
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
+  - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
+
+install:
+  - pip install -r requirements-group6.txt
+
+env:
+  - DISPLAY=":99.0"
+
+before_script:
+  - psql -c "CREATE USER oscar WITH PASSWORD 'oscar' CREATEDB;" -U postgres
+  - psql -c "ALTER USER oscar CREATEDB;" -U postgres
+  - psql -c "CREATE DATABASE oscar OWNER oscar;" -U postgres
+  - python manage.py makemigrations
+  - chmod +x makemigrations.sh
+  - ./makemigrations.sh
+  - python manage.py migrate
+
 script:
-  - python validate_exercices.py
+  - python manage.py behave
+  # - python validate_exercices.py
