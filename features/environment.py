@@ -8,6 +8,7 @@ from django.core import management
 from django.shortcuts import resolve_url
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
+import codecs
 
 def before_all(context):
     django.setup()
@@ -72,3 +73,9 @@ def after_step(context, step):
         # Screenshots where that step failed
         context.browser.save_screenshot('features/failures/screenshots/'
                                         + str(datetime.now()) + '-' + step.name + '.png')
+        save_path = 'features/failures/pages'
+        file_name = str(datetime.now()) + '-' + str(step.name) + '.html'
+        complete_name = os.path.join(save_path, file_name)
+        file_object = codecs.open(complete_name, "w", "utf-8")
+        html = context.browser.page_source
+        file_object.write(html)
