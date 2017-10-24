@@ -81,8 +81,8 @@
                 .col-sm-1
                   %button.btn.btn-danger{ng-click: "removeQuestion(question)", type: "button"}
                     %span.glyphicon.glyphicon-remove
-              
-              
+
+
               .form-group
                 %label.control-label.col-sm-2 Type de la question
                 .col-sm-10
@@ -96,11 +96,11 @@
                     %option{value: "checkbox"} Question à choix multiples (checkbox)
                     %option{value: "graph"} Réponse sur un graphique
                     %option{value: "professor"} Réponse corrigée par le professeur
-                    
+
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Texte à compléter
                 .col-sm-1
-                	%button.btn.btn-success{ng-click: "addAnswerField()", type: "button"}
+                  %button.btn.btn-success{ng-click: "addAnswerField()", type: "button"}
                     %span.glyphicon.glyphicon-plus
                 .col-sm-9
                   %textarea.form-control{id: "blank-text", type: "text", ng-model: "question.text", ng-required: "true", :rows => 3}
@@ -112,53 +112,53 @@
                 %label.control-label.col-sm-2 Indication pour les professeurs
                 .col-sm-10
                   %input.form-control{type: "text", ng-model: "question.indication", ng-required: "false"}
-							
-	          %ul.list-group
-		          %li.list-group-item{ng-if: "question.type != \"professor\"&& question.type != \"fill-text-blanks\"", ng-repeat: "answer in question.answers", ng-init: "answerIndex = $index.toString()"}
-		            .form-horizontal{ng-if: "question.type != \"graph\""}
-		              .form-group
-		                %label.col-sm-2.control-label Réponse possible :
-		                .col-sm-9
-		                  %input.form-control{type: "text", ng-if: "!question.type.startsWith(\"math\")", ng-model: "answer.text", ng-required: "true"}
-		                  %span{ng-if: "question.type == \"math-simple\"", ng-required: "true"}
-		                    %textarea.keyboard
-		                    %span.mathquill{class: "mathquill-{& topIndex &} mathquill-{& topIndex &}-{& answerIndex &}", data-keyboard-type: "{& question.type &}"}
-		                  %span{ng-if: "question.type == \"math-advanced\"", ng-required: "true"}
-		                    %textarea.keyboard
-		                    %span.mathquill{class: "mathquill-{& topIndex &} mathquill-{& topIndex &}-{& answerIndex &}", data-keyboard-type: "{& question.type &}"}
-		                .col-sm-1
-		                  %button.btn.btn-danger.btn-sm{ng-click: "removeAnswer(question, answer)", type: "button"}
-		                    %span.glyphicon.glyphicon-remove
-		              .form-group.no-bottom{ng-if: "question.type != \"text\" && question.type != \"fill-text-blanks\" && ! question.type.startsWith(\"math\")"}
-		                %label.control-label.col-sm-2 Réponse correcte ?
-		                .col-sm-1
-		                  %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
 
-		            .form-horizontal{ng-if: "question.type == \"graph\""}
-		              .form-group
-		                %label.control-label.col-sm-2 Type
-		                .col-sm-9
-		                  %select.form-control{kg-required: "true", ng-model: "answer.graph.type", ng-change: "onChangeGraphAnswerType(answer.graph)"}
-		                    %option{value: ""}
-		                    %option{value: "point"} Point
-		                .col-sm-1
-		                  %button.btn.btn-danger.btn-sm{ng-click: "removeAnswer(question, answer)", type: "button"}
-		                    %span.glyphicon.glyphicon-remove
+            %ul.list-group
+              %li.list-group-item{ng-if: "question.type != \"professor\"&& question.type != \"fill-text-blanks\"", ng-repeat: "answer in question.answers", ng-init: "answerIndex = $index.toString()"}
+                .form-horizontal{ng-if: "question.type != \"graph\""}
+                  .form-group
+                    %label.col-sm-2.control-label Réponse possible :
+                    .col-sm-9
+                      %input.form-control{type: "text", ng-if: "!question.type.startsWith(\"math\")", ng-model: "answer.text", ng-required: "true"}
+                      %span{ng-if: "question.type == \"math-simple\"", ng-required: "true"}
+                        %textarea.keyboard
+                        %span.mathquill{class: "mathquill-{& topIndex &} mathquill-{& topIndex &}-{& answerIndex &}", data-keyboard-type: "{& question.type &}"}
+                      %span{ng-if: "question.type == \"math-advanced\"", ng-required: "true"}
+                        %textarea.keyboard
+                        %span.mathquill{class: "mathquill-{& topIndex &} mathquill-{& topIndex &}-{& answerIndex &}", data-keyboard-type: "{& question.type &}"}
+                    .col-sm-1
+                      %button.btn.btn-danger.btn-sm{ng-click: "removeAnswer(question, answer)", type: "button"}
+                        %span.glyphicon.glyphicon-remove
+                  .form-group.no-bottom{ng-if: "question.type != \"text\" && question.type != \"fill-text-blanks\" && ! question.type.startsWith(\"math\")"}
+                    %label.control-label.col-sm-2 Réponse correcte ?
+                    .col-sm-1
+                      %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
+
+                .form-horizontal{ng-if: "question.type == \"graph\""}
+                  .form-group
+                    %label.control-label.col-sm-2 Type
+                    .col-sm-9
+                      %select.form-control{kg-required: "true", ng-model: "answer.graph.type", ng-change: "onChangeGraphAnswerType(answer.graph)"}
+                        %option{value: ""}
+                        %option{value: "point"} Point
+                    .col-sm-1
+                      %button.btn.btn-danger.btn-sm{ng-click: "removeAnswer(question, answer)", type: "button"}
+                        %span.glyphicon.glyphicon-remove
 		              -# ng-if: point
-		              .form-group{ng-if: "answer.graph.type == \"point\""}
-		                %label.control-label.col-sm-2 Coordonnées
-		                .form-inline.col-sm-10
-		                  .input-group.col-sm-5
-		                    .input-group-addon X
-		                    %input.form-control{type: "number", ng-required: "true", placeholder: "0", ng-model: "answer.graph.coordinates.X"}
-		                  .input-group.col-sm-5
-		                    .input-group-addon Y
-		                    %input.form-control{type: "number", ng-required: "true", placeholder: "0", ng-model: "answer.graph.coordinates.Y"}
+                  .form-group{ng-if: "answer.graph.type == \"point\""}
+                    %label.control-label.col-sm-2 Coordonnées
+                    .form-inline.col-sm-10
+                      .input-group.col-sm-5
+                        .input-group-addon X
+                        %input.form-control{type: "number", ng-required: "true", placeholder: "0", ng-model: "answer.graph.coordinates.X"}
+                      .input-group.col-sm-5
+                        .input-group-addon Y
+                        %input.form-control{type: "number", ng-required: "true", placeholder: "0", ng-model: "answer.graph.coordinates.Y"}
 
-							
-			        %button.btn.btn-success.btn-sm{ng-if: "question.type != \"professor\" && question.type != \"fill-text-blanks\"", ng-click: "addAnswer(topIndex, question)", type: "button"}
-			          %span.glyphicon.glyphicon-plus
-			          nouvelle réponse possible
+
+            %button.btn.btn-success.btn-sm{ng-if: "question.type != \"professor\" && question.type != \"fill-text-blanks\"", ng-click: "addAnswer(topIndex, question)", type: "button"}
+              %span.glyphicon.glyphicon-plus
+              nouvelle réponse possible
 
         .form-group
           %button.btn.btn-success{ng-click: "addQuestion()", type: "button"}

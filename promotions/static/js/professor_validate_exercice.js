@@ -7,6 +7,22 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             $scope.base64img = reader.result;
             $scope.$digest();
         })
+
+    }
+
+    $scope.addAnswerField = function(){
+    		//ToDo add field on focused cursor
+    		console.log("Inside addAnswerField function");
+  			elem = document.getElementById("blank-text");
+  			text = elem.value;
+  			matches = text.match(/#\[/g);
+  			if (matches == null) {
+  				text += "#[1]#";
+  			}
+  			else{
+  				text += "#["+(matches.length+1)+"]#";
+  			}
+  			elem.value = text;
     }
 
     $scope.validateExercice = function() {
@@ -275,18 +291,5 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     checkIfEditingExercice();
     
-    $scope.addAnswerField = function(){
-    		//ToDo add field on focused cursor
-    		console.log("Inside addAnswerField function");
-  			elem = document.getElementById("blank-text");
-  			text = elem.value;
-  			matches = text.match(/#\[/g);
-  			if (matches == null) {
-  				text += "#[1]#";
-  			}
-  			else{
-  				text += "#["+(matches.length+1)+"]#";
-  			}
-  			elem.value = text;
-    }
+
 }
