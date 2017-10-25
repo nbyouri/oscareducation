@@ -25,6 +25,23 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   			elem.value = text;
     }
 
+    $scope.parseFieldsInQuestion = function (topIndex, question) {
+        elem = document.getElementById("blank-text");
+        text = elem.value;
+        var numberBlank = text.match(/#\[/g).length;
+  		console.log("Found : "+numberBlank+" elements")
+        console.log("There is currently : "+question["answers"].length+" fields")
+        console.log(question)
+        for(i = question["answers"].length; i < numberBlank; i++){
+  		    console.log("Adding a field !")
+            question["answers"].push({
+                text: ""
+            })
+        }
+        console.log(question)
+
+    }
+
     $scope.validateExercice = function() {
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {

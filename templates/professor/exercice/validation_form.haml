@@ -107,17 +107,17 @@
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Réponses
                 .col-sm-10
-                  %button.btn.btn-success{ng-click: "parseFieldsInQuestion()", type: "button"}
+                  %button.btn.btn-success{ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
                     Générer les champs
                   %ul.list-group{ng-if: "question.type == \"fill-text-blanks\""}
-                    %li.list-group-item
+                    %li.list-group-item{ng-repeat: "answer in question.answers"}
                       %label.control-label Champ {{field_number}}
                       %ul.list-group
                         %li.list-group-item
                           Réponse possible {{answer_number}}
                           .form-group
                             .col-sm-10
-                              %input.form-control{type: "text", ng-model: "", ng-required: "true"}
+                              %input.form-control{type: "text", ng-model: "answer.text", ng-required: "true"}
                             .col-sm-1
                               %button.btn.btn-danger.btn-sm{ng-click: "", type: "button"}
                                 %span.glyphicon.glyphicon-remove
