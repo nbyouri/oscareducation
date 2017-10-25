@@ -96,7 +96,7 @@
                     %option{value: "checkbox"} Question à choix multiples (checkbox)
                     %option{value: "graph"} Réponse sur un graphique
                     %option{value: "professor"} Réponse corrigée par le professeur
-
+              //Module A begin main block
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Texte à compléter
                 .col-sm-1
@@ -104,6 +104,28 @@
                     %span.glyphicon.glyphicon-plus
                 .col-sm-9
                   %textarea.form-control{id: "blank-text", type: "text", ng-model: "question.text", ng-required: "true", :rows => 3}
+              .form-group{ng-if : "question.type == \"fill-text-blanks\""}
+                %label.control-label.col-sm-2 Réponses
+                .col-sm-10
+                  %button.btn.btn-success{ng-click: "parseFieldsInQuestion()", type: "button"}
+                    Générer les champs
+                  %ul.list-group{ng-if: "question.type == \"fill-text-blanks\""}
+                    %li.list-group-item
+                      %label.control-label Champ {{field_number}}
+                      %ul.list-group
+                        %li.list-group-item
+                          Réponse possible {{answer_number}}
+                          .form-group
+                            .col-sm-10
+                              %input.form-control{type: "text", ng-model: "", ng-required: "true"}
+                            .col-sm-1
+                              %button.btn.btn-danger.btn-sm{ng-click: "", type: "button"}
+                                %span.glyphicon.glyphicon-remove
+                        %button.btn.btn-success{ng-click: "sdfsdfsdf()", type: "button"}
+                          Nouvelle réponse
+              -# ToDo : add ng-repeat conditions on list and sublist to match answers
+
+              //Module A end main block
               .form-group
                 %label.control-label.col-sm-2 Source(s)
                 .col-sm-10
