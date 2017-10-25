@@ -113,17 +113,17 @@
                     %li.list-group-item{ng-repeat: "answer in question.answers", ng-init: "answerIndex = ($index+1).toString()"}
                       %label.control-label Champ {& answerIndex &}
                       %ul.list-group
-                        %li.list-group-item
-                          Réponse possible {{answer_number}}
+                        %li.list-group-item{ng-repeat: "possible in answer.answers track by $index"}
+                          Réponse possible
                           .form-group
                             .col-sm-10
-                              %input.form-control{type: "text", ng-model: "answer.text", ng-required: "true"}
+                              %input.form-control{type: "text", ng-model: "possible.text", ng-required: "true"}
                             .col-sm-1
-                              %button.btn.btn-danger.btn-sm{ng-click: "", type: "button"}
+                              %button.btn.btn-danger.btn-sm{ng-click: "removeAnswerBlank(question, answer, answerIndex)", type: "button"}
                                 %span.glyphicon.glyphicon-remove
-                        %button.btn.btn-success{ng-click: "sdfsdfsdf()", type: "button"}
+                        %button.btn.btn-success{ng-click: "addBlankAnswer(topIndex, question, answerIndex)", type: "button"}
                           Nouvelle réponse
-              -#TODO : Field 1 appreads even when no placeholder because of default question -> Change that ?
+              -#
 
               //Module A end main block
               .form-group

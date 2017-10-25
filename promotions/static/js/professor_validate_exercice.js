@@ -33,12 +33,24 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         console.log("There is currently : "+question["answers"].length+" fields")
         console.log(question)
         for(i = question["answers"].length; i < numberBlank; i++){
-  		    console.log("Adding a field !")
             question["answers"].push({
-                text: ""
+                type:"text",
+                answers:[""]
             })
         }
 
+    }
+
+    $scope.addBlankAnswer = function (topIndex, question, blankID) {
+        question["answers"][blankID-1].answers.push("")
+        //Pushing empty answers to iterate, maybe change that ?
+    }
+
+    $scope.removeAnswerBlank = function (question, answer, blankID) {
+        console.log(question)
+        question["answers"][blankID-1].answers.splice(0, 1)
+        console.log(question)
+        console.log("Remove an answer !")
     }
 
     $scope.validateExercice = function() {
@@ -144,6 +156,9 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 for (var i = 0; i < question.answers.length; ++i)
                     $scope.renderMathquil(topIndex, i, question)
             }, 100);
+        }
+        if (question.type == "fill-text-blanks"){
+            question.answers = []
         }
     }
 
