@@ -38,7 +38,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 text: ""
             })
         }
-        console.log(question)
 
     }
 

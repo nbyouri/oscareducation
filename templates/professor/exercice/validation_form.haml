@@ -110,8 +110,8 @@
                   %button.btn.btn-success{ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
                     Générer les champs
                   %ul.list-group{ng-if: "question.type == \"fill-text-blanks\""}
-                    %li.list-group-item{ng-repeat: "answer in question.answers"}
-                      %label.control-label Champ {{field_number}}
+                    %li.list-group-item{ng-repeat: "answer in question.answers", ng-init: "answerIndex = ($index+1).toString()"}
+                      %label.control-label Champ {& answerIndex &}
                       %ul.list-group
                         %li.list-group-item
                           Réponse possible {{answer_number}}
@@ -123,7 +123,7 @@
                                 %span.glyphicon.glyphicon-remove
                         %button.btn.btn-success{ng-click: "sdfsdfsdf()", type: "button"}
                           Nouvelle réponse
-              -# ToDo : add ng-repeat conditions on list and sublist to match answers
+              -#TODO : Field 1 appreads even when no placeholder because of default question -> Change that ?
 
               //Module A end main block
               .form-group
