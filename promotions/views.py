@@ -1407,6 +1407,12 @@ def exercice_validation_form_validate_exercice(request):
                 "answers": "",
             }
 
+        elif question["type"] == "fill-text-blanks":
+            question[question["instructions"]] = {
+                "type": question["type"],
+                "answers": question["answers"],
+            }
+
         else:
             answers = OrderedDict()
             for x in question["answers"]:
