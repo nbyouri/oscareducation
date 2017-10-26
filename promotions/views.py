@@ -1524,7 +1524,11 @@ def exercice_validation_form_submit(request, pk=None):
                     "type": question["type"],
                     "answers": [x["text"] for x in question["answers"]],
                 }
-
+            elif question["type"] == "fill-text-blanks":
+                new_question_answers = {
+                    "type": question["type"],
+                    "answers": [x["text"] for x in question["answers"]],
+                }
             elif question["type"].startswith("math"):
                 new_question_answers = {
                     "type": question["type"],

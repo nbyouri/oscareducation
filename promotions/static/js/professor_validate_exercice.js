@@ -8,7 +8,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             $scope.$digest();
         })
 
-    }
+    };
 
     $scope.addAnswerField = function(){
     		//ToDo add field on focused cursor
@@ -23,7 +23,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   				text += "#["+(matches.length+1)+"]#";
   			}
   			elem.value = text;
-    }
+    };
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {
         elem = document.getElementById("blank-text");
@@ -35,23 +35,25 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         for(i = question["answers"].length; i < numberBlank; i++){
             question["answers"].push({
                 type:"text",
-                answers:[""]
+                answers:[{text:""}]
             })
         }
 
-    }
+    };
 
     $scope.addBlankAnswer = function (topIndex, question, blankID) {
-        question["answers"][blankID-1].answers.push("")
+        question["answers"][blankID-1].answers.push(
+            {text: ""}
+        )
         //Pushing empty answers to iterate, maybe change that ?
-    }
+    };
 
     $scope.removeAnswerBlank = function (question, answer, blankID) {
         console.log(question)
         question["answers"][blankID-1].answers.splice(0, 1)
         console.log(question)
         console.log("Remove an answer !")
-    }
+    };
 
     $scope.validateExercice = function() {
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
@@ -90,7 +92,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 }
             })
 
-    }
+    };
 
     $scope.proposeToOscar = function() {
         var yaml = $scope.yaml;
@@ -140,14 +142,16 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 }]
             })
             .error(function() {
+                console.log($scope.questions);
                 $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger">Une erreur s\'est produite, nous en avons été alerté.</div>');
             })
             .finally(function() {
+                console.log($scope.questions);
                 $timeout(function() {
                     $("#submit-pull-request").removeClass("disabled");
                 }, 0);
             })
-    }
+    };
 
     $scope.onChangeQuestionType = function(topIndex, question) {
         if (question.type.startsWith("math")) {
@@ -160,7 +164,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         if (question.type == "fill-text-blanks"){
             question.answers = []
         }
-    }
+    };
 
     $scope.onChangeRadio = function(question, answer) {
         if (question.type != "radio")
@@ -175,7 +179,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 a.correct = false;
             }
         }
-    }
+    };
 
     $scope.onChangeGraphAnswerType = function(graph) {
         if (graph.type == "point") {
@@ -200,11 +204,11 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 $scope.renderMathquil(topIndex, question.answers.length - 1, question);
             }, 100);
         }
-    }
+    };
 
     $scope.removeAnswer = function(question, answer) {
         question["answers"].splice(question["answers"].indexOf(answer), 1);
-    }
+    };
 
     $scope.addQuestion = function() {
         $scope.questions.push({
@@ -219,11 +223,11 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             "source": "",
             "indication": "",
         })
-    }
+    };
 
     $scope.removeQuestion = function(question) {
         $scope.questions.splice($scope.questions.indexOf(question), 1);
-    }
+    };
 
     var checkIfEditingExercice = function() {
         // this is a horrible hack to get to make this code works both for
@@ -256,7 +260,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 }
             }, 100);
         })
-    }
+    };
 
     $scope.renderMathquil = function(topIndex, answerIndex, question) {
         console.log("topIndex: " + topIndex);
@@ -288,7 +292,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
             return [mathquill, keyboard];
         });
-    }
+    };
 
     $scope.skillCode = $location.search().code;
 
@@ -315,7 +319,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         }],
         source: "",
         indication: "",
-    }]
+    }];
+
 
     $scope.yamlValidationResult = "";
     $scope.exerciceIsValid = false;
