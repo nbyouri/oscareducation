@@ -119,7 +119,7 @@
                             .col-sm-10
                               %input.form-control{type: "text", ng-model: "possible.text", ng-required: "true"}
                             .col-sm-1
-                              %button.btn.btn-danger.btn-sm{ng-click: "removeAnswerBlank(question, answer, answerIndex)", type: "button"}
+                              %button.btn.btn-danger.btn-sm{ng-click: "removeAnswerBlank(question, answer, answerIndex, $index)", type: "button"}
                                 %span.glyphicon.glyphicon-remove
                         %button.btn.btn-success{ng-click: "addBlankAnswer(topIndex, question, answerIndex)", type: "button"}
                           Nouvelle réponse

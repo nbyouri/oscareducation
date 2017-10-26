@@ -48,9 +48,9 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         //Pushing empty answers to iterate, maybe change that ?
     };
 
-    $scope.removeAnswerBlank = function (question, answer, blankID) {
+    $scope.removeAnswerBlank = function (question, answer, blankID, index) {
         console.log(question)
-        question["answers"][blankID-1].answers.splice(0, 1)
+        question["answers"][blankID-1].answers.splice(index, 1)
         console.log(question)
         console.log("Remove an answer !")
     };
