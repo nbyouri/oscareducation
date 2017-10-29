@@ -111,13 +111,32 @@
                     Générer les champs
                   %ul.list-group{ng-if: "question.type == \"fill-text-blanks\""}
                     %li.list-group-item{ng-repeat: "answer in question.answers", ng-init: "answerIndex = ($index+1).toString()"}
-                      %label.control-label Champ {& answerIndex &}
+                      %p
+                        %label.control-label Champ {& answerIndex &}
+                      %p
+                      .form-group
+                        .col-sm-2
+                          %label.small Type de réponse
+                        .col-sm-10
+                          %select.form-control{ng-model: "answer.type", ng-required: "true"}
+                            %option{value: "text"} Réponse textuelle exacte
+                            %option{value: "math-simple"} Réponse mathématique simple
+                            %option{value: "math-advanced"} Réponse mathématique complexe
                       %ul.list-group
-                        %li.list-group-item{ng-repeat: "possible in answer.answers track by $index"}
+                        %li.list-group-item{ng-repeat: "possible in answer.answers track by $index", ng-init: "subAnswerIndex = $index.toString()"}
                           Réponse possible
                           .form-group
                             .col-sm-10
-                              %input.form-control{type: "text", ng-model: "possible.text", ng-required: "true"}
+                              %input.form-control{ng-if: "answer.type == \"text\"",type: "text", ng-model: "possible.text", ng-required: "true"}
+
+                              %span{ng-if: "answer.type == \"math-simple\"", ng-required: "true"}
+                                %textarea.keyboard
+                                %span.mathquill{class: "mathquill-{& topIndex &} mathquill-{& topIndex &}-{& answerIndex-1 &}-{& subAnswerIndex &}", data-keyboard-type: "math-simple"}
+
+                              %span{ng-if: "answer.type == \"math-advanced\"", ng-required: "true"}
+                                %textarea.keyboard
+                                %span.mathquill{class: "mathquill-{& topIndex &} mathquill-{& topIndex &}-{& answerIndex-1 &}-{& subAnswerIndex &}", data-keyboard-type: "math-advanced"}
+
                             .col-sm-1
                               %button.btn.btn-danger.btn-sm{ng-click: "removeAnswerBlank(question, answerIndex, $index)", type: "button"}
                                 %span.glyphicon.glyphicon-remove
@@ -221,4 +240,3 @@
     .hidden-math-form {
       display: inline;
 }
-

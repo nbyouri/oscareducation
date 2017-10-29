@@ -35,16 +35,31 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         for(i = question["answers"].length; i < numberBlank; i++){
             question["answers"].push({
                 type:"text",
-                answers:[{text:""}]
-            })
+                answers:[{
+                  text:"",
+                  latex:"",
+                  type:"",
+                }]
+            });
+            $scope.renderMathquil(topIndex, i, question, 0);
         }
 
     };
 
     $scope.addBlankAnswer = function (topIndex, question, blankID) {
+        console.log(question);
         question["answers"][blankID-1].answers.push(
-            {text: ""}
-        )
+            {"text": "",
+             "latex": "",
+             "type": ""}
+        );
+        $timeout(function() {
+            console.log("b");
+            console.log("blank id"+blankID);
+            console.log("question subanswer length : "+question.answers[0].answers.length);
+
+            $scope.renderMathquil(topIndex, blankID - 1, question, question.answers[blankID-1].answers.length - 1);
+        }, 100);
         //Pushing empty answers to iterate, maybe change that ?
     };
 
@@ -70,7 +85,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                     $scope.htmlRendering = $sce.trustAsHtml($scope.html);
 
                     $timeout(function() {
-                        
+
                         $('#exercice-rendering-yaml input[type="submit"]').addClass("disabled");
                         MathJax.Hub.Typeset(document.getElementById("exercice-rendering-panel"));
 
@@ -151,7 +166,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     };
 
     $scope.onChangeQuestionType = function(topIndex, question) {
-        if (question.type.startsWith("math")) {
+        if (question.type.startsWith("math") || question.type.startsWith("fill")) {
             $timeout(function() {
                 console.log("c");
                 for (var i = 0; i < question.answers.length; ++i)
@@ -160,6 +175,10 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         }
         if (question.type == "fill-text-blanks"){
             question.answers = []
+            $timeout(function() {
+                console.log("fill text blanks rendering mathquill");
+                $scope.renderMathquil(topIndex, 0, question, 0);
+            }, 100);
         }
     };
 
@@ -247,7 +266,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             // TODO yamlRendering/htmlRendering et image
             $timeout(function() {
                 for (var i = 0; i < $scope.questions.length; ++i) {
-                    if ($scope.questions[i].type.startsWith("math")) {
+                    if ($scope.questions[i].type.startsWith("math") || $scope.questions[i].type.startsWith("fill")) {
                         console.log("a");
                         console.log($scope.questions[i])
                         for (var j = 0; j < $scope.questions[i].answers.length; ++ j) {
@@ -259,21 +278,36 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         })
     };
 
-    $scope.renderMathquil = function(topIndex, answerIndex, question) {
+    $scope.renderMathquil = function(topIndex, answerIndex, question, subAnswerIndex=-1) {
         console.log("topIndex: " + topIndex);
         console.log("answerIndex: " + answerIndex);
+        console.log("subAnswer: "+ subAnswerIndex);
         if (answerIndex != null) {
-            query = $(".mathquill-" + topIndex + "-" + answerIndex);
+            if(subAnswerIndex < 0){
+              query = $(".mathquill-" + topIndex + "-" + answerIndex);
+            }else {
+              query = $(".mathquill-" + topIndex + "-" + answerIndex + "-" + subAnswerIndex);
+            }
         } else {
             query = $(".mathquill-" + topIndex);
+            console.log("question type :"+question.type);
+            if(question.type.startsWith("fill")){
+              consol.log("initiating mathquill question field")
+              query = $(".mathquill-" + topIndex + "-0");
+            }
         }
-        console.log(query);
+        console.log("query :"+query);
         renderMathquil(query, function(MQ, index, mq) {
             var mathquill = MQ.MathField(mq, {
                 handlers: {
                     edit: function() {
                         console.log("======> " + answerIndex);
-                        question.answers[answerIndex].latex = mathquill.latex();
+                        if(subAnswerIndex >= 0){
+                          question.answers[answerIndex].answers[subAnswerIndex].latex = mathquill.latex();
+                        }
+                        else{
+                          question.answers[answerIndex].latex = mathquill.latex();
+                        }
                         console.log(question.answers[answerIndex].latex);
                         console.log($scope.questions);
                     }
@@ -281,8 +315,11 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             });
 
             console.log(question.answers);
-            if (question.answers[answerIndex].text) {
+            if (subAnswerIndex < 0 && question.answers[answerIndex].text) {
                 mathquill.latex(question.answers[answerIndex].text);
+            }
+            if (subAnswerIndex >= 0 && question.answers[answerIndex].answers[subAnswerIndex].text) {
+                mathquill.latex(question.answers[answerIndex].answers[subAnswerIndex].text);
             }
 
             var keyboard = $($(mq).parent().children()[0]);
@@ -323,6 +360,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     $scope.exerciceIsValid = false;
 
     checkIfEditingExercice();
-    
+
 
 }
