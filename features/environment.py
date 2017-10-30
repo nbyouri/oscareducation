@@ -2,13 +2,12 @@ from datetime import datetime
 from selenium import webdriver
 import django
 from django.test.runner import DiscoverRunner
-from django.test.testcases import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.core import management
 from django.shortcuts import resolve_url
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 import codecs
+os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
+
 
 def before_all(context):
     django.setup()
@@ -25,6 +24,7 @@ def before_all(context):
     context.browser.set_window_size(1920, 1080)
     # Using a different port, not conflicting if server is booted up
     context.server_url = 'http://localhost:8080'
+
 
 class BehaviorDrivenTestCase(StaticLiveServerTestCase):
     """

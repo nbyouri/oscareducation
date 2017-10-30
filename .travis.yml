@@ -28,4 +28,6 @@ before_script:
 
 script:
   - python manage.py behave
-  # - python validate_exercices.py
+  - python validate_exercices.py
+  # Following tests are useless and outdated
+  # - python manage.py test
