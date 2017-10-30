@@ -42,6 +42,12 @@
           -elif answer.type == "professor"
             %input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
             -#%textarea.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", rows: "5"}
+          -elif answer.type == "fill-text-blanks"
+            =question.text
+            -for ans in answer.answers
+              ="la réponse est : "
+              =ans
+              %input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
           -else
             =answer.type
 
