@@ -47,6 +47,12 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     };
 
+    //Wipe the possible answers for a field when changing answer type.
+    //Otherwise mathquill display causes a display bug
+    $scope.wipeAnswersInField = function (question, answerIndex){
+        question["answers"][answerIndex-1].answers = [];
+    };
+
     $scope.addBlankAnswer = function (topIndex, question, blankID) {
         console.log(question);
         question["answers"][blankID-1].answers.push(
