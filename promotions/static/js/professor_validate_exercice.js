@@ -10,7 +10,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     };
 
-    $scope.addAnswerField = function(){
+    $scope.addAnswerField = function(question){
     		//ToDo add field on focused cursor
     		console.log("Inside addAnswerField function");
   			elem = document.getElementById("blank-text");
@@ -23,6 +23,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   				text += "#["+(matches.length+1)+"]#";
   			}
   			elem.value = text;
+  			question["text"] = text;
     };
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {

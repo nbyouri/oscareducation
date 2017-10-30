@@ -100,7 +100,7 @@
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Texte à compléter
                 .col-sm-1
-                  %button.btn.btn-success{ng-click: "addAnswerField()", type: "button"}
+                  %button.btn.btn-success{ng-click: "addAnswerField(question)", type: "button"}
                     %span.glyphicon.glyphicon-plus
                 .col-sm-9
                   %textarea.form-control{id: "blank-text", type: "text", ng-model: "question.text", ng-required: "true", :rows => 3}
