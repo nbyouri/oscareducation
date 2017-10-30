@@ -10,11 +10,11 @@
 
 ### Usage 
 
-Just run your tests with ```python manage.py behave```  and enjoy.
+Just run your tests with Behave within Pycharm or run `behave` in your terminal in the project's root.
 
 #### BDD Testing Framework
-**Django_Behave** is making it easier to use Behave 
-http://behave-django.readthedocs.io/en/stable/
+Behave is the testing framework used.   
+See http://pythonhosted.org/behave/ for further documentation.    
 
 #### POM DSL
 Still not found, but should be highly interesting to find an equivalent of 
