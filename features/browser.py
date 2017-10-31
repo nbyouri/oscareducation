@@ -8,7 +8,7 @@ from datetime import datetime
 class Browser(object):
     base_url = 'http://localhost:8080'
     driver = webdriver.PhantomJS()
-    driver.implicitly_wait(1)
+    driver.implicitly_wait(5)
     driver.set_window_size(1920, 1080)
 
     def close(self):
