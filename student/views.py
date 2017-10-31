@@ -55,7 +55,6 @@ def pass_test(request, pk):
         """
         if not StudentPoll.objects.filter(student=test_student.student).exists():
             pool_form = StudentPollForm(request.POST) if request.method == "POST" else StudentPollForm()
-
             if request.method == "POST" and pool_form.is_valid():
                 StudentPoll.objects.create(student=test_student.student, lesson=test_student.student.lesson_set.first(), **pool_form.cleaned_data)
                 return HttpResponseRedirect(reverse('student_dashboard'))
@@ -249,15 +248,12 @@ def start_test(request, pk):
 
 def skill_pedagogic_ressources(request, type, slug):
     """skill = get_object_or_404(Skill, code=slug)
-
     list_resource_id = list()
     # ManyToMany relation from Skill to Resource
     for skill_object in Skill.objects.all():
         for skill_object_resource in skill_object.resource.all():
             list_resource_id.append(skill_object_resource.id)
-
     personal_resource = Resource.objects.filter(added_by__professor__lesson__students=request.user.student, section="personal_resource", id__in=list_resource_id)
-
     return render(request, "professor/skill/update_pedagogical_resources.haml", {
         "object": skill,
         "skill": skill,
