@@ -23,7 +23,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   				text += "#["+(matches.length+1)+"]#";
   			}
   			elem.value = text;
-  			question["text"] = text;
+  			question["instructions"] = text;
     };
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {
