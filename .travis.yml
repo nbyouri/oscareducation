@@ -14,6 +14,7 @@ before_install:
   - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
   - sudo mkdir -p /usr/local/phantomjs/bin/
   - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
+  - sudo apt-get install libfontconfig libfreetype6
 
 install:
   - pip install -r requirements-group6.txt
