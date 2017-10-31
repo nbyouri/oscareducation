@@ -6,8 +6,8 @@ import numpy
 class Arithmetic_polynomial_second_degree(Problem_model):
     def __init__(self, desc, domain, range, val=None):
         Problem_model.__init__(self, desc, domain, range)
-        if val:
-            self.val = val  # TODO Check if values correspond to domain and right number of values
+        if val and len(val) == 3:
+            self.val = val
         else:
             self.genNewValues()
 
@@ -18,7 +18,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def genValues(self):
         if (self.domain == "Natural"):
             for i in range(3):
-                self.val.append(random.randint(0, 100))
+                self.val.append(random.randint(0, 100)) #TODO What range should we put ?
         elif (self.domain == "Integer"):
             for i in range(3):
                 self.val.append(random.randint(-100, 100))
@@ -26,7 +26,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             for i in range(3):
                 self.val.append(random.uniform(-100, 100))
         else:
-            raise ValueError("Wrong Domain")
+            raise ValueError("Wrong value for domain: ",self.domain)
 
     def getDesc(self):
         return self.desc
@@ -35,10 +35,14 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         return self.val
 
     def getSol(self):
-        tmp_sol = numpy.roots(self.val)
-        sol = tmp_sol
-        #if (self.range == "Rational"):
-        #    for root in tmp_sol:
-        #        if root.iscomplex():
-        #            numpy.delete(sol, root)
+        tmp_sol = numpy.roots(self.val).tolist()
+        if (self.range == "Rational"):
+            sol = list()
+            for root in tmp_sol:
+                if not isinstance(root, complex):
+                    sol.append(root)
+        elif (self.range == "Complex"):
+            sol = tmp_sol
+        else:
+            raise ValueError("Wrong value for range:",self.range)
         return sol

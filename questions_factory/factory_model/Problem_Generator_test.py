@@ -21,11 +21,15 @@ class MyTestCase(unittest.TestCase):
         problem = create_problem("Integer", "Rational", val)
         assert_that([1, -3, 2], equal_to(problem.getVal()))
 
-    def test_gen_val_integer_problem(self):
+    def test_gen_val_integer_rational_problem(self):
         problem = create_problem()
         val = problem.getVal()
         ans = numpy.roots(val)
-        assert_that(ans.tostring(), equal_to(problem.getSol().tostring()))
+        assert_that(ans.tolist(), contains(problem.getSol()))
+
+    def test_get_solution_with_complex_range(self):
+        problem = create_problem("Rational", "Rational", [1, 1, 20])
+        assert_that([[]], contains(problem.getSol()))
 
 
 
@@ -61,7 +65,7 @@ def create_problem(domain= "Integer", range="Rational", val= None):
     dict["domain"] = domain
     dict["range"] = range
     if val:
-        dict["val"] = [1, -3, 2]
+        dict["val"] = val
     write_json_file(dict, json_path)
     problem = Problem_generator.factory(json_path)
     return problem
