@@ -50,8 +50,7 @@ def before_scenario(context, _):
 
 
 def after_scenario(context, _):
-    context.test.tearDownClass()
-    del context.test
+    pass
 
 
 def after_all(context):
