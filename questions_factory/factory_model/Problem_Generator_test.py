@@ -21,13 +21,13 @@ class MyTestCase(unittest.TestCase):
         problem = create_problem("Integer", "Rational", val)
         assert_that([1, -3, 2], equal_to(problem.getVal()))
 
-    def test_gen_val_integer_rational_problem(self):
-        problem = create_problem()
+    def test_get_solution_random_val_integer_complex_problem(self):
+        problem = create_problem("Integer", "Complex")
         val = problem.getVal()
         ans = numpy.roots(val)
-        assert_that(ans.tolist(), contains(problem.getSol()))
+        assert_that([round(ans.tolist())], contains(problem.getSol()))
 
-    def test_get_solution_with_complex_range(self):
+    def test_get_solution_with_rational_range(self):
         problem = create_problem("Rational", "Rational", [1, 1, 20])
         assert_that([[]], contains(problem.getSol()))
 
@@ -70,6 +70,14 @@ def create_problem(domain= "Integer", range="Rational", val= None):
     problem = Problem_generator.factory(json_path)
     return problem
 
+def round(list):
+    new_list = []
+    for x in list:
+        if isinstance(x, complex):
+            new_list.append(complex("{0:.2f}".format(x)))
+        elif isinstance(x, float):
+            new_list.append(float("{0:.2f}".format(x)))
+    return new_list
 
 if __name__ == '__main__':
     unittest.main()

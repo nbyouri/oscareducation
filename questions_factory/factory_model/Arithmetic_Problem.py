@@ -34,8 +34,18 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def getVal(self):
         return self.val
 
+    def round(self, list):
+        new_list = []
+        for x in list:
+            if isinstance(x, complex):
+                new_list.append(complex("{0:.2f}".format(x)))
+            elif isinstance(x, float):
+                new_list.append(float("{0:.2f}".format(x)))
+        return new_list
+
     def getSol(self):
         tmp_sol = numpy.roots(self.val).tolist()
+        sol = list()
         if (self.range == "Rational"):
             sol = list()
             for root in tmp_sol:
@@ -45,4 +55,5 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             sol = tmp_sol
         else:
             raise ValueError("Wrong value for range:",self.range)
-        return sol
+
+        return self.round(sol)
