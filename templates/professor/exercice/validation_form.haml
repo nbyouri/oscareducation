@@ -74,7 +74,7 @@
         %ul.list-group{ng-if: "testable_online"}
           %li.list-group-item{ng-repeat: "question in questions", ng-init: "topIndex = $index.toString()"}
             .form-horizontal
-              .form-group
+              .form-group{ng-if: "!question.type.startsWith(\"fill\")"}
                 %label.control-label.col-sm-2 Énoncé de la question
                 .col-sm-9
                   %input.form-control{type: "text", ng-model: "question.instructions", ng-required: "true"}
@@ -100,10 +100,10 @@
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Texte à compléter
                 .col-sm-1
-                  %button.btn.btn-success{ng-click: "addAnswerField(question)", type: "button"}
+                  %button.btn.btn-success{ng-click: "addAnswerField(question)", type: "button", data-toggle: "tooltip", data-placement: "top", title: "Ajouter un champ"}
                     %span.glyphicon.glyphicon-plus
                 .col-sm-9
-                  %textarea.form-control{id: "blank-text", type: "text", ng-model: "question.text", ng-required: "true", :rows => 3}
+                  %textarea.form-control{id: "blank-text", type: "text", ng-model: "question.instructions", ng-required: "true", :rows => 3}
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Réponses
                 .col-sm-10
