@@ -23,7 +23,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   				text += "#["+(matches.length+1)+"]#";
   			}
   			elem.value = text;
-  			question["text"] = text;
+  			question["instructions"] = text;
     };
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {
@@ -45,6 +45,12 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             $scope.renderMathquil(topIndex, i, question, 0);
         }
 
+    };
+
+    //Wipe the possible answers for a field when changing answer type.
+    //Otherwise mathquill display causes a display bug
+    $scope.wipeAnswersInField = function (question, answerIndex){
+        question["answers"][answerIndex-1].answers = [];
     };
 
     $scope.addBlankAnswer = function (topIndex, question, blankID) {

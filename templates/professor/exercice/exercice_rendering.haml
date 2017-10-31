@@ -36,8 +36,10 @@
             %input.hidden{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y"}
       -elif question.type == "professor"
         %i A corriger par le professeur
+      -elif answer.type == "fill-text-blanks"
+        %input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
       -else
-        =question.type
+        ="test"
 
   %input.btn.btn-primary{type: "submit", value: "Répondre", disabled:"disabled"}
 
