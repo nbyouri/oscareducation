@@ -19,10 +19,8 @@ before_install:
 install:
   - pip install -r requirements-group6.txt
 
-env:
-  - export DISPLAY=:99.0
-
 before_script:
+  - "export DISPLAY=:99.0"
   - psql -c "CREATE USER oscar WITH PASSWORD 'oscar' CREATEDB;" -U postgres
   - psql -c "ALTER USER oscar CREATEDB;" -U postgres
   - psql -c "CREATE DATABASE oscar OWNER oscar;" -U postgres
