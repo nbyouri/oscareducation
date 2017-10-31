@@ -12,7 +12,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 def before_all(context):
     django.setup()
     context.test_runner = DiscoverRunner()
-    context.test_runner.setup_test_environment()
     context.old_db_config = context.test_runner.setup_databases()
     # PhantomJS is used there (headless browser - meaning we can execute tests in a command-line environment,
     # which is what we want for use with SemaphoreCI
@@ -59,7 +58,6 @@ def after_all(context):
     # Explicitly quits the browser, otherwise it won't once tests are done
     context.browser.quit()
     context.test_runner.teardown_databases(context.old_db_config)
-    context.test_runner.teardown_test_environment()
 
 
 def before_feature(context, feature):
