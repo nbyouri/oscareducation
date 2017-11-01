@@ -18,7 +18,7 @@ def generator(request):
         dom = request.POST['domain']
         range = request.POST['range_to'],  request.POST['range_from']
         problem_type = "Arithmetic_Polynomial_Second_degree"
-        data = {'problem': problem_type, 'range': range, 'domain': "Natural"}
+        data = {'problem': problem_type, 'range': "Rational", 'domain': "Natural"}
         problem = Problem_generator.factory(json.dumps(data))
         return render(request, "questions_factory/questions_list.haml", {'questions' : problem.gen_questions(5)})
     raise PermissionDenied()
