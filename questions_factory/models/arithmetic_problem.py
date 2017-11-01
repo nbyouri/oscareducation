@@ -16,13 +16,13 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         self.gen_values()
 
     def gen_values(self):
-        if (self.domain == "Natural"):
+        if self.domain == "Natural":
             for i in range(3):
                 self.val.append(random.randint(0, 100))  # TODO What range should we put ?
-        elif (self.domain == "Integer"):
+        elif self.domain == "Integer":
             for i in range(3):
                 self.val.append(random.randint(-100, 100))
-        elif (self.domain == "Rational"):
+        elif self.domain == "Rational":
             for i in range(3):
                 self.val.append(random.uniform(-100, 100))
         else:
@@ -59,13 +59,8 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         return self.round(sol)
 
     def gen_questions(self, number_of_questions):
-        values = list()
-        solutions = list()
-        questions = dict()
+        questions = list()
         for _ in range(number_of_questions):
-            values.append(self.get_val())
-            solutions.append(self.get_sol())
+            questions.append((self.get_val(), self.get_sol()))
             self.gen_new_values()
-        questions["values"] = values
-        questions["solutions"] =  solutions
         return questions
