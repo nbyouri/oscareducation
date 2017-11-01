@@ -10,9 +10,9 @@ from django.db.models import Q
 
 
 def generator(request):
-    # GET
     if request.method == "GET":
         return render(request, "questions_factory/settings_problems.haml")
     if request.method == "POST":
-        pass
+
+        return render(request, "questions_factory/questions_list.haml")
     raise PermissionDenied()

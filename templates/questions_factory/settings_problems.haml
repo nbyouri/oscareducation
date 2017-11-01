@@ -6,18 +6,18 @@
     %h2 Outil de création de questions
     Subject
     .subject_menu
-      %select
+      %select{:name => "subject"}
         %option subject1
         %option subject2
 
     Assessment type
-    .assessment_menu
+    .assessment_menu{:name => "assessment"}
       %select
         %option assessment1
         %option assessment2
 
     Compétence
-    .skill_menu
+    .skill_menu{:skill => "skill"}
       %select
         %option Probème arithmétique
 
@@ -26,23 +26,31 @@
 
       Domaine
       .domain_menu
-        %select
+        %select{:name => "domain"}
           %option Naturels
           %option Entiers
           %option Rationnels
 
+      Image
+      .image_menu
+        %select{:name => "image"}
+          %option Rationnels
+          %option Complexes
+
       Range
       .range_menu
-        %input{:required => "", :type => "integer"}
-        to
-        %input{:required => "", :type => "integer"}
-
+        From
+        %input{:name => "range_from"}
+        To
+        %input{:name => "range_to"}
+      &nbsp
+      .input_menu
         A
-        %input{:required => "", :type => "integer"}
+        %input{:required => "", :type => "integer", :name => "input_a"}
         B
-        %input{:required => "", :type => "integer"}
+        %input{:required => "", :type => "integer", :name => "input_b"}
         C
-        %input{:required => "", :type => "integer"}
+        %input{:required => "", :type => "integer", :name => "input_c"}
         &nbsp
       .submit-row
         %label
