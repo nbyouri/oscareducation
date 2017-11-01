@@ -4,8 +4,8 @@ import numpy
 
 
 class Arithmetic_polynomial_second_degree(Problem_model):
-    def __init__(self, domain, range, val=None):
-        Problem_model.__init__(self, "Polynomial second degree", domain, range)
+    def __init__(self, domain, image, range, val=None):
+        Problem_model.__init__(self, "Polynomial second degree", domain, image, range)
         if val and len(val) == 3:
             self.val = val
         else:
@@ -18,13 +18,13 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def gen_values(self):
         if self.domain == "Natural":
             for i in range(3):
-                self.val.append(random.randint(0, 100))  # TODO What range should we put ?
+                self.val.append(random.randint(self.range[0], self.range[1]))  # TODO What range should we put ?
         elif self.domain == "Integer":
             for i in range(3):
-                self.val.append(random.randint(-100, 100))
+                self.val.append(random.randint(self.range[0], self.range[1]))
         elif self.domain == "Rational":
             for i in range(3):
-                self.val.append(random.uniform(-100, 100))
+                self.val.append(random.uniform(self.range[0], self.range[1]))
         else:
             raise ValueError("Wrong value for domain: ", self.domain)
 
@@ -34,7 +34,8 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def get_val(self):
         return self.val
 
-    def round(self, list):
+    @staticmethod
+    def round(list):
         new_list = []
         for x in list:
             if isinstance(x, complex):
@@ -46,15 +47,15 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def get_sol(self):
         tmp_sol = numpy.roots(self.val).tolist()
         sol = list()
-        if (self.range == "Rational"):
+        if self.image == "Rational":
             sol = list()
             for root in tmp_sol:
                 if not isinstance(root, complex):
                     sol.append(root)
-        elif (self.range == "Complex"):
+        elif self.image == "Complex":
             sol = tmp_sol
         else:
-            raise ValueError("Wrong value for range:", self.range)
+            raise ValueError("Wrong value for image:", self.image)
 
         return self.round(sol)
 

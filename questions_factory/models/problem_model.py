@@ -2,9 +2,10 @@ import abc
 
 
 class Problem_model:
-    def __init__(self, desc, domain, range, val=None):
+    def __init__(self, desc, domain, image, range=(0, 20), val=None):
         self.desc = desc
         self.domain = domain
+        self.image = image
         self.range = range
 
     @abc.abstractmethod

@@ -16,9 +16,10 @@ def generator(request):
         return render(request, "questions_factory/settings_problems.haml")
     if request.method == "POST":
         dom = request.POST['domain']
-        range = request.POST['range_to'],  request.POST['range_from']
+        range = request.POST['range_to'], request.POST['range_from']
         problem_type = "Arithmetic_Polynomial_Second_degree"
-        data = {'problem': problem_type, 'range': "Rational", 'domain': "Natural"}
+        data = {'problem': problem_type, 'image': "Rational", 'domain': "Natural",
+                'range': [0, 20]}  # TODO Remove hardcoding
         problem = Problem_generator.factory(json.dumps(data))
-        return render(request, "questions_factory/questions_list.haml", {'questions' : problem.gen_questions(5)})
+        return render(request, "questions_factory/questions_list.haml", {'questions': problem.gen_questions(5)})
     raise PermissionDenied()
