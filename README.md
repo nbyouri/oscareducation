@@ -118,12 +118,6 @@ configuration for the `sphinx` tool.
 - Add a configuration selecting "Behave"
 - If you want to run the tests in PyCharm, go in Settings/Language & Framework/BDD and select Behave
 
-### MacOS Setup
-
-### Windows Setup
-- Launch requirements-group6_wind.txt
-- You might be forced to restart your computer after adding PhantomJS in your path
-
 ## Usage
 
 Just run your tests with Behave within Pycharm or run `behave` in your terminal in the project's root.
