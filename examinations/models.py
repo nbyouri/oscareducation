@@ -221,6 +221,31 @@ class Question(models.Model):
             # No automatic verification to perform if corrected by a Professor
             return -1
 
+        elif evaluation_type == "fill-text-blanks":
+            ok = 1
+            num = 0
+            print("response", response)
+            for num in response:
+                for res in response[num]["response_blank"]:
+                    print("on est la ",res)
+                    res_blank = res#["response_blank"]
+
+                    # if isinstance(res_blank["text"], (int, float)):
+                    #     res_blank["text"] = str(res_blank["text"])
+
+                    correct_answers = [unicode(x["text"]).lower().strip().replace(" ", "").encode('UTF-8')
+                                       for x in raw_correct_answers["answers"][num]]
+                    print("correct answers", correct_answers[0])
+
+                    res_blank = res_blank.strip().replace(" ", "").lower().encode("Utf-8") if isinstance(res_blank,
+                                                                                                   basestring) else res_blank
+                    if res_blank in [x for x in correct_answers]:
+                        response[num]["correct_blank"] = 1
+                    else:
+                        response[num]["correct_blank"] = 0
+                        ok = 0
+                num += 1
+            return ok
         # No automatic correction type found, not corrected by default
         else:
             return -1

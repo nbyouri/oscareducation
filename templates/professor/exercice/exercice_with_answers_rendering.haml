@@ -1,3 +1,4 @@
+-# once the question is validated an proposed to oscar
 .form-group
   %label
     -if answer.type == "text"
@@ -49,5 +50,14 @@
       %span
         %p
           %i A corriger par le professeur
+    -elif answer.type == "fill-text-blanks"
+      profExerciceExerciceWithAnswerRendering
+      %br
+      =question.text
+      -for ans in answer.answers
+        ="la réponse est : "
+        =ans
+        %br
+        %input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
     -else
       =answer.type

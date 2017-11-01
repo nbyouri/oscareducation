@@ -1,3 +1,4 @@
+-# visualisation during a test
 -load lesson_tags
 
 	%form{method: "POST"}
@@ -43,8 +44,10 @@
 						%input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
 						-#%textarea.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", rows: "5"}
 					-elif answer.type == "fill-text-blanks"
-						=question.text
+						examinationExerciceRendering
 						%br
+						=question.text
+
 						-with i=0
 						-for ans in answer.answers
 							="la réponse est : "
