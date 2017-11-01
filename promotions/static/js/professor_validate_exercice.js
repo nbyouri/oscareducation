@@ -11,19 +11,26 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     };
 
     $scope.addAnswerField = function(question){
-    		//ToDo add field on focused cursor
-    		console.log("Inside addAnswerField function");
   			elem = document.getElementById("blank-text");
   			text = elem.value;
-  			matches = text.match(/#\[/g);
-  			if (matches == null) {
+  			matches = text.match(/#\[\d]#/g);
+  			if (matches === null) { //If it is the first field
   				text += "#[1]#";
+  				elem.value = text; //Update input form
   			}
-  			else{
-  				text += "#["+(matches.length+1)+"]#";
+  			else{ //If we already have fields
+  			    newText = "";
+  			    for(var i = 0; i < matches.length; i++) { //Reorder fields in order
+                    newText += text.substring(0,text.indexOf(matches[i])); //Append text before field
+                    text = text.slice(text.indexOf(matches[i])+matches[i].length, text.length); //Remove added text
+                    newText += "#["+ (i+1) + "]#";//Add field in order
+                }
+                newText += text;
+  				newText += "#["+(matches.length+1)+"]#";
+  			    elem.value = newText //Update input form
   			}
-  			elem.value = text;
-  			question["instructions"] = text;
+  			question["instructions"] = elem.value; //Update object for DB
+  			elem.focus();//Request focus on text input
     };
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {
