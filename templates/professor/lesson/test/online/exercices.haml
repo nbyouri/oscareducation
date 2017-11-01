@@ -103,6 +103,9 @@
 
               .pull-right
                 -if test_exercice.test.can_change_exercice
+                  %td.center{width: "20px"}
+                    %a.btn.btn-primary.btn-xs{href: "{% url 'questions_factory:generator' %}", data-toogle: "tooltip", data-placement: "top", title: "Génerer des questions automatiques"}
+                      générer
                   -if test_exercice.skill.context_set.count > 1
                     %td.center{width: "20px"}
                       %a.btn.btn-primary.btn-xs{href: "{% url 'professor:lesson_test_online_change_exercice' lesson.pk test.pk test_exercice.pk %}", data-toggle: "tooltip", data-placement: "top", title: "Remplacer par une autre question tirée des questions disponible dans Oscar"}
