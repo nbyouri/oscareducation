@@ -74,15 +74,13 @@
         %ul.list-group{ng-if: "testable_online"}
           %li.list-group-item{ng-repeat: "question in questions", ng-init: "topIndex = $index.toString()"}
             .form-horizontal
-              .form-group{ng-if: "!question.type.startsWith(\"fill\")"}
+              .form-group{ng-if: "question.type != \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Énoncé de la question
                 .col-sm-9
                   %input.form-control{type: "text", ng-model: "question.instructions", ng-required: "true"}
                 .col-sm-1
                   %button.btn.btn-danger{ng-click: "removeQuestion(question)", type: "button"}
                     %span.glyphicon.glyphicon-remove
-
-
               .form-group
                 %label.control-label.col-sm-2 Type de la question
                 .col-sm-10
@@ -90,6 +88,7 @@
                     %option{value: ""}
                     %option{value: "text"} Réponse textuelle exacte
                     %option{value: "fill-text-blanks"} Question à trous
+                    %option{value: "fill-table-blanks"} Tableau à trous
                     %option{value: "math-simple"} Réponse mathématique simple
                     %option{value: "math-advanced"} Réponse mathématique avancée
                     %option{value: "radio"} Une seule réponse unique possible parmi toutes (radio)
@@ -97,6 +96,7 @@
                     %option{value: "graph"} Réponse sur un graphique
                     %option{value: "professor"} Réponse corrigée par le professeur
               //Module A begin main block
+              //Text-filling form
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Texte à compléter
                 .col-sm-1
@@ -104,6 +104,30 @@
                     %span.glyphicon.glyphicon-plus
                 .col-sm-9
                   %textarea.form-control{id: "blank-text", type: "text", ng-model: "question.instructions", ng-required: "true", :rows => 3}
+              //Table-filling form
+              .form-group{ng-if: "question.type == \"fill-table-blanks\""}
+                .col-sm-2
+                  %label.control-label.col-sm-2 Tableau
+                .col-sm-10
+                  %button.btn.btn-success.sm-margin{ng-click: "addColumnTableBlank(table)", type: "button"} Nouvelle colonne
+                  %div.table-responsive
+                    %table.fillparent{ng-init:"table = question.table"}
+                      %tr{ng-if: "table[0].length > 1"}
+                        %td
+                        %td{ng-repeat: "column in table[0] track by $index"}
+                          %button.btn.btn-danger.fillparent{type: "button",ng-click: "removeColumnTableBlank(table, $index)"}
+                            %span.glyphicon.glyphicon-remove
+                      %tr{ng-repeat: "row in table track by $index", ng-init: "x = $index.toString()"}
+                        %td
+                          %button.btn.btn-danger{type: "button", ng-if: "table.length > 1", ng-click: "removeRowTableBlank(table, x)"}
+                            %span.glyphicon.glyphicon-remove
+                        %td{ng-repeat: "column in row track by $index", ng-init:"y = $index.toString()"}
+                          %input.form-control{type: "text", ng-model: "table[x][y]"}
+                      %tr
+                        %td
+                          %button.btn.btn-success{ng-click: "addRowTableBlank(table)", type: "button"}
+                            %span.glyphicon.glyphicon-plus
+
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Réponses
                 .col-sm-10
@@ -142,7 +166,6 @@
                                 %span.glyphicon.glyphicon-remove
                         %button.btn.btn-success{ng-click: "addBlankAnswer(topIndex, question, answerIndex)", type: "button"}
                           Nouvelle réponse
-              -#
 
               //Module A end main block
               .form-group
@@ -236,7 +259,16 @@
     body {
       padding-bottom: 200px;
     }
+    #question_table{
+      border: 1px solid lightgrey;
+    }
 
+    .fillparent {
+      width : 100% !important;
+    }
+    .sm-margin{
+      margin-bottom : 5px
+    }
     .hidden-math-form {
       display: inline;
 }

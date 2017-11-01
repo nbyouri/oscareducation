@@ -74,6 +74,72 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         question["answers"][blankID-1].answers.splice(index, 1)
     };
 
+    /**
+     * when question.type == "fill-table-blanks"
+     * add a row in the table
+     *
+     * @param table the table object
+     */
+    $scope.addRowTableBlank = function (table){
+        nRows = table.length;
+        nCols = table[0].length;
+
+        newLine = [];
+        for(var i = 0; i < nCols; i++){
+            newLine.push("")
+        }
+        table.push(newLine);
+    };
+
+    /**
+     * when question.type == "fill-table-blanks"
+     * add a column in the table, max of 10
+     *
+     * @param table the table object
+     */
+    $scope.addColumnTableBlank = function (table){
+        nRows = table.length;
+        nCols = table[0].length;
+
+        if(nCols < 10) {
+            for (var i = 0; i < nRows; i++) {
+                table[i].push("");
+            }
+        }
+        else{
+            alert("Impossible d'avoir plus de dix colonnes par tableau")
+        }
+    };
+
+    /**
+     * when question.type == "fill-table-blanks"
+     * remove a row in the table
+     *
+     * @param table the table object
+     * @param x index of row to remove
+     */
+    $scope.removeRowTableBlank = function (table, x){
+        if(table.length > 1)
+            table.splice(x,1);
+        else
+            $scope.flag = true;
+    };
+
+    /**
+     * when question.type == "fill-table-blanks"
+     * remove a column in the table
+     *
+     * @param table the table object
+     * @param y index of column to remove
+     */
+    $scope.removeColumnTableBlank = function(table, y){
+        if(table[0].length > 1){
+            for(var i = 0; i < table.length; i++){
+                table[i].splice(y,1)
+            }
+        }
+    };
+
     $scope.validateExercice = function() {
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
@@ -180,13 +246,18 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                     $scope.renderMathquil(topIndex, i, question)
             }, 100);
         }
-        if (question.type == "fill-text-blanks"){
-            question.answers = []
+        if (question.type.startsWith("fill")){
+            question.answers = [];
+            if(question.type === "fill-table-blanks"){
+                question.table = [["",""],["",""]]; //Start as a 2*2 (better UX)
+            }
             $timeout(function() {
                 console.log("fill text blanks rendering mathquill");
                 $scope.renderMathquil(topIndex, 0, question, 0);
             }, 100);
         }
+        console.log("question :");
+        console.log(question);
     };
 
     $scope.onChangeRadio = function(question, answer) {
