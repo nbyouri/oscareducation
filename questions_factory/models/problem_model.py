@@ -8,15 +8,15 @@ class Problem_model:
         self.range = range
 
     @abc.abstractmethod
-    def getDesc(self):
+    def get_desc(self):
         """Return the description of the problem"""
         return
 
     @abc.abstractmethod
-    def getSol(self):
+    def get_sol(self):
         """Return the solution of the problem"""
         return
 
     @abc.abstractmethod
-    def genValues(self):
+    def gen_values(self):
         """Generate new random values for the problem"""

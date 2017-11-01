@@ -4,21 +4,21 @@ import numpy
 
 
 class Arithmetic_polynomial_second_degree(Problem_model):
-    def __init__(self, desc, domain, range, val=None):
-        Problem_model.__init__(self, desc, domain, range)
+    def __init__(self, desc, domain, image, val=None):
+        Problem_model.__init__(self, desc, domain, image)
         if val and len(val) == 3:
             self.val = val
         else:
-            self.genNewValues()
+            self.gen_new_values()
 
-    def genNewValues(self):
+    def gen_new_values(self):
         self.val = list()
-        self.genValues()
+        self.gen_values()
 
-    def genValues(self):
+    def gen_values(self):
         if (self.domain == "Natural"):
             for i in range(3):
-                self.val.append(random.randint(0, 100)) #TODO What range should we put ?
+                self.val.append(random.randint(0, 100))  # TODO What range should we put ?
         elif (self.domain == "Integer"):
             for i in range(3):
                 self.val.append(random.randint(-100, 100))
@@ -26,12 +26,12 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             for i in range(3):
                 self.val.append(random.uniform(-100, 100))
         else:
-            raise ValueError("Wrong value for domain: ",self.domain)
+            raise ValueError("Wrong value for domain: ", self.domain)
 
-    def getDesc(self):
+    def get_desc(self):
         return self.desc
 
-    def getVal(self):
+    def get_val(self):
         return self.val
 
     def round(self, list):
@@ -43,7 +43,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
                 new_list.append(float("{0:.2f}".format(x)))
         return new_list
 
-    def getSol(self):
+    def get_sol(self):
         tmp_sol = numpy.roots(self.val).tolist()
         sol = list()
         if (self.range == "Rational"):
@@ -54,6 +54,18 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         elif (self.range == "Complex"):
             sol = tmp_sol
         else:
-            raise ValueError("Wrong value for range:",self.range)
+            raise ValueError("Wrong value for range:", self.range)
 
         return self.round(sol)
+
+    def gen_questions(self, number_of_questions):
+        values = list()
+        solutions = list()
+        questions = dict()
+        for _ in range(number_of_questions):
+            values.append(self.get_val())
+            solutions.append(self.get_sol())
+            self.gen_new_values()
+        questions["values"] = values
+        questions["solutions"] =  solutions
+        return questions
