@@ -7,8 +7,41 @@
     Subject
     .subject_menu
       %select
-        %option aljj
-        %option vvcfg
+        %option subject1
+        %option subject2
 
-  .right.column
-    %h2 Gay
+    Assessment type
+    .assessment_menu
+      %select
+        %option assessment1
+        %option assessment2
+
+    Skill
+    .skill_menu
+      %select
+        %option skill1
+        %option skill2
+
+    Domain
+    .domain_menu
+      %select
+        %option Natural N
+        %option Integer Z
+        %option Rational Q
+
+    Range
+    .range_menu
+      %input{:required => "", :type => "integer"}
+      to
+      %input{:required => "", :type => "integer"}
+
+    A
+
+    %input{:required => "", :type => "integer"}
+    B
+    %input{:required => "", :type => "integer"}
+    C
+    %input{:required => "", :type => "integer"}
+
+
+
