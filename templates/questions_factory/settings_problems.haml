@@ -1,52 +1,64 @@
 -extends "base.haml"
 
+-load bootstrap3
+
 -block content
+  .panel.panel-default
+    .panel-heading Outil de création de questions
 
-  .left.column
-    %h2 Outil de création de questions
-    Subject
-    .subject_menu
-      %select
-        %option subject1
-        %option subject2
+    .panel-body
+      .left.column
+      Subject
+      .subject_menu
+        %select{:name => "subject"}
+          %option subject1
+          %option subject2
 
-    Assessment type
-    .assessment_menu
-      %select
-        %option assessment1
-        %option assessment2
-
-    Compétence
-    .skill_menu
-      %select
-        %option Probème arithmétique
-
-    %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
-      -csrf_token
-
-      Domaine
-      .domain_menu
+      Assessment type
+      .assessment_menu{:name => "assessment"}
         %select
-          %option Naturels
-          %option Entiers
-          %option Rationnels
+          %option assessment1
+          %option assessment2
 
-      Range
-      .range_menu
-        %input{:required => "", :type => "integer"}
-        to
-        %input{:required => "", :type => "integer"}
+      Compétence
+      .skill_menu{:skill => "skill"}
+        %select
+          %option Probème arithmétique
 
-        A
-        %input{:required => "", :type => "integer"}
-        B
-        %input{:required => "", :type => "integer"}
-        C
-        %input{:required => "", :type => "integer"}
+      %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
+        -csrf_token
+
+        Domaine
+        .domain_menu
+          %select{:name => "domain"}
+            %option Naturels
+            %option Entiers
+            %option Rationnels
+
+        Image
+        .image_menu
+          %select{:name => "image"}
+            %option Rationnels
+            %option Complexes
+
+        Range
+        .range_menu
+          From
+          %input{:name => "range_from"}
+          To
+          %input{:name => "range_to"}
         &nbsp
-      .submit-row
-        %label
+        .input_menu
+          A
+          %input{:required => "", :type => "integer", :name => "input_a"}
+          B
+          %input{:required => "", :type => "integer", :name => "input_b"}
+          C
+          %input{:required => "", :type => "integer", :name => "input_c"}
           &nbsp
-        %input.btn.btn-primary{type: "submit", value: "Créer"}
+        .submit-row
+          %label
+            &nbsp
+          %input.btn.btn-primary{type: "submit", value: "Créer"}
 
 

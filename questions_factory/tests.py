@@ -17,24 +17,24 @@ class ArithmeticExpectedBehaviour(TestCase):
     def test_solution_integer_rational_two_roots(self):
         val = [1, -3, 2]
         problem = create_problem("Integer", "Rational", val)
-        [x_1, x_2] = problem.getSol()
+        [x_1, x_2] = problem.get_sol()
         assert_that(2, equal_to(x_1))
         assert_that(1, equal_to(x_2))
 
     def test_val_integer_rational_problem(self):
         val = [1, -3, 2]
         problem = create_problem("Integer", "Rational", val)
-        assert_that([1, -3, 2], equal_to(problem.getVal()))
+        assert_that([1, -3, 2], equal_to(problem.get_val()))
 
     def test_solution_randomized_integer_complex(self):
         problem = create_problem("Integer", "Complex")
-        val = problem.getVal()
+        val = problem.get_val()
         ans = numpy.roots(val)
-        assert_that([round(ans.tolist())], contains(problem.getSol()))
+        assert_that([round(ans.tolist())], contains(problem.get_sol()))
 
     def test_solution_with_rational_range(self):
         problem = create_problem("Rational", "Rational", [1, 1, 20])
-        assert_that([[]], contains(problem.getSol()))
+        assert_that([[]], contains(problem.get_sol()))
 
 
 class UnexpectedBehaviour(TestCase):
