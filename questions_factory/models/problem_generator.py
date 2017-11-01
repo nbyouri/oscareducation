@@ -4,12 +4,11 @@ import json
 
 class Problem_generator:
 
-    def factory(json_path):
+    def factory(json_i):
         global problem, domain, range, values
-        with open(json_path) as json_file:
-            input = json.load(json_file)
+        input = json.loads(json_i)
         try:
-            problem= input.pop("problem")
+            problem = input["problem"]
             domain, range = input.pop("domain"), input.pop("range")
             values = input.pop("val", None)
         except:

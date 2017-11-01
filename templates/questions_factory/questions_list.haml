@@ -4,4 +4,8 @@
 
   .left.column
     %h2 liste des questions
-    {{ request.POST.image }}
+    {% for o in some_list %}
+      <div">
+        {% o[0]  : o[1] %}
+      </div>
+    {% endfor %}
