@@ -14,7 +14,6 @@ install:
 before_script:
   - "export DISPLAY=:99.0"
   - psql -c "CREATE USER oscar WITH PASSWORD 'oscar' CREATEDB;" -U postgres
-  - psql -c "ALTER USER oscar CREATEDB;" -U postgres
   - psql -c "CREATE DATABASE oscar OWNER oscar;" -U postgres
   - python manage.py makemigrations
   - chmod +x makemigrations.sh
@@ -22,7 +21,7 @@ before_script:
   - python manage.py migrate
 
 script:
+  # General Behaviour Testing
   - python manage.py behave
-  - python validate_exercices.py
-  # Following tests are useless and outdated
-  # - python manage.py test
+  # Targeted Unit Testing
+  - python manage.py test questions_factory
