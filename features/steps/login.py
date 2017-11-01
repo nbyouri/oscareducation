@@ -1,10 +1,11 @@
 from behave import given, when, then
+from django.contrib.auth.hashers import make_password
 
 
 @given('I am an existing non logged professor')
 def step_impl(context):
     from test.factories.user import ProfessorFactory
-    u = ProfessorFactory.create()
+    u = ProfessorFactory.create(user__username="username", user__password=make_password("password"))
     u.save()
 
 
