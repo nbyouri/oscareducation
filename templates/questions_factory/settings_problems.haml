@@ -16,32 +16,37 @@
         %option assessment1
         %option assessment2
 
-    Skill
+    Compétence
     .skill_menu
       %select
-        %option skill1
-        %option skill2
+        %option Probème arithmétique
 
-    Domain
-    .domain_menu
-      %select
-        %option Natural N
-        %option Integer Z
-        %option Rational Q
+    %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
+      -csrf_token
 
-    Range
-    .range_menu
-      %input{:required => "", :type => "integer"}
-      to
-      %input{:required => "", :type => "integer"}
+      Domaine
+      .domain_menu
+        %select
+          %option Naturels
+          %option Entiers
+          %option Rationnels
 
-    A
+      Range
+      .range_menu
+        %input{:required => "", :type => "integer"}
+        to
+        %input{:required => "", :type => "integer"}
 
-    %input{:required => "", :type => "integer"}
-    B
-    %input{:required => "", :type => "integer"}
-    C
-    %input{:required => "", :type => "integer"}
-
+        A
+        %input{:required => "", :type => "integer"}
+        B
+        %input{:required => "", :type => "integer"}
+        C
+        %input{:required => "", :type => "integer"}
+        &nbsp
+      .submit-row
+        %label
+          &nbsp
+        %input.btn.btn-primary{type: "submit", value: "Créer"}
 
 
