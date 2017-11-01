@@ -4,8 +4,8 @@ import numpy
 
 
 class Arithmetic_polynomial_second_degree(Problem_model):
-    def __init__(self, desc, domain, range, val=None):
-        Problem_model.__init__(self, desc, domain, range)
+    def __init__(self, domain, range, val=None):
+        Problem_model.__init__(self, "Polynomial second degree", domain, range)
         if val and len(val) == 3:
             self.val = val
         else:
