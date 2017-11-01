@@ -1412,7 +1412,12 @@ def exercice_validation_form_validate_exercice(request):
                 "type": question["type"],
                 "answers": question["answers"],
             }
-
+        elif question["type"] == "fill-table-blanks":
+            question[question["instructions"]] = {
+                "type": question["type"],
+                "table": question["table"],
+                "answers": question["answers"],
+            }
         else:
             answers = OrderedDict()
             for x in question["answers"]:
@@ -1527,6 +1532,12 @@ def exercice_validation_form_submit(request, pk=None):
             elif question["type"] == "fill-text-blanks":
                 new_question_answers = {
                     "type": question["type"],
+                    "answers": [x["answers"] for x in question["answers"]],
+                }
+            elif question["type"] == "fill-table-blanks":
+                new_question_answers = {
+                    "type": question["type"],
+                    "table": question["table"],
                     "answers": [x["answers"] for x in question["answers"]],
                 }
             elif question["type"].startswith("math"):
