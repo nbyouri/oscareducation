@@ -7,7 +7,6 @@ from hamcrest import *
 
 
 class NormalBehaviour(TestCase):
-
     def test_get_solution_integer_rational_problem(self):
         val = [1, -3, 2]
         problem = create_problem("Integer", "Rational", val)
@@ -30,6 +29,7 @@ class NormalBehaviour(TestCase):
         problem = create_problem("Rational", "Rational", [1, 1, 20])
         assert_that([[]], contains(problem.getSol()))
 
+
 # TODO: Test unexpected behavior
 
 
@@ -50,23 +50,24 @@ def read_json_file():
         return json_file
 
 
-def remove_json_file(path):
+def remove_json_file(file):
     try:
-        os.remove(path + 'json_tmp.txt')
+        os.remove(file)
     except:
         OSError("File doesn't exist")
 
 
-def create_problem(domain= "Integer", range="Rational", val= None):
-    json_path = 'json_tmp.txt'
-    remove_json_file(json_path)
+def create_problem(domain="Integer", range="Rational", val=None):
+    json_file = 'json_tmp.txt'
+    remove_json_file(json_file)
     dict = new_arithmetic_dict()
     dict["domain"] = domain
     dict["range"] = range
     if val:
         dict["val"] = val
-    write_json_file(dict, json_path)
-    problem = Problem_generator.factory(json_path)
+    write_json_file(dict, json_file)
+    problem = Problem_generator.factory(json_file)
+    remove_json_file(json_file)
     return problem
 
 
