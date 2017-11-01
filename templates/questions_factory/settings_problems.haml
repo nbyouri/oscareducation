@@ -1,0 +1,52 @@
+-extends "base.haml"
+
+-block content
+
+  .left.column
+    %h2 Outil de création de questions
+    Subject
+    .subject_menu
+      %select
+        %option subject1
+        %option subject2
+
+    Assessment type
+    .assessment_menu
+      %select
+        %option assessment1
+        %option assessment2
+
+    Compétence
+    .skill_menu
+      %select
+        %option Probème arithmétique
+
+    %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
+      -csrf_token
+
+      Domaine
+      .domain_menu
+        %select
+          %option Naturels
+          %option Entiers
+          %option Rationnels
+
+      Range
+      .range_menu
+        %input{:required => "", :type => "integer"}
+        to
+        %input{:required => "", :type => "integer"}
+
+        A
+        %input{:required => "", :type => "integer"}
+        B
+        %input{:required => "", :type => "integer"}
+        C
+        %input{:required => "", :type => "integer"}
+        &nbsp
+      .submit-row
+        %label
+          &nbsp
+        %input.btn.btn-primary{type: "submit", value: "Créer"}
+
+
