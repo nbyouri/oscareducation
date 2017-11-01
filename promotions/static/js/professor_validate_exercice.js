@@ -29,17 +29,14 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     $scope.parseFieldsInQuestion = function (topIndex, question) {
         elem = document.getElementById("blank-text");
         text = elem.value;
+        console.log(question);
         var numberBlank = text.match(/#\[/g).length;
-  		console.log("Found : "+numberBlank+" elements")
-        console.log("There is currently : "+question["answers"].length+" fields")
-        console.log(question)
-        for(i = question["answers"].length; i < numberBlank; i++){
+        for(var i = question["answers"].length; i < numberBlank; i++){
             question["answers"].push({
-                type:"text",
+                type:"text", //start as text by default
                 answers:[{
                   text:"",
-                  latex:"",
-                  type:"",
+                  latex:""
                 }]
             });
             $scope.renderMathquil(topIndex, i, question, 0);
@@ -57,8 +54,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         console.log(question);
         question["answers"][blankID-1].answers.push(
             {"text": "",
-             "latex": "",
-             "type": ""}
+             "latex": ""
+            }
         );
         $timeout(function() {
             console.log("b");

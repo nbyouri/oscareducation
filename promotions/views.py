@@ -1532,13 +1532,13 @@ def exercice_validation_form_submit(request, pk=None):
             elif question["type"] == "fill-text-blanks":
                 new_question_answers = {
                     "type": question["type"],
-                    "answers": [x["answers"] for x in question["answers"]],
+                    "answers": [x for x in question["answers"]],
                 }
             elif question["type"] == "fill-table-blanks":
                 new_question_answers = {
                     "type": question["type"],
                     "table": question["table"],
-                    "answers": [x["answers"] for x in question["answers"]],
+                    "answers": [x for x in question["answers"]],
                 }
             elif question["type"].startswith("math"):
                 new_question_answers = {
