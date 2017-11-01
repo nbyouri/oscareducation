@@ -2,7 +2,7 @@ import abc
 
 
 class Problem_model:
-    def __init__(self, desc, domain, range):
+    def __init__(self, desc, domain, range, val=None):
         self.desc = desc
         self.domain = domain
         self.range = range

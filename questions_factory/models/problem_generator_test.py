@@ -4,7 +4,7 @@ import numpy
 
 import os
 from hamcrest import *
-from Problem_Generator import *
+from problem_generator import *
 
 
 class MyTestCase(unittest.TestCase):
@@ -31,7 +31,7 @@ class MyTestCase(unittest.TestCase):
         problem = create_problem("Rational", "Rational", [1, 1, 20])
         assert_that([[]], contains(problem.getSol()))
 
-
+ #TODO Test unexpected behavior
 
 ########UTILS#######
 def new_arithmetic_dict():

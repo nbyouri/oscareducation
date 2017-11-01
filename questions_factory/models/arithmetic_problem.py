@@ -1,4 +1,4 @@
-from Problem_Model import *
+from problem_model import *
 import random
 import numpy
 
