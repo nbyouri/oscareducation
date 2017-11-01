@@ -11,5 +11,5 @@ from django.db.models import Q
 def generator(request):
     # GET
     if request.method == "GET":
-        return render(request, "questions_factory/generator.haml")
+        return render(request, "questions_factory/settings_problems.haml")
     raise PermissionDenied()
