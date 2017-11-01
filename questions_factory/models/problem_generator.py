@@ -1,4 +1,4 @@
-from Arithmetic_Problem import *
+from arithmetic_problem import *
 import json
 
 
