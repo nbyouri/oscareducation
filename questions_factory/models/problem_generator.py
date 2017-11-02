@@ -3,19 +3,16 @@ import json
 
 
 class Problem_generator:
-
     def factory(json_i):
-        global problem, domain, range, values
+        global problem, domain, image, range, values
         input = json.loads(json_i)
-        try:
-            problem = input["problem"]
-            domain, range = input.pop("domain"), input.pop("range")
-            values = input.pop("val", None)
-        except:
-            KeyError()
+        problem = input["problem"]
+        domain, range, image = input.pop("domain"), input.pop("range"), input.pop("image")
+        values = input.pop("val", None)
 
         if problem == "Arithmetic_Polynomial_Second_degree":
-            return Arithmetic_polynomial_second_degree(domain, range, values)
+            return Arithmetic_polynomial_second_degree(domain, image, range, values)
         else:
             raise ValueError
+
     factory = staticmethod(factory)

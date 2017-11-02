@@ -31,15 +31,15 @@
         Domaine
         .domain_menu
           %select{:name => "domain"}
-            %option Naturels
-            %option Entiers
-            %option Rationnels
+            %option{:value => "Natural"} Naturels
+            %option{:value => "Integer"} Entiers
+            %option{:value => "Rational"} Rationnels
 
         Image
         .image_menu
           %select{:name => "image"}
-            %option Rationnels
-            %option Complexes
+            %option{:value => "Rational"} Rationnels
+            %option{:value => "Complex"} Complexes
 
         Range
         .range_menu
@@ -50,11 +50,11 @@
         &nbsp
         .input_menu
           A
-          %input{:required => "", :type => "integer", :name => "input_a"}
+          %input{:type => "integer", :name => "input_a"}
           B
-          %input{:required => "", :type => "integer", :name => "input_b"}
+          %input{:type => "integer", :name => "input_b"}
           C
-          %input{:required => "", :type => "integer", :name => "input_c"}
+          %input{:type => "integer", :name => "input_c"}
           &nbsp
         .submit-row
           %label
