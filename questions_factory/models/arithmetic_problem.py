@@ -62,6 +62,9 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def gen_questions(self, number_of_questions):
         questions = list()
         for _ in range(number_of_questions):
+            # We only want problems having a solution
+            while not self.get_sol():
+                self.gen_new_values()
             questions.append((self.get_val(), self.get_sol()))
             self.gen_new_values()
         return questions
