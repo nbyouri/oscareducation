@@ -225,28 +225,31 @@ class Question(models.Model):
         elif evaluation_type == "fill-text-blanks":
             ok = 1
             print("response", response)
+            num_rep = 0
             for num in response:
                 for res in response[num]["response_blank"]:
-                    print("on est la ",res)
-                    res_blank = res#["response_blank"]
+                    res_blank = res
 
-                    # if isinstance(res_blank["text"], (int, float)):
-                    #     res_blank["text"] = str(res_blank["text"])
+                    print(num_rep)
+                    print("he!!!!!!!!!", raw_correct_answers["answers"][num_rep]["answers"])
                     correct_answers = []
                     correct_answers.append([unicode(x["text"]).lower().strip().replace(" ", "").encode('UTF-8')
-                                       for x in raw_correct_answers["answers"][num]])
-                    correct_answers.append([unicode(x["type"]).lower().strip().replace(" ", "").encode('UTF-8')
-                                       for x in raw_correct_answers["answers"][num]])
+                                       for x in raw_correct_answers["answers"][num_rep]["answers"]])
                     correct_answers.append([unicode(x["latex"]).lower().strip().replace(" ", "").encode('UTF-8')
-                                       for x in raw_correct_answers["answers"][num]])
-
+                                       for x in raw_correct_answers["answers"][num_rep]["answers"]])
                     res_blank = res_blank.strip().replace(" ", "").lower().encode("Utf-8") if isinstance(res_blank,
                                                                                                    basestring) else res_blank
-                    if res_blank in [x for x in correct_answers[0]] or res_blank in [x for x in correct_answers[1]] or res_blank in [x for x in correct_answers[2]]:
+
+                    print("CORENTIN", correct_answers)
+                    print("SEBASTIEN", res_blank)
+
+                    if res_blank in [x for x in correct_answers[0]] or res_blank in [x for x in correct_answers[1]]:
                         response[num]["correct_blank"] = 1
                     else:
                         response[num]["correct_blank"] = 0
                         ok = 0
+                num_rep += 1
+
             return ok
         # No automatic correction type found, not corrected by default
         else:
