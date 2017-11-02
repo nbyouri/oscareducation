@@ -1,3 +1,4 @@
+# coding=utf-8
 from problem_model import *
 import random
 import numpy
@@ -8,6 +9,8 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         Problem_model.__init__(self, "Polynomial second degree", domain, image, range)
         if val and len(val) == 3:
             self.val = val
+        elif image == "Integer":
+            self.gen_values_from_sol()
         else:
             self.gen_new_values()
 
@@ -28,6 +31,15 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         else:
             raise ValueError("Wrong value for domain: ", self.domain)
 
+    def gen_values_from_sol(self):
+        sol = [random.randint(-20, 20), random.randint(-20, 20)]
+        sum, prod = sol[0] + sol[1], sol[0] * sol[1]
+        # For polynom of type ax²+bx+c
+        a = random.randint(-20, 20)
+        b = -1*sum*a
+        c = prod*a
+        self.val = [a, b, c]
+
     def get_desc(self):
         return self.desc
 
@@ -47,7 +59,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     def get_sol(self):
         tmp_sol = numpy.roots(self.val).tolist()
         sol = list()
-        if self.image == "Rational":
+        if self.image == "Rational" or self.image == "Integer":
             sol = list()
             for root in tmp_sol:
                 if not isinstance(root, complex):
