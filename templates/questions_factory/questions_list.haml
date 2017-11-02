@@ -5,8 +5,9 @@
     .panel-heading Questions générées
 
     .panel-body
-      .left.column
-        %h2 liste des questions
-        -for o in questions
-          .div
+      %h2 Choissisez les questions que vous voulez garder
+      -for o in questions
+        .question{:class => "checkbox"}
+          %label
+            %input{:type => "checkbox", :value => "IDHERE"}
             =o
