@@ -9,8 +9,6 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         Problem_model.__init__(self, "Polynomial second degree", domain, image, range)
         if val and len(val) == 3:
             self.val = val
-        elif image == "Integer":
-            self.gen_values_from_sol()
         else:
             self.gen_new_values()
 
@@ -19,7 +17,9 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         self.gen_values()
 
     def gen_values(self):
-        if self.domain == "Natural":
+        if self.image == "Integer":
+            self.gen_values_from_sol()
+        elif self.domain == "Natural":
             for i in range(3):
                 self.val.append(random.randint(self.range[0], self.range[1]))  # TODO What range should we put ?
         elif self.domain == "Integer":
@@ -32,10 +32,12 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             raise ValueError("Wrong value for domain: ", self.domain)
 
     def gen_values_from_sol(self):
-        sol = [random.randint(-20, 20), random.randint(-20, 20)]
+        # Max_val for value is rng_range³
+        # TODO What range should we put ?
+        sol = [random.randint(-5, 5), random.randint(-5, 5)]
         sum, prod = sol[0] + sol[1], sol[0] * sol[1]
         # For polynom of type ax²+bx+c
-        a = random.randint(-20, 20)
+        a = random.randint(-5, 5)
         b = -1*sum*a
         c = prod*a
         self.val = [a, b, c]
