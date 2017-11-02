@@ -2,6 +2,8 @@
 from problem_model import *
 import random
 import numpy
+from examinations.models import *
+from collections import OrderedDict
 
 
 class Arithmetic_polynomial_second_degree(Problem_model):
@@ -38,8 +40,8 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         sum, prod = sol[0] + sol[1], sol[0] * sol[1]
         # For polynom of type ax²+bx+c
         a = random.randint(-5, 5)
-        b = -1*sum*a
-        c = prod*a
+        b = -1 * sum * a
+        c = prod * a
         self.val = [a, b, c]
 
     def get_desc(self):
@@ -73,12 +75,21 @@ class Arithmetic_polynomial_second_degree(Problem_model):
 
         return self.round(sol)
 
+    def new_question(self, sol):
+        if self.domain == "Integer" or "Natural":
+            question_desc = ("Calculer les racines de: %dx²+%dx+%d = 0" % tuple(self.val))
+        elif self.domain == "Rational":
+            question_desc = ("Calculer les racines de: %0.2fx²+%0.2fx+%0.2f = 0" % tuple(self.val))
+        answers = yaml.dump(OrderedDict([("answer", [tuple(sol)]), ("type", "text")]))
+        question = Question(description=question_desc, answer=answers, source="Géneré automatiquement")
+        return question
+
     def gen_questions(self, number_of_questions):
         questions = list()
         for _ in range(number_of_questions):
             # We only want problems having a solution
             while not self.get_sol():
                 self.gen_new_values()
-            questions.append((self.get_val(), self.get_sol()))
+            questions.append((self.new_question(self.get_sol())))  # TODO Change for new_exercice
             self.gen_new_values()
         return questions
