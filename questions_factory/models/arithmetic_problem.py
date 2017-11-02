@@ -80,7 +80,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             question_desc = ("Calculer les racines de: %dx²+%dx+%d = 0" % tuple(self.val))
         elif self.domain == "Rational":
             question_desc = ("Calculer les racines de: %0.2fx²+%0.2fx+%0.2f = 0" % tuple(self.val))
-        answers = yaml.dump(OrderedDict([("answer", [tuple(sol)]), ("type", "text")]))
+        answers = yaml.dump(OrderedDict([("answers", [tuple(sol)]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Géneré automatiquement")
         return question
 
