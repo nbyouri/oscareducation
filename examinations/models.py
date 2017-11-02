@@ -224,14 +224,11 @@ class Question(models.Model):
 
         elif evaluation_type == "fill-text-blanks":
             ok = 1
-            print("response", response)
             num_rep = 0
             for num in response:
                 for res in response[num]["response_blank"]:
                     res_blank = res
 
-                    print(num_rep)
-                    print("he!!!!!!!!!", raw_correct_answers["answers"][num_rep]["answers"])
                     correct_answers = []
                     correct_answers.append([unicode(x["text"]).lower().strip().replace(" ", "").encode('UTF-8')
                                        for x in raw_correct_answers["answers"][num_rep]["answers"]])
@@ -239,11 +236,7 @@ class Question(models.Model):
                                        for x in raw_correct_answers["answers"][num_rep]["answers"]])
                     res_blank = res_blank.strip().replace(" ", "").lower().encode("Utf-8") if isinstance(res_blank,
                                                                                                    basestring) else res_blank
-
-                    print("CORENTIN", correct_answers)
-                    print("SEBASTIEN", res_blank)
-
-                    if res_blank in [x for x in correct_answers[0]] or res_blank in [x for x in correct_answers[1]]:
+                    if res_blank != "" and (res_blank in [x for x in correct_answers[0]] or res_blank in [x for x in correct_answers[1]]):
                         response[num]["correct_blank"] = 1
                     else:
                         response[num]["correct_blank"] = 0
