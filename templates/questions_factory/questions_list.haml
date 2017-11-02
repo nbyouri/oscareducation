@@ -1,9 +1,12 @@
 -extends "base.haml"
 
 -block content
+  .panel.panel-default
+    .panel-heading Questions générées
 
-  .left.column
-    %h2 liste des questions
-    -for o in questions
-      .div
-        =o
+    .panel-body
+      .left.column
+        %h2 liste des questions
+        -for o in questions
+          .div
+            =o
