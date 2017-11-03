@@ -7,7 +7,10 @@
     .panel-heading Outil de création de questions
     -if form.errors
       .alert.alert-danger
-        Le nom d'utilisateur ou le mot de passe saisi est incorrect.
+        - for field in form
+          - if field.errors
+            = field.label_tag
+            = field.errors
 
     .panel-body
       .left.column
@@ -26,7 +29,7 @@
       Compétence
       .skill_menu{:skill => "skill"}
         %select
-          %option Probème arithmétique
+          %option Problème arithmétique
 
       %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
         -csrf_token
