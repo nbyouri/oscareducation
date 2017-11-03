@@ -5,6 +5,9 @@
 -block content
   .panel.panel-default
     .panel-heading Outil de création de questions
+    -if form.errors
+      .alert.alert-danger
+        Le nom d'utilisateur ou le mot de passe saisi est incorrect.
 
     .panel-body
       .left.column

@@ -1,6 +1,13 @@
 from problem_model import *
+from problem_form import ProblemForm
 import random
 import numpy
+from django import forms
+
+
+class ArithmeticProblemForm(ProblemForm):
+    def __init__(self):
+        super(ArithmeticProblemForm, self).__init__()
 
 
 class Arithmetic_polynomial_second_degree(Problem_model):
