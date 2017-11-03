@@ -169,13 +169,9 @@
                                         %table.answers-table
                                           %tr
                                             %td.right-border{width: "50%"}
-                                              -with i=forloop.counter0
-                                                -if i == 0
-                                                  =student_answer.0.response_blank.0
-                                                -elif i == 1
-                                                  =student_answer.1.response_blank.0
-                                                -else
-                                                  =student_answer.1.response_blank.0
+                                              -for stu_ans in answer.get_blank_answers
+                                                -if stu_ans.0 == ans.3
+                                                  =stu_ans.1.0
                                             %td{width: "50%", display: "block"}
                                               -for answ in ans.2
                                                   %ul

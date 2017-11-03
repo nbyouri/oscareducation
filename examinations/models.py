@@ -106,10 +106,17 @@ class Question(models.Model):
         return yaml_answer["answers"]
 
     def get_text_blanks(self):
+        """Get a list of the texts separated by blanks except the last text"""
         temp = re.split(r'#\[\d\]#',self.description)
         return temp[0:len(temp)-1]
 
+    def get_last_text_blanks(self):
+        """Get the text after the last blank"""
+        temp = re.split(r'#\[\d\]#',self.description)
+        return temp[len(temp)-1]
+
     def get_ans_blanks(self):
+        """Get a list of [the text before the blank, the type of answer, the possible correct answers, the index of blank]"""
         tab = []
         temp = self.get_text_blanks()
         answer = self.get_answer()['answers']
@@ -122,15 +129,9 @@ class Question(models.Model):
                     t.append(ans['text'])
                 else:
                     t.append(ans['latex'])
-            tab.append([temp[i],answers['type'],t])
+            tab.append([temp[i],answers['type'],t,i])
             i+=1
-        print(tab)
-        print(temp)
         return tab
-
-    def get_last_text_blanks(self):
-        temp = re.split(r'#\[\d\]#',self.description)
-        return temp[len(temp)-1]
 
     def get_answers_extracted(self):
         return self.get_answers().items()
@@ -384,6 +385,14 @@ class Answer(models.Model):
         """Get the list of answers"""
         return json.loads(self.raw_answer)[0]
 
+    def get_blank_answers(self):
+        """Get the list of student answers associated with the index number [[index,student_answer]]"""
+        tab = []
+
+        answers = self.get_answers()[str(0)]["response"]
+        for i in range(0,len(answers)):
+            tab.append([i,answers[str(i)]["response_blank"]])
+        return tab
 
 class TestStudent(models.Model):
     """A student test
