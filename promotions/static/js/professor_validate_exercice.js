@@ -36,7 +36,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     $scope.parseFieldsInQuestion = function (topIndex, question) {
         elem = document.getElementById("blank-text");
         text = elem.value;
-        console.log(question);
+        //console.log(question);
         var numberBlank = text.match(/#\[/g).length;
         for(var i = question["answers"].length; i < numberBlank; i++){
             question["answers"].push({
@@ -58,16 +58,14 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     };
 
     $scope.addBlankAnswer = function (topIndex, question, blankID) {
-        console.log(question);
         question["answers"][blankID-1].answers.push(
             {"text": "",
              "latex": ""
             }
         );
         $timeout(function() {
-            console.log("b");
-            console.log("blank id"+blankID);
-            console.log("question subanswer length : "+question.answers[0].answers.length);
+            //console.log("blank id"+blankID);
+            //console.log("question subanswer length : "+question.answers[0].answers.length);
 
             $scope.renderMathquil(topIndex, blankID - 1, question, question.answers[blankID-1].answers.length - 1);
         }, 100);
@@ -206,7 +204,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 }
 
                 $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-success">L\'exercice a correctement été soumis, merci !<br />Vous pouvez le voir <a href="' + data.url + '" target="_blank">ici</a>.</div>');
-                console.log(data);
+                //console.log(data);
 
                 $scope.yaml = "";
                 $scope.html = "";
@@ -231,11 +229,11 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 }]
             })
             .error(function() {
-                console.log($scope.questions);
+                //console.log($scope.questions);
                 $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger">Une erreur s\'est produite, nous en avons été alerté.</div>');
             })
             .finally(function() {
-                console.log($scope.questions);
+                //console.log($scope.questions);
                 $timeout(function() {
                     $("#submit-pull-request").removeClass("disabled");
                 }, 0);
@@ -245,7 +243,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     $scope.onChangeQuestionType = function(topIndex, question) {
         if (question.type.startsWith("math") || question.type.startsWith("fill")) {
             $timeout(function() {
-                console.log("c");
                 for (var i = 0; i < question.answers.length; ++i)
                     $scope.renderMathquil(topIndex, i, question)
             }, 100);
@@ -260,8 +257,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 $scope.renderMathquil(topIndex, 0, question, 0);
             }, 100);
         }
-        console.log("question :");
-        console.log(question);
+        //console.log("question :");
+        //console.log(question);
     };
 
     $scope.onChangeRadio = function(question, answer) {
@@ -298,7 +295,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
         if (question.type.startsWith("math")) {
             $timeout(function() {
-                console.log("b");
                 $scope.renderMathquil(topIndex, question.answers.length - 1, question);
             }, 100);
         }
@@ -344,13 +340,19 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             $scope.html = data.html;
             $scope.yaml = data.yaml;
             $scope.questions = data.questions;
-
+            for(var i = 0; i < $scope.questions.length; i++){ //Iterate trough
+                for(var j = 0; j < $scope.questions[i].answers.length; j++){
+                    if($scope.questions[i].type == "fill-text-blanks") { //Replace incorrect field if question fill-in
+                        $scope.questions[i].answers[i] = $scope.questions[i].answers[i].text;
+                    }
+                }
+            }
             // TODO yamlRendering/htmlRendering et image
             $timeout(function() {
                 for (var i = 0; i < $scope.questions.length; ++i) {
                     if ($scope.questions[i].type.startsWith("math") || $scope.questions[i].type.startsWith("fill")) {
-                        console.log("a");
-                        console.log($scope.questions[i])
+                        //console.log("a");
+                        //console.log($scope.questions[i])
                         for (var j = 0; j < $scope.questions[i].answers.length; ++ j) {
                             $scope.renderMathquil(i, j, $scope.questions[i])
                         }
@@ -361,9 +363,9 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     };
 
     $scope.renderMathquil = function(topIndex, answerIndex, question, subAnswerIndex=-1) {
-        console.log("topIndex: " + topIndex);
+        /*console.log("topIndex: " + topIndex);
         console.log("answerIndex: " + answerIndex);
-        console.log("subAnswer: "+ subAnswerIndex);
+        console.log("subAnswer: "+ subAnswerIndex);*/
         if (answerIndex != null) {
             if(subAnswerIndex < 0){
               query = $(".mathquill-" + topIndex + "-" + answerIndex);
@@ -372,31 +374,30 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             }
         } else {
             query = $(".mathquill-" + topIndex);
-            console.log("question type :"+question.type);
+            //console.log("question type :"+question.type);
             if(question.type.startsWith("fill")){
-              consol.log("initiating mathquill question field")
+              //console.log("initiating mathquill question field")
               query = $(".mathquill-" + topIndex + "-0");
             }
         }
-        console.log("query :"+query);
         renderMathquil(query, function(MQ, index, mq) {
             var mathquill = MQ.MathField(mq, {
                 handlers: {
                     edit: function() {
-                        console.log("======> " + answerIndex);
+                        //console.log("======> " + answerIndex);
                         if(subAnswerIndex >= 0){
                           question.answers[answerIndex].answers[subAnswerIndex].latex = mathquill.latex();
                         }
                         else{
                           question.answers[answerIndex].latex = mathquill.latex();
                         }
-                        console.log(question.answers[answerIndex].latex);
-                        console.log($scope.questions);
+                        //console.log(question.answers[answerIndex].latex);
+                        //console.log($scope.questions);
                     }
                 }
             });
 
-            console.log(question.answers);
+            //console.log(question.answers);
             if (subAnswerIndex < 0 && question.answers[answerIndex].text) {
                 mathquill.latex(question.answers[answerIndex].text);
             }
