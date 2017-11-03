@@ -55,3 +55,14 @@ def test_render_always_lower_case():
     a, a2 = render("{a} {A}", {"a": 1}).split(" ")
 
     assert a == a2
+
+
+# evaluate
+"""
+class evaluate(TestCase):
+    def setUp(self)
+
+#
+
+#
+"""
