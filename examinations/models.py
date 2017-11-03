@@ -310,15 +310,29 @@ class Answer(models.Model):
         questions_with_answers = list()
         index = 0
         for question in self.test_exercice.exercice.get_questions():
+            student_answers = self.get_answers()[str(index)].get("response")
+
+            if question.get_type() == "fill-text-blanks":
+                student_answers = self.get_blanks_answers(student_answers, index)
+
             questions_with_answers.append(
                 [index,
                  question,
                  question.get_type(),
-                 self.get_answers()[str(index)].get("response"),
+                 student_answers,
                  self.get_answers()[str(index)].get("correct")
                  ])
             index += 1
         return questions_with_answers
+
+    def get_blanks_answers(self, student_answers, index):
+        """Get the list of student answers associated with the index number [[index,student_answer]]"""
+        tab = []
+        print(student_answers)
+        for i in range(index,index+len(student_answers)):
+            tab.append([i-index,student_answers[str(i)]["response_blank"]])
+        print tab
+        return tab
 
     def contains_professor_not_assessed(self):
         """Does the Answer contain a response that need to be assessed by a Professor?
@@ -385,14 +399,6 @@ class Answer(models.Model):
         """Get the list of answers"""
         return json.loads(self.raw_answer)[0]
 
-    def get_blank_answers(self):
-        """Get the list of student answers associated with the index number [[index,student_answer]]"""
-        tab = []
-
-        answers = self.get_answers()[str(0)]["response"]
-        for i in range(0,len(answers)):
-            tab.append([i,answers[str(i)]["response_blank"]])
-        return tab
 
 class TestStudent(models.Model):
     """A student test
