@@ -11,6 +11,7 @@ import yaml
 import yamlordereddictloader
 import json
 import re
+import collections
 
 
 class Context(models.Model):
@@ -103,6 +104,33 @@ class Question(models.Model):
         """Get the correct answers of this Question"""
         yaml_answer = self.get_answer()
         return yaml_answer["answers"]
+
+    def get_text_blanks(self):
+        temp = re.split(r'#\[\d\]#',self.description)
+        return temp[0:len(temp)-1]
+
+    def get_ans_blanks(self):
+        tab = []
+        temp = self.get_text_blanks()
+        answer = self.get_answer()['answers']
+
+        i=0
+        for answers in answer:
+            t = []
+            for ans in answers['answers']:
+                if answers['type'] == 'text':
+                    t.append(ans['text'])
+                else:
+                    t.append(ans['latex'])
+            tab.append([temp[i],answers['type'],t])
+            i+=1
+        print(tab)
+        print(temp)
+        return tab
+
+    def get_last_text_blanks(self):
+        temp = re.split(r'#\[\d\]#',self.description)
+        return temp[len(temp)-1]
 
     def get_answers_extracted(self):
         return self.get_answers().items()

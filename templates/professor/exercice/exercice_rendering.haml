@@ -36,10 +36,11 @@
             %input.hidden{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y"}
       -elif question.type == "professor"
         %i A corriger par le professeur
-      -elif answer.type == "fill-text-blanks"
-        profExerciceExerciceRendering
-        =question.text
-        %input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
+      -elif question.type == "fill-text-blanks"
+        -for text in question.get_text_blanks
+          =text
+          %input{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off", disabled:"disabled"}
+        =question.get_last_text_blanks
       -else
         ="test"
 

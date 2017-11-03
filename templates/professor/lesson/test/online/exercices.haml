@@ -150,8 +150,7 @@
                     .well.question-indication
                       =question.indication|safe
 
-                  -with answer=question.get_answer
-                    -include "professor/exercice/exercice_with_answers_rendering.haml"
+                  -include "professor/exercice/exercice_with_answers_rendering.haml"
 
               -else
                 %p

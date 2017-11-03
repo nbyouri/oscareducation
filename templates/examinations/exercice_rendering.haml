@@ -5,8 +5,9 @@
 		-csrf_token
 		-for question in questions
 			-if question.description
-				.well.question-description
-					=question.description|safe|encode_utf8
+				-if question.get_answer.type != "fill-text-blanks"
+					.well.question-description
+						=question.description|safe|encode_utf8
 			-else
 				-# Should never reach this error
 				%div.alert.alert-danger
@@ -44,17 +45,12 @@
 						%input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
 						-#%textarea.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", rows: "5"}
 					-elif answer.type == "fill-text-blanks"
-						examinationExerciceRendering
 						%br
-						=question.text
-
-						-with i=0
-						-for ans in answer.answers
-							="la réponse est : "
-							=ans
-							%br
-							=i
-							%input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
+						.well.question-description
+							-for text in question.get_text_blanks
+								=text
+								%input{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
+							=question.get_last_text_blanks
 					-else
 						=answer.type
 
