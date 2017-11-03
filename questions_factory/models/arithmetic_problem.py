@@ -1,6 +1,6 @@
 # coding=utf-8
 from problem_model import *
-from problem_form import ProblemForm
+from problem_form import ArithmeticForm
 import random
 import numpy
 from examinations.models import *
@@ -82,7 +82,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         elif self.domain == "Rational":
             question_desc = ("Calculer les racines de: %0.2fx²+%0.2fx+%0.2f = 0" % tuple(self.val))
         answers = yaml.dump(OrderedDict([("answers", [tuple(sol)]), ("type", "text")]))
-        question = Question(description=question_desc, answer=answers, source="Géneré automatiquement")
+        question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
 
     def gen_questions(self, number_of_questions):
@@ -94,3 +94,7 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             questions.append((self.new_question(self.get_sol())))  # TODO Change for new_exercice
             self.gen_new_values()
         return questions
+
+    @staticmethod
+    def make_form(post_values):
+        return ArithmeticForm(post_values)
