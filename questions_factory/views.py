@@ -4,13 +4,14 @@ import json
 
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-
 from models.problem_generator import Problem_generator
+from models.problem_form import ArithmeticForm
 
 
 def generator(request):
     if request.method == "GET":
-        return render(request, "questions_factory/settings_problems.haml")
+        form = ArithmeticForm()
+        return render(request, "questions_factory/settings_problems.haml", {'form': form})
     if request.method == "POST":
         # TODO Verify data send in POST
         dom = request.POST['domain']

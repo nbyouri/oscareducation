@@ -5,8 +5,38 @@
     .panel-heading Questions générées
 
     .panel-body
-      .left.column
-        %h2 liste des questions
-        -for o in questions
-          .div
-            =o
+      %h2 Choissisez les questions que vous voulez garder
+      -for question in questions
+        .panel.panel-success
+          .panel-heading
+            Question généré
+          .panel-body
+            -if question.description
+              .well.question-description
+                =question.description|safe
+            -if question.source
+              %p
+                %b Source(s) :
+              .well.questions-source
+                =question.source|safe
+            -with answer=question.get_answer
+              -include "professor/exercice/exercice_with_answers_rendering.haml"
+
+
+      -#%form{method: "POST"}
+        -csrf_token
+        %input{type: "submit", value: question}
+        %button.btn.btn-primary{type: "submit"}
+          Choisir cet exercice
+
+-block javascript
+  :javascript
+    $(function() {
+      {% for exercice in test_exercice.skill.exercice_set.all %}
+      {% for _, question in exercice.get_questions.items %}
+      {% if question.type == "graph" %}
+      new Graph('graph-' + {{ forloop.counter0 }})
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+    });

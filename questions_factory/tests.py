@@ -33,6 +33,10 @@ class NormalBehaviour(TestCase):
         problem = create_problem("Rational", "Rational", [1, 1, 20])
         assert_that([[]], contains(problem.get_sol()))
 
+    @staticmethod
+    def test_get_value_with_integer_solution():
+        problem = create_problem("Rational", "Integer")
+        assert_that(problem.get_val(), only_contains(instance_of(int)))
 
 class UnexpectedBehaviour(TestCase):
     def test_wrongvalues_integer_rational(self):

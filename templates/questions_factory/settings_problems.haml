@@ -5,6 +5,9 @@
 -block content
   .panel.panel-default
     .panel-heading Outil de création de questions
+    -if form.errors
+      .alert.alert-danger
+        Le nom d'utilisateur ou le mot de passe saisi est incorrect.
 
     .panel-body
       .left.column
@@ -28,34 +31,19 @@
       %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
         -csrf_token
 
-        Domaine
-        .domain_menu
-          %select{:name => "domain"}
-            %option{:value => "Natural"} Naturels
-            %option{:value => "Integer"} Entiers
-            %option{:value => "Rational"} Rationnels
-
-        Image
-        .image_menu
-          %select{:name => "image"}
-            %option{:value => "Rational"} Rationnels
-            %option{:value => "Complex"} Complexes
-
-        Range
-        .range_menu
-          From
-          %input{:name => "range_from"}
-          To
-          %input{:name => "range_to"}
-        &nbsp
-        .input_menu
-          A
-          %input{:type => "integer", :name => "input_a"}
-          B
-          %input{:type => "integer", :name => "input_b"}
-          C
-          %input{:type => "integer", :name => "input_c"}
-          &nbsp
+        -for field in form
+          =field.label_tag
+          =field
+          %br/
+        -# Not needed now
+          .input_menu
+            A
+            %input{:type => "integer", :name => "input_a"}
+            B
+            %input{:type => "integer", :name => "input_b"}
+            C
+            %input{:type => "integer", :name => "input_c"}
+            &nbsp
         .submit-row
           %label
             &nbsp
