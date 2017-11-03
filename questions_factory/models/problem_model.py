@@ -21,3 +21,7 @@ class Problem_model:
     @abc.abstractmethod
     def gen_values(self):
         """Generate new random values for the problem"""
+
+    @abc.abstractmethod
+    def make_form(self):
+        """Generate the associated form"""
