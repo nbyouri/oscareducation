@@ -1,5 +1,5 @@
 from generation import needs_to_be_generated, get_variable_list, render
-
+from django.test import TestCase,Client
 
 class IntInRange():
     def __eq__(self, a):
@@ -58,11 +58,15 @@ def test_render_always_lower_case():
 
 
 # evaluate
-"""
-class evaluate(TestCase):
+
+class evaluateTest(TestCase):
+    def setUp(self):
+
+# get_answers
+
+class answersTest(TestCase):
     def setUp(self)
+# getOccurence
 
-#
-
-#
-"""
+class getOccurenceTest(TestCase):
+    def setUp(self):

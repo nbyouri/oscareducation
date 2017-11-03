@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase,Client
 
 
 
@@ -13,10 +13,8 @@ from django.test import TestCase
 """
 # pass tests
 
-class passTestsTest(TestCast):
-    def setUp(self):
-        #self.s = Client()
-        #request = {}
+class passTestsTest(TestCase):
+    d
 
     # We test to access to a test but without logging, the server shall forbid us and send us a 404 error.
     # We take the id of a test already created, 21, in our case.
@@ -50,11 +48,12 @@ class passTestsTest(TestCast):
     def testRender(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
+        response = c.get("/student/test/28")
         self.assertTemplateUsed(response,"examinations/take_exercice.haml")
 
 
 # skill pedagogic
-
+"""
 class skillPedagogicTest(TestCase):
     def setUp(self):
         self.s = Client()
@@ -78,3 +77,6 @@ class skillPedagogicTest(TestCase):
         response = self.c.get('/pedagogical/skill/S13aI/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'professor/skill/update_pedagogical_resources.haml')
+
+
+"""
