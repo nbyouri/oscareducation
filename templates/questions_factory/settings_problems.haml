@@ -6,7 +6,7 @@
   .panel.panel-default
     .panel-heading Outil de création de questions
     -if form.errors
-      .alert.alert-danger
+      .alert.alert-danger{:id => "id_error_panel"}
         - for field in form
           - if field.errors
             = field.label_tag
