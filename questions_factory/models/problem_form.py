@@ -19,10 +19,11 @@ class ArithmeticForm(ProblemForm):
         range_from = cleaned_data.get("range_from")
         range_to = cleaned_data.get("range_to")
 
-        if range_from and range_to:
+        # Checking instance to avoid problem with 0 values
+        if isinstance(range_from, float) and isinstance(range_to, float):
             if range_from >= range_to:
                 msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
                 self.add_error('range_from', msg)
-            if range_to - range_from < 5:
+            if (range_to - range_from) < 5:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 5"
                 self.add_error('range_from', msg)
