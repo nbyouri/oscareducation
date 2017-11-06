@@ -30,9 +30,32 @@
             %button.btn-primary{type: "submit"}
               Choisir cet exercice
 
+
+      %h3
+        Revenir au test
+        .panel-body
+        %form{method: "GET", action: ""}
+          -csrf_token
+          %button.bg-primary{type: "submit"}
+            Revenir au test
+
 -block javascript
   :javascript
+
     $(function() {
+      $('form').submit(function(){
+        var form = $(this)
+        $.ajax({
+          type: 'post',
+          url: 'submit/',
+          data: $(this).serialize(),
+          success: function (data) {
+            console.log(data.msg);
+            form.hide()
+          }
+        });
+        return false;
+      });
       {% for exercice in test_exercice.skill.exercice_set.all %}
       {% for _, question in exercice.get_questions.items %}
       {% if question.type == "graph" %}

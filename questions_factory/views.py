@@ -11,7 +11,7 @@ from models.problem_form import ArithmeticForm
 from examinations.models import Test, Answer, TestExercice, TestStudent, Context, List_question
 from django.http import HttpResponse, HttpResponseRedirect
 from promotions.utils import user_is_professor
-
+from django.http import JsonResponse
 
 @user_is_professor
 def generator(request, test_exercice_pk):
@@ -45,6 +45,5 @@ def generator_submit(request, test_exercice_pk):
                 context_id=test_exercice.exercice.id,
                 question_id=question_id,
             )
-        # TODO Find a good redirect
-        return HttpResponse("Question Créer <br\>"
-                            "Retour à la page précdente pour en ajouter d'autres")
+            link.save()
+        return JsonResponse({'msg': 'La question a été ajoutée au test'})
