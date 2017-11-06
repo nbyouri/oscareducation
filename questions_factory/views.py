@@ -7,8 +7,10 @@ from django.shortcuts import render
 from models.problem_generator import Problem_generator
 from models import *
 from models.problem_form import ArithmeticForm
+from promotions.utils import user_is_professor
 
 
+@user_is_professor
 def generator(request):
     form = Arithmetic_polynomial_second_degree.make_form(request.POST or None)
     if request.method == "POST":
