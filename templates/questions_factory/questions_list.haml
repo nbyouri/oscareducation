@@ -10,7 +10,7 @@
       -for question in questions
         .panel.panel-success
           .panel-heading
-            Question généré
+            Question générée
           .panel-body
             -if question.description
               .well.question-description
@@ -24,7 +24,7 @@
               -include "professor/exercice/exercice_with_answers_rendering.haml"
             -#%button.btn-primary{type: "submit", onclick: "submitQuestion()"}
               Choisir cet exercice
-          %form{method: "POST", action: "submit/", enctype: 'application/json'}
+          %form{method: "POST", enctype: 'application/json'}
             -csrf_token
             %input{type: "hidden", name: "question_description", value: "{{question.description}}"}
             %input{type: "hidden", name: "question_source", value: "{{question.source}}"}
@@ -36,15 +36,16 @@
       %h3
         Revenir au test
         .panel-body
-        %form{method: "GET", action: ""}
-          -csrf_token
-          %button.bg-primary{type: "submit"}
-            Revenir au test
+          %form{method: "GET", action: ""}
+            -csrf_token
+            %button.bg-primary{type: "submit"}
+              Revenir au test
 
 -block javascript
   :javascript
 
     $(function() {
+
       $('form').submit(function(){
         var form = $(this)
         $.ajax({
@@ -58,6 +59,7 @@
         });
         return false;
       });
+
       {% for exercice in test_exercice.skill.exercice_set.all %}
       {% for _, question in exercice.get_questions.items %}
       {% if question.type == "graph" %}
