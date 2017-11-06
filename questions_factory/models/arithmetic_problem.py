@@ -85,8 +85,6 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             question_desc = ("Calculer les racines de: %0.2fx²+%0.2fx+%0.2f = 0" % tuple(self.val))
         answers = yaml.dump(OrderedDict([("answers", [tuple(sol)]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
-        # TODO Change this or find a way to delete all the unuse question from db
-        question.save()
         return question
 
     def gen_questions(self, number_of_questions):

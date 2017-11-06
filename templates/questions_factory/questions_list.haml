@@ -26,7 +26,9 @@
               Choisir cet exercice
           %form{method: "POST", action: "submit/", enctype: 'application/json'}
             -csrf_token
-            %input{type: "hidden", name: "question_id", value: "{{question.id}}"}
+            %input{type: "hidden", name: "question_description", value: "{{question.description}}"}
+            %input{type: "hidden", name: "question_source", value: "{{question.source}}"}
+            %input{type: "hidden", name: "question_answer", value: "{{question.answer}}"}
             %button.btn-primary{type: "submit"}
               Choisir cet exercice
 
