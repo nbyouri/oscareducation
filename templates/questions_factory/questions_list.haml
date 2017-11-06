@@ -1,10 +1,11 @@
 -extends "base.haml"
-
 -block content
   .panel.panel-default{"id": "id_generated_questions_page"}
     .panel-heading Questions générées
-
     .panel-body
+      -if test_exercice.exercice.context
+        .well
+          =test_exercice.exercice.context|safe
       %h2 Choissisez les questions que vous voulez garder
       -for question in questions
         .panel.panel-success
@@ -21,13 +22,13 @@
                 =question.source|safe
             -with answer=question.get_answer
               -include "professor/exercice/exercice_with_answers_rendering.haml"
-
-
-      -#%form{method: "POST"}
-        -csrf_token
-        %input{type: "submit", value: question}
-        %button.btn.btn-primary{type: "submit"}
-          Choisir cet exercice
+            -#%button.btn-primary{type: "submit", onclick: "submitQuestion()"}
+              Choisir cet exercice
+          %form{method: "POST", action: "submit/", enctype: 'application/json'}
+            -csrf_token
+            %input{type: "hidden", name: "question_id", value: "{{question.id}}"}
+            %button.btn-primary{type: "submit"}
+              Choisir cet exercice
 
 -block javascript
   :javascript
@@ -40,3 +41,4 @@
       {% endfor %}
       {% endfor %}
     });
+
