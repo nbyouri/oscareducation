@@ -104,7 +104,7 @@
               .pull-right
                 -if test_exercice.test.can_change_exercice
                   %td.center{width: "20px"}
-                    %a.btn.btn-primary.btn-xs{href: "{% url 'questions_factory:generator' %}", data-toogle: "tooltip", data-placement: "top", title: "Génerer des questions automatiques"}
+                    %a.btn.btn-primary.btn-xs{href: "{% url 'questions_factory:generator' test_exercice.pk %}", data-toogle: "tooltip", data-placement: "top", title: "Génerer des questions automatiques"}
                       générer
                   -if test_exercice.skill.context_set.count > 1
                     %td.center{width: "20px"}

@@ -6,6 +6,8 @@ import numpy
 from examinations.models import *
 from collections import OrderedDict
 
+from skills.models import Skill
+
 
 class Arithmetic_polynomial_second_degree(Problem_model):
     def __init__(self, domain, image, range, val=None):
@@ -83,6 +85,8 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             question_desc = ("Calculer les racines de: %0.2fx²+%0.2fx+%0.2f = 0" % tuple(self.val))
         answers = yaml.dump(OrderedDict([("answers", [tuple(sol)]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
+        # TODO Change this or find a way to delete all the unuse question from db
+        question.save()
         return question
 
     def gen_questions(self, number_of_questions):
@@ -91,9 +95,29 @@ class Arithmetic_polynomial_second_degree(Problem_model):
             # We only want problems having a solution
             while not self.get_sol():
                 self.gen_new_values()
-            questions.append((self.new_question(self.get_sol())))  # TODO Change for new_exercice
+            questions.append((self.new_question(self.get_sol())))
             self.gen_new_values()
         return questions
+
+    def get_context(self):
+        default_context = self.default_context()
+        # TODO Get from db if already Context already exist
+        # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
+        return default_context
+
+    @staticmethod
+    def default_context():
+        description = "Calculer les racines $$ x_1, x_2 $$ d'un polyonme du second degré <br/> " \
+                      "<b> Attention : </b> les réponses doivent être sous la forme " \
+                      "$$ (x_1, x_2) $$ dans l'ordre croissant et arrondis à 2 chiffres après la virgule"
+        skill_id = "T4-U5-A1b"
+        default_context = Context.objects.create(
+            file_name="generated",
+            skill=Skill.objects.get(code=skill_id),
+            context=description,
+            added_by=None
+        )
+        return default_context
 
     @staticmethod
     def make_form(post_values):
