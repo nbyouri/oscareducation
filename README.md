@@ -3,6 +3,7 @@
 ## Group 6 Status
 
 [![Build Status](https://travis-ci.org/nbyouri/oscareducation.svg?branch=master)](https://travis-ci.org/nbyouri/oscareducation)
+[![Coverage Status](https://coveralls.io/repos/github/nbyouri/oscareducation/badge.svg?branch=coverage)](https://coveralls.io/github/nbyouri/oscareducation?branch=coverage)
 
 See further for information about our part of the project.
 
