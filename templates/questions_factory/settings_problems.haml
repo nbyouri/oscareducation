@@ -4,7 +4,7 @@
 
 -block content
   .panel.panel-default
-    .panel-heading Outil de création de questions
+    .panel-heading{id: "id_question_generator"} Outil de création de questions
     -if form.errors
       .alert.alert-danger{:id => "id_error_panel"}
         - for field in form
