@@ -7,11 +7,12 @@ from django.db import transaction
 from django.shortcuts import render, get_object_or_404, reverse
 from models.problem_generator import Problem_generator
 from models import *
+from examinations.models import *
 from models.problem_form import ArithmeticForm
 from examinations.models import Test, Answer, TestExercice, TestStudent, Context, List_question
 from django.http import HttpResponse, HttpResponseRedirect
 from promotions.utils import user_is_professor
-
+from django.http import JsonResponse
 
 @user_is_professor
 def generator(request, test_exercice_pk):
@@ -39,12 +40,16 @@ def generator(request, test_exercice_pk):
 def generator_submit(request, test_exercice_pk):
     test_exercice = get_object_or_404(TestExercice, pk=test_exercice_pk)
     if request.method == "POST":
-        question_id = request.POST["question_id"]
+        question_desc = request.POST["question_description"]
+        question_source = request.POST["question_source"]
+        question_answer = (request.POST["question_answer"])
+        with transaction.atomic():
+            question = Question(description=question_desc, answer=question_answer, source=question_source)
+            question.save()
         with transaction.atomic():
             link = List_question.objects.create(
                 context_id=test_exercice.exercice.id,
-                question_id=question_id,
+                question_id=question.id,
             )
-        # TODO Find a good redirect
-        return HttpResponse("Question Créer <br\>"
-                            "Retour à la page précdente pour en ajouter d'autres")
+            link.save()
+        return JsonResponse({'msg': 'La question a été ajoutée au test'})
