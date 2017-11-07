@@ -93,9 +93,11 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         questions = list()
         for _ in range(number_of_questions):
             # We only want problems having a solution
+            # TODO : Avoid looping
             while not self.get_sol():
                 self.gen_new_values()
             questions.append((self.new_question(self.get_sol())))
+            # TODO : Check if no two problems the same
             self.gen_new_values()
         return questions
 
