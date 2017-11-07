@@ -9,6 +9,7 @@ oscar/settings_local.py
 documentation/build/
 .DS_Store
 oscar-data.sql
+temp.sql
 ghostdriver.log
 features/failures/*
 json_tmp.txt

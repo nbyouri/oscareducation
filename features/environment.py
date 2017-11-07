@@ -18,7 +18,7 @@ def before_all(context):
     # For debugging purposes, you can use the Firefox driver instead.
     context.browser = webdriver.PhantomJS()
     # Small unit of wait between instructions, allowing things to load
-    context.browser.implicitly_wait(3)
+    context.browser.implicitly_wait(10)
     # Screen size must be wide enough to let PhantomJS find elements
     context.browser.set_window_size(1920, 1080)
     # Using a different port, not conflicting if server is booted up
