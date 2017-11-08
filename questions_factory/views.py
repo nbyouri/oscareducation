@@ -11,9 +11,8 @@ from models import *
 from promotions.utils import user_is_professor
 
 
-
 @user_is_professor
-def generator(request, skill_id, test_id):
+def generator(request, lesson_id, skill_id, test_id):
     form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
@@ -33,11 +32,12 @@ def generator(request, skill_id, test_id):
                 new_test_exercise.exercice = exercise
                 new_test_exercise.save()
             return render(request, "questions_factory/questions_list.haml",
-                          {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise})
+                          {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise,
+                           'test_id': test_id, 'lesson_id': lesson_id})
     return render(request, "questions_factory/settings_problems.haml", {'form': form})
 
 
-def generator_submit(request, skill_id, test_id):
+def generator_submit(request, lesson_id, skill_id, test_id):
     if request.method == "POST":
         test_exercise = get_object_or_404(TestExercice, pk=int(request.POST["exercise_id"]))
         question_desc = request.POST["question_description"]

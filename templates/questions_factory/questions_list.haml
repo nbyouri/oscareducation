@@ -37,11 +37,8 @@
       %h3
         Revenir au test
         .panel-body
-          %form{method: "GET", action: ""}
-            -csrf_token
-            %button.bg-primary{type: "submit"}
-              Revenir au test
-
+          %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}"}
+            Revenir au test
 -block javascript
   :javascript
 
