@@ -49,13 +49,19 @@ class UnexpectedBehaviour(TestCase):
 
     def test_wrong_domain_value_raise_error(self):
         with self.assertRaises(ValueError):
-            problem = create_problem("Wrong_val", "Rational")
-            problem.get_sol()
+            create_problem("Wrong_val", "Rational")
 
     def test_wrong_image_value_raise_error(self):
         with self.assertRaises(ValueError):
             problem = create_problem("Integer", "Wrong val")
             problem.get_sol()
+
+
+class ProblemSettings(TestCase):
+    def test_get_problem_description(self):
+        val = [1, -3, 2]
+        problem = create_problem("Integer", "Rational", [0, 20], val)
+        assert_that("Polynomial second degree", equal_to(problem.get_desc()))
 
 
 def new_arithmetic_dict():
