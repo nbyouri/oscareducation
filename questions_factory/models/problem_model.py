@@ -1,7 +1,7 @@
 import abc
 
 
-class Problem_model:
+class ProblemModel:
     def __init__(self, desc, domain, image, range=(0, 20), val=None):
         self.desc = desc
         self.domain = domain

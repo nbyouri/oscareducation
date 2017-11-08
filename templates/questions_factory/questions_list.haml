@@ -3,9 +3,9 @@
   .panel.panel-default{"id": "id_generated_questions_page"}
     .panel-heading Questions générées
     .panel-body
-      -if test_exercice.exercice.context
+      -if new_test_exercise.exercice.context
         .well
-          =test_exercice.exercice.context|safe
+          =new_test_exercise.exercice.context|safe
       %h2 Choisissez les questions que vous voulez garder
       -for question in questions
         .panel.panel-success
@@ -29,6 +29,7 @@
             %input{type: "hidden", name: "question_description", value: "{{question.description}}"}
             %input{type: "hidden", name: "question_source", value: "{{question.source}}"}
             %input{type: "hidden", name: "question_answer", value: "{{question.answer}}"}
+            %input{type: "hidden", name: "exercise_id", value: "{{ new_test_exercise.id }}"}
             %button.btn-primary{type: "submit"}
               Choisir cet exercice
 
@@ -36,11 +37,8 @@
       %h3
         Revenir au test
         .panel-body
-          %form{method: "GET", action: ""}
-            -csrf_token
-            %button.bg-primary{type: "submit"}
-              Revenir au test
-
+          %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}", id:"return-to-test-modify"}
+            Revenir au test
 -block javascript
   :javascript
 
@@ -60,7 +58,7 @@
         return false;
       });
 
-      {% for exercice in test_exercice.skill.exercice_set.all %}
+      {% for exercice in new_test_exercise.skill.exercice_set.all %}
       {% for _, question in exercice.get_questions.items %}
       {% if question.type == "graph" %}
       new Graph('graph-' + {{ forloop.counter0 }})

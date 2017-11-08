@@ -1,7 +1,7 @@
 # coding=utf-8
 from django import forms
 
-DOMAIN_CHOICES = (('Natural', 'Naturels'), ('Integer', 'Entiers'), ('Rational', 'Rationnels'))
+DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
 IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
 
 

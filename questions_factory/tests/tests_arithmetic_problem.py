@@ -1,9 +1,8 @@
 from django.test import TestCase
-from questions_factory.models import *
 import json
 import numpy
-import os
 from hamcrest import *
+from questions_factory.models.problem_generator import ProblemGenerator
 
 
 class NormalBehaviour(TestCase):
@@ -29,6 +28,13 @@ class NormalBehaviour(TestCase):
         assert_that([round(ans.tolist())], contains(problem.get_sol()))
 
     @staticmethod
+    def test_get_solution_random_val_rational_complex_problem():
+        problem = create_problem("Rational", "Complex", [0, 20])
+        val = problem.get_val()
+        ans = numpy.roots(val)
+        assert_that([round(ans.tolist())], contains(problem.get_sol()))
+
+    @staticmethod
     def test_get_solution_with_rational_range():
         problem = create_problem("Rational", "Rational", [1, 1, 20])
         assert_that([[]], contains(problem.get_sol()))
@@ -41,8 +47,15 @@ class NormalBehaviour(TestCase):
 
 class UnexpectedBehaviour(TestCase):
 
-    def test_wrong_values_integer_rational(self):
-        pass
+    def test_wrong_domain_value_raise_error(self):
+        with self.assertRaises(ValueError):
+            problem = create_problem("Wrong_val", "Rational")
+            problem.get_sol()
+
+    def test_wrong_image_value_raise_error(self):
+        with self.assertRaises(ValueError):
+            problem = create_problem("Integer", "Wrong val")
+            problem.get_sol()
 
 
 def new_arithmetic_dict():
@@ -57,7 +70,7 @@ def create_problem(domain="Integer", image="Rational", range=[0, 20], val=None):
     dict['range'] = range
     if val:
         dict["val"] = val
-    problem = Problem_generator.factory(json.dumps(dict))
+    problem = ProblemGenerator.factory(json.dumps(dict))
     return problem
 
 

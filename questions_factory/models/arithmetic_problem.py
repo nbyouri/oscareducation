@@ -9,9 +9,9 @@ from collections import OrderedDict
 from skills.models import Skill
 
 
-class Arithmetic_polynomial_second_degree(Problem_model):
+class ArithmeticPolynomialSecondDegree(ProblemModel):
     def __init__(self, domain, image, range, val=None):
-        Problem_model.__init__(self, "Polynomial second degree", domain, image, range)
+        ProblemModel.__init__(self, "Polynomial second degree", domain, image, range)
         if val and len(val) == 3:
             self.val = val
         else:
@@ -79,11 +79,18 @@ class Arithmetic_polynomial_second_degree(Problem_model):
         return self.round(sol)
 
     def new_question(self, sol):
+        question_desc = "Calculer les racines de: "
         if self.domain == "Integer" or "Natural":
-            question_desc = ("Calculer les racines de: %dx²+%dx+%d = 0" % tuple(self.val))
+            equation = ("{:-d}x²{:+d}x{:+d}".format(self.val[0], self.val[1], self.val[2]))
         elif self.domain == "Rational":
-            question_desc = ("Calculer les racines de: %0.2fx²+%0.2fx+%0.2f = 0" % tuple(self.val))
-        answers = yaml.dump(OrderedDict([("answers", [tuple(sol)]), ("type", "text")]))
+            equation = ("{:-0.2f}x²{:+0.2f}x{:+0.2f}".format(self.val[0], self.val[1], self.val[2]))
+        equation = self.pretty_polynomial_string(equation)
+        question_desc += equation
+        if sol.__len__() > 1:
+            sol = tuple(sol)
+        else:
+            sol = sol[0]
+        answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
 
@@ -122,3 +129,18 @@ class Arithmetic_polynomial_second_degree(Problem_model):
     @staticmethod
     def make_form(post_values):
         return ArithmeticForm(post_values)
+
+    @staticmethod
+    # TODO Make it prettier
+    def pretty_polynomial_string(string):
+        string = string.replace("0x²", " ")
+        string = string.replace("0x", " ")
+        string = string.replace("0", " ")
+        string = string.replace("1x²", "x²")
+        string = string.replace("1x", "x")
+        string = string.replace("+ ", "")
+        string = string.replace(" +", "")
+        string = string.replace("- ", "")
+        string = string.replace(" -", "")
+        string = string.replace("", "")
+        return string
