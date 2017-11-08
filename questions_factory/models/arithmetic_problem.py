@@ -5,6 +5,7 @@ import random
 import numpy
 from examinations.models import *
 from collections import OrderedDict
+import re
 
 from skills.models import Skill
 
@@ -133,14 +134,8 @@ class ArithmeticPolynomialSecondDegree(Problem_model):
     @staticmethod
     # TODO Make it prettier
     def pretty_polynomial_string(string):
-        string = string.replace("0x²", " ")
-        string = string.replace("0x", " ")
-        string = string.replace("0", " ")
-        string = string.replace("1x²", "x²")
-        string = string.replace("1x", "x")
-        string = string.replace("+ ", "")
-        string = string.replace(" +", "")
-        string = string.replace("- ", "")
-        string = string.replace(" -", "")
-        string = string.replace("", "")
+        string = re.sub(r"\+-", r"-", string)
+        string = "   " + string + "   "
+        string = re.sub(r"(\+|-|\s)0x*²*(\+|-|\s)", r"\2", string)
+        string = re.sub(r"(\+|-|\s)1(x²*)(\+|-|\s)", r"\2\3", string)
         return string
