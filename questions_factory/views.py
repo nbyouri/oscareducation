@@ -49,7 +49,7 @@ def generator_submit(request, lesson_id, skill_id, test_id):
         with transaction.atomic():
             link = List_question.objects.create(
                 context_id=test_exercise.exercice.id,
-                question_id=question.id,
+                   question_id=question.id,
             )
             link.save()
         return JsonResponse({'msg': 'La question a été ajoutée au test'})
