@@ -47,8 +47,15 @@ class NormalBehaviour(TestCase):
 
 class UnexpectedBehaviour(TestCase):
 
-    def test_wrong_values_integer_rational(self):
-        pass
+    def test_wrong_domain_value_raise_error(self):
+        with self.assertRaises(ValueError):
+            problem = create_problem("Wrong_val", "Rational")
+            problem.get_sol()
+
+    def test_wrong_image_value_raise_error(self):
+        with self.assertRaises(ValueError):
+            problem = create_problem("Integer", "Wrong val")
+            problem.get_sol()
 
 
 def new_arithmetic_dict():
