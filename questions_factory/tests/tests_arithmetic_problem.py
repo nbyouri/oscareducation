@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import *
+from questions_factory.models import *
 import json
 import numpy
 import os
@@ -38,33 +38,16 @@ class NormalBehaviour(TestCase):
         problem = create_problem("Rational", "Integer")
         assert_that(problem.get_val(), only_contains(instance_of(int)))
 
-class UnexpectedBehaviour(TestCase):
-    def test_wrongvalues_integer_rational(self):
-        pass
 
-# TODO: Test unexpected behavior
+class UnexpectedBehaviour(TestCase):
+
+    def test_wrong_values_integer_rational(self):
+        pass
 
 
 def new_arithmetic_dict():
     dict = {"problem": "Arithmetic_Polynomial_Second_degree", "desc": "blabla"}
     return dict
-
-
-def write_json_file(data, path):
-    with open(path, 'w') as outfile:
-        json.dump(data, outfile)
-
-
-def read_json_file():
-    with open('json_tmp.txt') as json_file:
-        return json_file
-
-
-def remove_json_file(file):
-    try:
-        os.remove(file)
-    except:
-        OSError("File doesn't exist")
 
 
 def create_problem(domain="Integer", image="Rational", range=[0, 20], val=None):
