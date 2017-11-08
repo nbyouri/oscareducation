@@ -1,7 +1,7 @@
 import abc
 
 
-class Problem_model:
+class ProblemModel:
     def __init__(self, desc, domain, image, range=(0, 20), val=None):
         self.desc = desc
         self.domain = domain
@@ -11,12 +11,10 @@ class Problem_model:
     @abc.abstractmethod
     def get_desc(self):
         """Return the description of the problem"""
-        return
 
     @abc.abstractmethod
     def get_sol(self):
         """Return the solution of the problem"""
-        return
 
     @abc.abstractmethod
     def gen_values(self):

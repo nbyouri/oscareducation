@@ -10,9 +10,9 @@ import re
 from skills.models import Skill
 
 
-class ArithmeticPolynomialSecondDegree(Problem_model):
+class ArithmeticPolynomialSecondDegree(ProblemModel):
     def __init__(self, domain, image, range, val=None):
-        Problem_model.__init__(self, "Polynomial second degree", domain, image, range)
+        ProblemModel.__init__(self, "Polynomial second degree", domain, image, range)
         if val and len(val) == 3:
             self.val = val
         else:

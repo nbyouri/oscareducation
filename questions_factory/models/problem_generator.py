@@ -3,6 +3,7 @@ import json
 
 
 class ProblemGenerator:
+
     def __init__(self):
         pass
 

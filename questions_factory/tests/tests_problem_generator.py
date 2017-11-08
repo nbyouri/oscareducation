@@ -5,7 +5,9 @@ from questions_factory.models.problem_generator import ProblemGenerator
 
 
 class NormalBehaviour(TestCase):
-    pass
+    def test_problem_generator_creation_succeed(self):
+        gen = ProblemGenerator()
+        self.assertTrue(isinstance(gen, ProblemGenerator))
 
 
 class UnexpectedBehaviour(TestCase):
@@ -22,8 +24,7 @@ def problem_settings(problem, problem_description, domain, image, range, val):
         "desc": problem_description,
         "domain": domain,
         "image": image,
-        "range": range
+        "range": range,
+        "val": val
     }
-    if val:
-        settings["val"] = val
     return settings
