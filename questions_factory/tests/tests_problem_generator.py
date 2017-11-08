@@ -1,9 +1,7 @@
 from django.test import TestCase
 from questions_factory.models import *
 import json
-import numpy
-import os
-from hamcrest import *
+from questions_factory.models.problem_generator import ProblemGenerator
 
 
 class NormalBehaviour(TestCase):
@@ -14,7 +12,7 @@ class UnexpectedBehaviour(TestCase):
     def test_problem_raises_value_error(self):
         with self.assertRaises(ValueError) as context:
             problem_set = problem_settings("foo", "bar", "Interrzger", "Ratdqdional", [9687, 20], None)
-            Problem_generator.factory(json.dumps(problem_set))
+            ProblemGenerator.factory(json.dumps(problem_set))
         self.assertTrue('Wrong problem type' in context.exception)
 
 

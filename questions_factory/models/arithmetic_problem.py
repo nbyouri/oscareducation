@@ -9,7 +9,7 @@ from collections import OrderedDict
 from skills.models import Skill
 
 
-class Arithmetic_polynomial_second_degree(Problem_model):
+class ArithmeticPolynomialSecondDegree(Problem_model):
     def __init__(self, domain, image, range, val=None):
         Problem_model.__init__(self, "Polynomial second degree", domain, image, range)
         if val and len(val) == 3:

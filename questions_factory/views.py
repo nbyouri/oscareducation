@@ -1,22 +1,16 @@
 # encoding: utf-8
-
-import json
-
-from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404, reverse
-from models.problem_generator import Problem_generator
 from models import *
 from examinations.models import *
-from models.problem_form import ArithmeticForm
 from examinations.models import Test, Answer, TestExercice, TestStudent, Context, List_question
-from django.http import HttpResponse, HttpResponseRedirect
 from promotions.utils import user_is_professor
 from django.http import JsonResponse
 
+
 @user_is_professor
 def generator(request, test_exercice_pk):
-    form = Arithmetic_polynomial_second_degree.make_form(request.POST or None)
+    form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
     test_exercice = get_object_or_404(TestExercice, pk=test_exercice_pk)
     if request.method == "POST":
         if form.is_valid():
@@ -26,7 +20,7 @@ def generator(request, test_exercice_pk):
             problem_type = "Arithmetic_Polynomial_Second_degree"
             data = {'problem': problem_type, 'image': image, 'domain': dom,
                     'range': range}
-            problem = Problem_generator.factory(json.dumps(data))
+            problem = ProblemGenerator.factory(json.dumps(data))
             exercice = problem.get_context()
             with transaction.atomic():
                 exercice.added_by = request.user

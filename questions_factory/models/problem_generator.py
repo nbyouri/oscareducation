@@ -2,7 +2,10 @@ from arithmetic_problem import *
 import json
 
 
-class Problem_generator:
+class ProblemGenerator:
+    def __init__(self):
+        pass
+
     def factory(json_i):
         global problem, domain, image, range, values
         input = json.loads(json_i)
@@ -11,7 +14,7 @@ class Problem_generator:
         values = input.pop("val", None)
 
         if problem == "Arithmetic_Polynomial_Second_degree":
-            return Arithmetic_polynomial_second_degree(domain, image, range, values)
+            return ArithmeticPolynomialSecondDegree(domain, image, range, values)
         else:
             raise ValueError('Wrong problem type')
 
