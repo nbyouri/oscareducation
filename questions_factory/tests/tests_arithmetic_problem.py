@@ -28,6 +28,13 @@ class NormalBehaviour(TestCase):
         assert_that([round(ans.tolist())], contains(problem.get_sol()))
 
     @staticmethod
+    def test_get_solution_random_val_rational_complex_problem():
+        problem = create_problem("Rational", "Complex", [0, 20])
+        val = problem.get_val()
+        ans = numpy.roots(val)
+        assert_that([round(ans.tolist())], contains(problem.get_sol()))
+
+    @staticmethod
     def test_get_solution_with_rational_range():
         problem = create_problem("Rational", "Rational", [1, 1, 20])
         assert_that([[]], contains(problem.get_sol()))
