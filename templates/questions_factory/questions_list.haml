@@ -3,9 +3,9 @@
   .panel.panel-default{"id": "id_generated_questions_page"}
     .panel-heading Questions générées
     .panel-body
-      -if test_exercice.exercice.context
+      -if new_test_exercise.exercice.context
         .well
-          =test_exercice.exercice.context|safe
+          =new_test_exercise.exercice.context|safe
       %h2 Choisissez les questions que vous voulez garder
       -for question in questions
         .panel.panel-success
@@ -37,7 +37,7 @@
       %h3
         Revenir au test
         .panel-body
-          %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}"}
+          %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}", id:"return-to-test-modify"}
             Revenir au test
 -block javascript
   :javascript
