@@ -11,9 +11,10 @@ from models import *
 from promotions.utils import user_is_professor
 
 
+
 @user_is_professor
 def generator(request, skill_id, test_id):
-    form = Arithmetic_polynomial_second_degree.make_form(request.POST or None)
+    form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             dom = form.cleaned_data['domain']
@@ -22,7 +23,7 @@ def generator(request, skill_id, test_id):
             problem_type = "Arithmetic_Polynomial_Second_degree"
             data = {'problem': problem_type, 'image': image, 'domain': dom,
                     'range': range}
-            problem = Problem_generator.factory(json.dumps(data))
+            problem = ProblemGenerator.factory(json.dumps(data))
             exercise = problem.get_context()
             new_test_exercise = TestExercice()
             new_test_exercise.skill_id = skill_id

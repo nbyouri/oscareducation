@@ -1,9 +1,8 @@
 from django.test import TestCase
-from questions_factory.models import *
 import json
 import numpy
-import os
 from hamcrest import *
+from questions_factory.models.problem_generator import ProblemGenerator
 
 
 class NormalBehaviour(TestCase):
@@ -57,7 +56,7 @@ def create_problem(domain="Integer", image="Rational", range=[0, 20], val=None):
     dict['range'] = range
     if val:
         dict["val"] = val
-    problem = Problem_generator.factory(json.dumps(dict))
+    problem = ProblemGenerator.factory(json.dumps(dict))
     return problem
 
 
