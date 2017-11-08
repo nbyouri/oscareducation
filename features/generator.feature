@@ -14,6 +14,8 @@ Feature: Generator
     Then I enter "0" as lower range and "60" as upper range
     When I click on the create button
     Then I see a list of generated problems
+    Then I choose a generated problem
+    Then I click on going back to the test
 
   Scenario: Trying to create an arithmetic problem without parameters
     Given The db is populated

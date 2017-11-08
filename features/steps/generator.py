@@ -40,3 +40,15 @@ def step_impl(context):
     br = context.browser
     br.find_element_by_id("id_generate_button").click()
 
+
+@then('I choose a generated problem')
+def step_impl(context):
+    br = context.browser
+    br.find_element_by_xpath("//button[@type='submit']").click()
+
+
+@then('I click on going back to the test')
+def step_impl(context):
+    br = context.browser
+    br.find_element_by_id("return_to_test_modify").click()
+
