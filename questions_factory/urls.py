@@ -4,6 +4,6 @@ from django.views.generic import TemplateView
 from . import views
 
 urlpatterns = [
-    url(r'^generator/(?P<test_exercice_pk>\d+)/$', views.generator, name='generator'),
-    url(r'^generator/(?P<test_exercice_pk>\d+)/submit/$', views.generator_submit, name='generator_submit')
+    url(r'^generator/(?P<skill_id>\d+)/(?P<test_id>\d+)/$', views.generator, name='generator'),
+    url(r'^generator/(?P<skill_id>\d+)/(?P<test_id>\d+)/submit/$', views.generator_submit, name='generator_submit')
 ]
