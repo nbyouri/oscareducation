@@ -22,9 +22,9 @@ before_script:
 
 script:
   # Targeted Unit Testing with Coverage
-  - coverage run --source=questions_factory manage.py test questions_factory
+  - coverage run -a --source=questions_factory manage.py test questions_factory
   # General Behaviour Testing with Coverage
-  - coverage run --source=questions_factory manage.py behave
+  - coverage run -a --source=questions_factory manage.py behave
 
 
 after_success:
