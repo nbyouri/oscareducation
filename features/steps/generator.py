@@ -50,5 +50,5 @@ def step_impl(context):
 @then('I click on going back to the test')
 def step_impl(context):
     br = context.browser
-    br.find_element_by_id("return_to_test_modify").click()
+    br.find_element_by_id("return-to-test-modify").click()
 
