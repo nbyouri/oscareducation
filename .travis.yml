@@ -22,9 +22,12 @@ before_script:
 
 script:
   # General Behaviour Testing
-  - coverage run --source=. manage.py behave
+  - python manage.py behave
   # Targeted Unit Testing
-  - coverage run --source=. manage.py test questions_factory
+  - python manage.py test questions_factory
+  # Coverage
+  - coverage run --source=questions_factory manage.py behave
+  - coverage run --source=questions_factory manage.py test questions_factory
 
 after_success:
     coveralls
