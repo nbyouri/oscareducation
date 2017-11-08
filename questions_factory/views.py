@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 from django.db import transaction
-from django.http import Http404
+from django.http import Http404, HttpResponseNotFound
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -33,10 +33,7 @@ def generator(request, skill_id, test_id):
                 new_test_exercise.save()
             return render(request, "questions_factory/questions_list.haml",
                           {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise})
-    elif request.method == "GET":
-        return render(request, "questions_factory/settings_problems.haml", {'form': form})
-    else:
-        raise Http404
+    return render(request, "questions_factory/settings_problems.haml", {'form': form})
 
 
 def generator_submit(request, skill_id, test_id):
@@ -56,4 +53,4 @@ def generator_submit(request, skill_id, test_id):
             link.save()
         return JsonResponse({'msg': 'La question a été ajoutée au test'})
     else:
-        raise Http404
+        return HttpResponseNotFound('<h1>No matches the given query.</h1>')
