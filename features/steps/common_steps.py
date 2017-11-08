@@ -25,25 +25,15 @@ def step_impl(context):
     assert br.current_url.endswith('/professor/dashboard/')
 
 
-@then('I go on class creation page')
-def step_impl(context):
+@then('I create the class "{classname}", with students "{firstname1}" "{lastname1}" and "{firstname2}" "{lastname2}"')
+def step_impl(context, classname, firstname1, lastname1, firstname2, lastname2):
     br = context.browser
     br.find_element_by_id("id_add_lesson").click()
     assert br.current_url.endswith('professor/lesson/add/')
-
-
-@then('I create a class "{classname}"')
-def step_impl(context, classname):
-    br = context.browser
     br.find_element_by_id("id_name").send_keys(classname)
     Select(br.find_element_by_id("id_stage")).select_by_value("13")
     br.find_element_by_xpath("//button[@type='submit']").click()
     assert re.search(r'/professor/lesson/[0-9]+/student/add/', br.current_url)
-
-
-@then('I create two students, "{firstname1}" "{lastname1}" and "{firstname2}" "{lastname2}" for my class')
-def step_impl(context, firstname1, lastname1, firstname2, lastname2):
-    br = context.browser
     br.find_element_by_xpath("//input[@name='first_name_0']").send_keys(firstname1)
     br.find_element_by_xpath("//input[@name='last_name_0']").send_keys(lastname1)
     br.find_element_by_xpath("//input[@name='first_name_1']").send_keys(firstname2)
@@ -52,10 +42,29 @@ def step_impl(context, firstname1, lastname1, firstname2, lastname2):
     assert re.search(r'/professor/lesson/[0-9]+', br.current_url)
 
 
+@then('I create the test "{test_name}" for skill "{skill}"')
+def step_impl(context, test_name, skill):
+    br = context.browser
+    br.find_element_by_id("id_my_tests_button").click()
+    assert re.search(r'/professor/lesson/[0-9]+/test/', br.current_url)
+    br.find_element_by_id("id_add_test_button").click()
+    assert re.search(r'/professor/lesson/[0-9]+/test/add', br.current_url)
+    br.find_element_by_id("id_add_test_online_button").click()
+    assert re.search(r'/professor/lesson/[0-9]+/test/online/add', br.current_url)
+    Select(br.find_element_by_xpath("//select[@ng-model='stage13SelectedSkill']")).select_by_value(skill)
+    # Adding the competence
+    br.find_element_by_id("addSkillToTestButtonForStage13").click()
+    br.find_element_by_id("addSkillToTestButtonForStage13").click()
+    br.find_element_by_id("addSkillToTestButtonForStage13").click()
+    # Add name to test
+    br.find_element_by_id("test_name").send_keys(test_name)
+    # Create the test
+    br.find_element_by_id("id_create_test_button").click()
+
+
 @given('The db is populated')
 def step_impl(context):
     populate_stages_in_db()
-
 
 
 def populate_stages_in_db():
