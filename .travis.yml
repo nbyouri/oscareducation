@@ -21,13 +21,10 @@ before_script:
   - python manage.py migrate
 
 script:
-  # General Behaviour Testing
-  - python manage.py behave
-  # Targeted Unit Testing
-  - python manage.py test questions_factory
-  # Coverage
-  - coverage run --source=questions_factory manage.py behave
-  - coverage run --source=questions_factory manage.py test questions_factory
+  # General Behaviour Testing with Coverage
+  - coverage run --source=questions_factory manage.py behave manage.py test questions_factory
+  # Targeted Unit Testing with Coverage
+  # - coverage run --source=questions_factory
 
 after_success:
     coveralls

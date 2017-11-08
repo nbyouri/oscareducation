@@ -13,6 +13,6 @@ class Problem_generator:
         if problem == "Arithmetic_Polynomial_Second_degree":
             return Arithmetic_polynomial_second_degree(domain, image, range, values)
         else:
-            raise ValueError
+            raise ValueError('Wrong problem type')
 
     factory = staticmethod(factory)
