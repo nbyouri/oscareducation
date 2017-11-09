@@ -39,6 +39,20 @@ class NormalBehaviour(TestCase):
         problem = create_problem("Integer", "Rational", [0, 20], val)
         assert_that([1, -3, 2], equal_to(problem.get_val()))
 
+
+    @staticmethod
+    def test_get_solution_with_rational_range():
+        problem = create_problem("Rational", "Rational", [1, 1, 20])
+        assert_that([[]], contains(problem.get_sol()))
+
+    @staticmethod
+    def test_get_value_with_integer_solution():
+        problem = create_problem("Rational", "Integer")
+        assert_that(problem.get_val(), only_contains(instance_of(int)))
+
+
+class ComplexImageProblems(TestCase):
+
     @staticmethod
     def test_get_solution_random_val_integer_complex_problem():
         problem = create_problem("Integer", "Complex", [0, 20])
@@ -54,14 +68,21 @@ class NormalBehaviour(TestCase):
         assert_that([round(ans.tolist())], contains(problem.get_sol()))
 
     @staticmethod
-    def test_get_solution_with_rational_range():
-        problem = create_problem("Rational", "Rational", [1, 1, 20])
-        assert_that([[]], contains(problem.get_sol()))
+    def test_high_number_solutions_rational_complex_problem():
+        for i in range(0, 100):
+            problem = create_problem("Rational", "Complex", [0, 20])
+            val = problem.get_val()
+            ans = numpy.roots(val)
+            assert_that([round(ans.tolist())], contains(problem.get_sol()))\
+
 
     @staticmethod
-    def test_get_value_with_integer_solution():
-        problem = create_problem("Rational", "Integer")
-        assert_that(problem.get_val(), only_contains(instance_of(int)))
+    def test_high_number_solutions_integer_complex_problem():
+        for i in range(0, 100):
+            problem = create_problem("Integer", "Complex", [0, 20])
+            val = problem.get_val()
+            ans = numpy.roots(val)
+            assert_that([round(ans.tolist())], contains(problem.get_sol()))
 
 
 class UnexpectedBehaviour(TestCase):
