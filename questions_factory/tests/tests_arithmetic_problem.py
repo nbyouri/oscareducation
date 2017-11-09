@@ -2,14 +2,33 @@ from django.test import TestCase
 import json
 import numpy
 from hamcrest import *
+
+from examinations.models import Question
 from questions_factory.models.problem_generator import ProblemGenerator
 
 
 class NormalBehaviour(TestCase):
+
+    def test_get_unique_solution_integer_integer_problem(self):
+        val = [0, 1, -2]
+        problem = create_problem("Integer", "Integer", [0, 10], val)
+        [x_1] = problem.get_sol()
+        assert_that(2, equal_to(x_1))
+        question = problem.new_question(problem.get_sol())
+        self.assertTrue(isinstance(question, Question))
+
     @staticmethod
     def test_get_solution_integer_rational_problem():
         val = [1, -3, 2]
         problem = create_problem("Integer", "Rational", [0, 20], val)
+        [x_1, x_2] = problem.get_sol()
+        assert_that(2, equal_to(x_1))
+        assert_that(1, equal_to(x_2))
+
+    @staticmethod
+    def test_get_solution_integer_integer_problem():
+        val = [1, -3, 2]
+        problem = create_problem("Integer", "Integer", [0, 10], val)
         [x_1, x_2] = problem.get_sol()
         assert_that(2, equal_to(x_1))
         assert_that(1, equal_to(x_2))
