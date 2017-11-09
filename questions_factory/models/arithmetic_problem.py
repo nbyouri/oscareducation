@@ -25,9 +25,6 @@ class ArithmeticPolynomialSecondDegree(ProblemModel):
     def gen_values(self):
         if self.image == "Integer":
             self.gen_values_from_sol()
-        elif self.domain == "Natural":
-            for i in range(3):
-                self.val.append(random.randint(self.range[0], self.range[1]))  # TODO What range should we put ?
         elif self.domain == "Integer":
             for i in range(3):
                 self.val.append(random.randint(self.range[0], self.range[1]))
@@ -81,7 +78,7 @@ class ArithmeticPolynomialSecondDegree(ProblemModel):
 
     def new_question(self, sol):
         question_desc = "Calculer les racines de: "
-        if self.domain == "Integer" or "Natural":
+        if self.domain == "Integer":
             equation = ("{:-d}x²{:+d}x{:+d}".format(self.val[0], self.val[1], self.val[2]))
         elif self.domain == "Rational":
             equation = ("{:-0.2f}x²{:+0.2f}x{:+0.2f}".format(self.val[0], self.val[1], self.val[2]))
