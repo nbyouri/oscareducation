@@ -52,3 +52,9 @@ def step_impl(context):
     br = context.browser
     br.find_element_by_id("return-to-test-modify").click()
 
+
+@then('I select the rational domain')
+def step_impl(context):
+    br = context.browser
+    Select(br.find_element_by_id("id_domain")).select_by_value("Rational")
+
