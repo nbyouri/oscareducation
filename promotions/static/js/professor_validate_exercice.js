@@ -38,15 +38,22 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         text = elem.value;
         //console.log(question);
         var numberBlank = text.match(/#\[/g).length;
-        for(var i = question["answers"].length; i < numberBlank; i++){
-            question["answers"].push({
-                type:"text", //start as text by default
-                answers:[{
-                  text:"",
-                  latex:""
-                }]
-            });
-            $scope.renderMathquil(topIndex, i, question, 0);
+        if (numberBlank > question["answers"].length) { //If we have blanks to add
+            for (var i = question["answers"].length; i < numberBlank; i++) {
+                question["answers"].push({
+                    type: "text", //start as text by default
+                    answers: [{
+                        text: "",
+                        latex: ""
+                    }]
+                });
+                $scope.renderMathquil(topIndex, i, question, 0);
+            }
+        }else if(numberBlank < question["answers"].length){ //If we have blanks to remove
+            for (i = numberBlank; i < question["answers"].length; i++) {
+                question["answers"].splice(i, 1); //Remove the field
+                $scope.renderMathquil(topIndex, i, question, 0);
+            }
         }
 
     };
