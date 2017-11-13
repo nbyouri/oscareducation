@@ -34,6 +34,24 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             console.log(question)
     };
 
+    $scope.parseTableQuestion = function(question){
+        var counter = 0;
+        for(var i = 0; i < question.table.length; i++){
+          for(var j = 0; j < question.table[i].length; j++){
+              var textTrimmed = question.table[i][j].replace(/\s/g,'');
+              console.log("Debug parsable table");
+              console.log(textTrimmed);
+              var matches = textTrimmed.match(/#\[\d]#/g);
+              console.log(matches);
+              if(textTrimmed.length == 0 || matches != null){
+                  counter++;
+                  question.table[i][j] = "#["+counter+"]#";
+              }
+          }
+        }
+        return counter;
+    };
+
     $scope.isPlaceholder = function (question) {
         if (question["answers"].length > 0){ //If we have fields, don't disable the button
             return true;
@@ -47,18 +65,24 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     }
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {
-        elem = document.getElementById("blank-text");
-        text = elem.value;
-        //console.log(question);
-        var matches = text.match(/#\[/g);
-        if(matches == null){ //No placeholders in the instructions
-            for (i = 0; i < question["answers"].length; i++) {
-                question["answers"].splice(i, 1); //Remove the field
-                $scope.renderMathquil(topIndex, i, question, 0);
+        var numberBlank = 0;
+        if(question.type == "fill-table-blanks"){
+            numberBlank = $scope.parseTableQuestion(question);
+
+        }else {
+            var elem = document.getElementById("blank-text");
+            var text = elem.value;
+            //console.log(question);
+            var matches = text.match(/#\[/g);
+            if (matches == null) { //No placeholders in the instructions
+                for (i = 0; i < question["answers"].length; i++) {
+                    question["answers"].splice(i, 1); //Remove the field
+                    $scope.renderMathquil(topIndex, i, question, 0);
+                }
+                return; //Quit !
             }
-            return; //Quit !
+            numberBlank = matches.length;
         }
-        var numberBlank = matches.length;
         if (numberBlank > question["answers"].length) { //If we have blanks to add
             for (var i = question["answers"].length; i < numberBlank; i++) {
                 question["answers"].push({
@@ -170,6 +194,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         }
     };
 
+
+
     $scope.validateExercice = function() {
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
@@ -278,7 +304,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         if (question.type.startsWith("fill")){
             question.answers = [];
             if(question.type === "fill-table-blanks"){
-                question.table = [["",""],["",""]]; //Start as a 2*2 (better UX)
+                question.table =  [["",""],["",""]];
             }
             $timeout(function() {
                 console.log("fill text blanks rendering mathquill");

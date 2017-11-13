@@ -128,13 +128,12 @@
                         %td
                           %button.btn.btn-success{ng-click: "addRowTableBlank(table)", type: "button"}
                             %span.glyphicon.glyphicon-plus
-
-              .form-group{ng-if : "question.type == \"fill-text-blanks\""}
+              .form-group{ng-if : "question.type.startsWith(\"fill-\")"}
                 %label.control-label.col-sm-2 Réponses
                 .col-sm-10
-                  %button.btn.btn-success{ng-disabled:"!isPlaceholder(question)", id: 'parserField', ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
+                  %button.btn.btn-success{ng-disabled:"question.type == \"fill-text-blanks\" && !isPlaceholder(question)", id: 'parserField', ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
                     Générer les champs
-                  %ul.list-group{ng-if: "question.type == \"fill-text-blanks\""}
+                  %ul.list-group{ng-if: "question.type.startsWith(\"fill-\")"}
                     %li.list-group-item{ng-repeat: "answer in question.answers", ng-init: "answerIndex = ($index+1).toString()"}
                       %p
                         %label.control-label Champ {& answerIndex &}
@@ -179,7 +178,7 @@
                   %input.form-control{type: "text", ng-model: "question.indication", ng-required: "false"}
 
             %ul.list-group
-              %li.list-group-item{ng-if: "question.type != \"professor\"&& question.type != \"fill-text-blanks\"", ng-repeat: "answer in question.answers", ng-init: "answerIndex = $index.toString()"}
+              %li.list-group-item{ng-if: "question.type != \"professor\"&& !question.type.startsWith(\"fill-\")", ng-repeat: "answer in question.answers", ng-init: "answerIndex = $index.toString()"}
                 .form-horizontal{ng-if: "question.type != \"graph\""}
                   .form-group
                     %label.col-sm-2.control-label Réponse possible :
@@ -221,7 +220,7 @@
                         %input.form-control{type: "number", ng-required: "true", placeholder: "0", ng-model: "answer.graph.coordinates.Y"}
 
 
-            %button.btn.btn-success.btn-sm{ng-if: "question.type != \"professor\" && question.type != \"fill-text-blanks\"", ng-click: "addAnswer(topIndex, question)", type: "button"}
+            %button.btn.btn-success.btn-sm{ng-if: "question.type != \"professor\" && !question.type.startsWith(\"fill-\")", ng-click: "addAnswer(topIndex, question)", type: "button"}
               %span.glyphicon.glyphicon-plus
               nouvelle réponse possible
 
