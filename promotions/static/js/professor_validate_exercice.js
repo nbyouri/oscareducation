@@ -31,13 +31,34 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   			}
   			question["instructions"] = elem.value; //Update object for DB
   			elem.focus();//Request focus on text input
+            console.log(question)
     };
+
+    $scope.isPlaceholder = function (question) {
+        if (question["answers"].length > 0){ //If we have fields, don't disable the button
+            return true;
+        }
+        if(question["instructions"] == undefined) {
+            //If for some reason the user erased the instructions, no placeholder
+            return false;
+        }
+        matches = question["instructions"].match(/#\[\d]#/g);
+        return matches != null; //If no match, no placeholder
+    }
 
     $scope.parseFieldsInQuestion = function (topIndex, question) {
         elem = document.getElementById("blank-text");
         text = elem.value;
         //console.log(question);
-        var numberBlank = text.match(/#\[/g).length;
+        var matches = text.match(/#\[/g);
+        if(matches == null){ //No placeholders in the instructions
+            for (i = 0; i < question["answers"].length; i++) {
+                question["answers"].splice(i, 1); //Remove the field
+                $scope.renderMathquil(topIndex, i, question, 0);
+            }
+            return; //Quit !
+        }
+        var numberBlank = matches.length;
         if (numberBlank > question["answers"].length) { //If we have blanks to add
             for (var i = question["answers"].length; i < numberBlank; i++) {
                 question["answers"].push({

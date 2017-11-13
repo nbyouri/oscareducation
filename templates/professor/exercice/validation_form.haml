@@ -131,7 +131,7 @@
               .form-group{ng-if : "question.type == \"fill-text-blanks\""}
                 %label.control-label.col-sm-2 Réponses
                 .col-sm-10
-                  %button.btn.btn-success{id: 'parserField', ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
+                  %button.btn.btn-success{ng-disabled:"!isPlaceholder(question)", id: 'parserField', ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
                     Générer les champs
                   %ul.list-group{ng-if: "question.type == \"fill-text-blanks\""}
                     %li.list-group-item{ng-repeat: "answer in question.answers", ng-init: "answerIndex = ($index+1).toString()"}
