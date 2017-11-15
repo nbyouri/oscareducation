@@ -96,16 +96,6 @@ class Question(models.Model):
 
         return {}
 
-    def get_table(self):
-        print("HEEEEEEEEEEE ", yaml.load(self, Loader=yamlordereddictloader.Loader))
-        if self.answers.table:
-            return yaml.load(self.table, Loader=yamlordereddictloader.Loader)
-
-        return {}
-
-    #def get_text_tab(self):
-
-
     def get_type(self):
         """Get the Question type"""
         yaml_answer = self.get_answer()
@@ -285,6 +275,7 @@ class Question(models.Model):
 
             return ok
         # No automatic correction type found, not corrected by default
+        
         else:
             return -1
 

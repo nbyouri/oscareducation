@@ -190,7 +190,7 @@ def validate_exercice(request, test_student, test_exercice):
                 print(raw_answer)
                 for dic in question.get_answers():
                     for answer_blank in dic:
-                        resp = request.POST["fill-"+str(number)+"-"+str(num_blank)]
+                        resp = request.POST.get("fill-"+str(number)+"-"+str(num_blank),False)
                         raw_answer[number]["response"][number+num_blank] = {"response_blank": [resp], "correct_blank": -1}
                     num_blank += 1
             else:

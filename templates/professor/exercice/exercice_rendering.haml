@@ -42,6 +42,8 @@
             =text
             %input{id: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", type: "text", autocomplete: "off",  disabled:"disabled"}
           =question.get_last_text_blanks
+      -elif question.type == "fill-table-blanks"
+        renderingProf
       -else
         ="test"
 
