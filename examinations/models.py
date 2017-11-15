@@ -96,6 +96,16 @@ class Question(models.Model):
 
         return {}
 
+    def get_table(self):
+        print("HEEEEEEEEEEE ", yaml.load(self, Loader=yamlordereddictloader.Loader))
+        if self.answers.table:
+            return yaml.load(self.table, Loader=yamlordereddictloader.Loader)
+
+        return {}
+
+    #def get_text_tab(self):
+
+
     def get_type(self):
         """Get the Question type"""
         yaml_answer = self.get_answer()
@@ -252,7 +262,7 @@ class Question(models.Model):
             # No automatic verification to perform if corrected by a Professor
             return -1
 
-        elif evaluation_type == "fill-text-blanks":
+        elif evaluation_type == "fill-text-blanks" or evaluation_type == "fill-table-blanks":
             ok = 1
             num_rep = 0
             for num in response:

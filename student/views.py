@@ -184,7 +184,7 @@ def validate_exercice(request, test_student, test_exercice):
             elif data["type"] == "professor":
                 raw_answer[number]["response"] = [request.POST[str(number)]]
 
-            elif data["type"] == "fill-text-blanks":
+            elif data["type"] == "fill-text-blanks" or data["type"] == "fill-table-blanks":
                 num_blank = 0
                 raw_answer[number]["response"] = {}
                 print(raw_answer)

@@ -52,6 +52,22 @@
 									=text
 									%input{id: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
 								=question.get_last_text_blanks
+					-elif answer.type == "fill-table-blanks"
+						%br
+						.well.question-description
+							-with toploop_counter0=forloop.counter0
+
+							%table{:border => 1}
+								%tbody
+								-for row in answer.table
+									%tr
+									-for col in row
+										-if col.0 == '#'
+											%td= col
+											=col
+											%input{id: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
+										-else
+											%td= col
 					-else
 						=answer.type
 
