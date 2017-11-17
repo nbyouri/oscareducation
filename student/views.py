@@ -187,7 +187,6 @@ def validate_exercice(request, test_student, test_exercice):
             elif data["type"] == "fill-text-blanks" or data["type"] == "fill-table-blanks":
                 num_blank = 0
                 raw_answer[number]["response"] = {}
-                print(raw_answer)
                 for dic in question.get_answers():
                     for answer_blank in dic:
                         resp = request.POST.get("fill-"+str(number)+"-"+str(num_blank),False)

@@ -255,78 +255,68 @@
                                                   =y
                                                   )
                                       -elif type == "fill-text-blanks"
-                                        -for ans in question.get_ans_blanks
+                                        -for ans in question.get_answer.answers
                                           %tr
                                             %td{colspan: 2}
                                               .answers-panel.panel{class: "{% if correct == 1 %}panel-success{% elif correct == 0 %}panel-danger{% else %}panel-warning{% endif %}"}
                                                 .panel-heading
-                                                  =ans.0
+                                                  =ans.text.0
                                                 .panel-body.answers-panel
                                                   %table.answers-table
                                                     %tr
                                                       %td.right-border{width: "50%"}
-                                                        -for stu_ans in student_answer
-                                                          -if stu_ans.0 == ans.3
-                                                            =stu_ans.1.0
+                                                        -with inloop_counter0=forloop.counter0
+                                                          -for stu_ans in student_answer
+                                                            -if stu_ans.0 == inloop_counter0
+                                                              =stu_ans.1.0
                                                       %td{width: "50%", display: "block"}
-                                                        -for answ in ans.2
+                                                        -for answ in ans.answers
                                                             %ul
-                                                              -if ans.1 != "text"
+                                                              -if ans.type != "text"
                                                                 %li
                                                                   \\(
-                                                                  =answ
+                                                                  =answ.latex
                                                                   \\)
-                                                                  (code latex : <code>{{ answ }}</code>)
+                                                                  (code latex : <code>{{ answ.latex }}</code>)
                                                               -else
-                                                                %li=answ
-                                      -# -elif type == "fill-table-blanks"
-                                      -#   -for ans in question.get_answers
-                                      -#     =ans
-                                      -#     #br
-                                      -#     %tr
-                                      -#       %td{colspan: 2}
-                                      -#         .answers-panel.panel{class: "{% if correct == 1 %}panel-success{% elif correct == 0 %}panel-danger{% else %}panel-warning{% endif %}"}
-                                      -#           .panel-heading
-                                      -#             =ans.0
-                                      -#           .panel-body.answers-panel
-                                      -#             %table.answers-table
-                                      -#               %tr
-                                      -#                 %td.right-border{width: "50%"}
-                                      -#                   -for stu_ans in student_answer
-                                      -#                     =stu_ans
-                                      -#                     %
-                                      -#                     -if stu_ans.0 == ans.3
-                                      -#                       =stu_ans.1.0
-                                      -#                 %td{width: "50%", display: "block"}
-                                      -#                   -for answ in ans.2
-                                      -#                       %ul
-                                      -#                         -if ans.1 != "text"
-                                      -#                           %li
-                                      -#                             \\(
-                                      -#                             =answ
-                                      -#                             \\)
-                                      -#                             (code latex : <code>{{ answ }}</code>)
-                                      -#                         -else
-                                      -#                           %li=answ
+                                                                %li=answ.text
 
+                                       -elif type == "fill-table-blanks"
+                                         %br
+                                          %table.table.table-bordered
+                                            %tbody
+                                            -for row in question.get_answer.table
+                                                %tr
+                                                -for col in row
+                                                  %td= col.text
 
-                            						-# .well.question-description
-                            						-# 	-with toploop_counter0=forloop.counter0
-                                        -#
-                            						-# 	%table{:border => 1}
-                            						-# 		%tbody
-                                        -#     =student_answer
-                            						-# 		-for row in question.get_answer.table
-                            						-# 			%tr
-                            						-# 			-for col in row
-                            						-# 				-if col.0 == '#'
-                            						-# 					%td= col
-                            						-# 					=col
-                            						-# 					%input{id: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
-                            						-# 					%br
-                            						-# 				-else
-                            						-# 					%td= col
-
+                                        -for ans in question.get_answer.answers
+                                          %tr
+                                            %td{colspan: 2}
+                                              -with inloop_counter0=forloop.counter0
+                                                .answers-panel.panel{class: "{% if correct == 1 %}panel-success{% elif correct == 0 %}panel-danger{% else %}panel-warning{% endif %}"}
+                                                  .panel-heading
+                                                    -with y=forloop.counter|stringformat:"s"
+                                                      -with template="#["|add:y|add:"]#"
+                                                        =template
+                                                  .panel-body.answers-panel
+                                                    %table.answers-table
+                                                      %tr
+                                                        %td.right-border{width: "50%"}
+                                                          -for stu_ans in student_answer
+                                                            -if stu_ans.0 == inloop_counter0
+                                                              =stu_ans.1.0
+                                                        %td{width: "50%", display: "block"}
+                                                          -for answ in ans.answers
+                                                              %ul
+                                                                -if ans.type != "text"
+                                                                  %li
+                                                                    \\(
+                                                                    =answ.latex
+                                                                    \\)
+                                                                    (code latex : <code>{{ answ.latex }}</code>)
+                                                                -else
+                                                                  %li=answ.text
 
                                   %a.btn.btn-default.infos{id: "{{ question.id }}"} Afficher les sources/informations
                                   %p.hiddeninfo{id: "source_{{ question.id }}"}
