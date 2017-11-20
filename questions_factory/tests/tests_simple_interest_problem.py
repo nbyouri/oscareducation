@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.test import TestCase
 import json
 
@@ -24,9 +25,19 @@ class SolutionsTests(TestCase):
 
 
 class GeneratingQuestionsTests(TestCase):
+
+    def setUp(self):
+        from test.factories.skill import SkillFactory
+        from test.factories.skill import SectionFactory
+        SectionFactory.create(id=28, name="UAA5: Deuxième degré").save()
+        SkillFactory.create(id=342, code="T4-U5-A1b",
+                            name="", description="",
+                            image="area-chart", oscar_synthese=None, modified_by_id=None, section_id=28)
+
     def test_time_placed_year_rate_year(self):
         problem = create_problem("year", "year")
         questions = problem.gen_questions(5)
+        self.assertTrue(isinstance(problem.get_context(), Context))
         for question in questions:
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
@@ -34,6 +45,7 @@ class GeneratingQuestionsTests(TestCase):
     def test_time_placed_month_rate_month(self):
         problem = create_problem("month", "month")
         questions = problem.gen_questions(5)
+        self.assertTrue(isinstance(problem.get_context(), Context))
         for question in questions:
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
@@ -41,6 +53,7 @@ class GeneratingQuestionsTests(TestCase):
     def test_time_placed_month_rate_year(self):
         problem = create_problem("month", "year")
         questions = problem.gen_questions(5)
+        self.assertTrue(isinstance(problem.get_context(), Context))
         for question in questions:
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
@@ -48,6 +61,7 @@ class GeneratingQuestionsTests(TestCase):
     def test_time_placed_year_rate_month(self):
         problem = create_problem("year", "month")
         questions = problem.gen_questions(5)
+        self.assertTrue(isinstance(problem.get_context(), Context))
         for question in questions:
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
