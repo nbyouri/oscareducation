@@ -13,7 +13,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     $scope.addAnswerField = function(question){
   			elem = document.getElementById("blank-text");
   			text = elem.value;
-  			matches = text.match(/#\[\d*]#/g);
+  			matches = text.match(/#\[\d+]#/g);
   			if (matches === null) { //If it is the first field
   				text += "#[1]#";
   				elem.value = text; //Update input form

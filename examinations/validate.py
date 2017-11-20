@@ -88,10 +88,20 @@ def validate_exercice_yaml_structure(exercice):
                     # XXX put warning if X/Y is our of graph
 
         elif data["type"] == "fill-table-blanks":
-            pass
-        
+            if len(data["answers"]) == 0:
+                return (u'Un tableau à trous doit avoir au moins un blanc (cliquez sur le "Générer les champs" pour en ajouter)')
+
+
         elif data["type"] == "fill-text-blanks":
-            pass
+            if len(data["answers"]) == 0:
+                return (u'Une question à trous doit avoir au moins un blanc (cliquez sur le "+" pour en ajouter)')
+            counter = 0
+            for answer in data["answers"]:
+                counter += 1
+                if answer["type"] not in ["text", "math-simple", "math-advanced"]:
+                    return (u'Le type de la question %s est illégal' %(counter)).encode("Utf-8")
+                if len(answer["answers"]) == 0:
+                    return (u'Le champs %s doit avoir au moins une réponse possible' %(counter)).encode("Utf-8")
 
         elif data["type"] == "professor":
             # No verification to perform, no automatic grade if the Professor grades the Question
