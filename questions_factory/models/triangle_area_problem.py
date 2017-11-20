@@ -1,7 +1,12 @@
-import random
+import math
+import turtle, random
 from cmath import sqrt
+from decimal import Decimal
+
+import screen as screen
 
 from questions_factory.models import *
+from questions_factory.models.triangle_draw import TriangleDraw, draw_triangle
 
 
 class TriangleAreaProblem(TrianglePerimeterProblem):
@@ -25,13 +30,18 @@ class TriangleAreaProblem(TrianglePerimeterProblem):
         self.side_c = sides[2]
 
     def area(self):
-        p = self.init_sides() / 2.0
-        return sqrt(p * (p - self.side_a) * (p - self.side_b) * (p - self.side_c)) # erone method
+        draw_triangle(self) # ABSOLUTELY FLOAT!
+        if (self.side_a + self.side_b > self.side_c) and (self.side_a + self.side_c > self.side_b) and (self.side_b + self.side_c > self.side_a):
+            s = self.side_a + self.side_b + self.side_c
+            s = s / 2.0
+            print"s->", s
+            print"side_a->", self.side_a
+            print"side_b->", self.side_b
+            print"side_c->", self.side_c
+            output1 = Decimal(math.sqrt(s * (s - self.side_a) * (s - self.side_b) * (s - self.side_c)))  # erone method for area
+            output2 = round(output1, 2)
+            return output2
 
-    def init_sides(self):
-        side_a = random.randint(1, 9)
-        side_c = random.randint(1, 9)
-        side_b = random.randint(1, 9)
-        if (side_a + side_b > side_c) and (side_a + side_c > side_b) and (side_b + side_c > side_a):
-            return [side_a, side_b, side_c]
-        return self.init_sides()
+        else:
+            self.area()
+

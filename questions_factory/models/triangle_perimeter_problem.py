@@ -39,9 +39,9 @@ class TrianglePerimeterProblem:
         self.side_c = sides[2]
 
     def init_sides(self):
-        side_a = random.randint(1, 9)
-        side_c = random.randint(1, 9)
-        side_b = random.randint(1, 9)
+        side_a = random.randint(1.0, 9.0)
+        side_c = random.randint(1.0, 9.0)
+        side_b = random.randint(1.0, 9.0)
         if (side_a + side_b > side_c) and (side_a + side_c > side_b) and (side_b + side_c > side_a):
             return [side_a, side_b, side_c]
         return self.init_sides()

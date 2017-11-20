@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.test import TestCase
 from questions_factory.models import *
 import json
@@ -8,20 +9,16 @@ from hamcrest import *
 from questions_factory.models.triangle_area_problem import TriangleAreaProblem
 
 
-def test_basic():
-    tri = TriangleAreaProblem()
-    tri.side_a = 2
-    tri.side_b = 2
-    tri.side_c = 2
-    assert_that(tri.area == 1.73)
-
-
 class NormalBehaviour(TestCase):
-    pass
+    def test_basic(self):
+        tri = TriangleAreaProblem()
+        s = tri.side_a + tri.side_b + tri.side_c
+        s = s / 2.0
+        output1 = Decimal(numpy.math.sqrt(s * (s - tri.side_a) * (s - tri.side_b) * (s - tri.side_c)))  # erone method
+        test_area = round(output1, 2)
+        area = tri.area()
+        assert_that(tri.area() == test_area)
 
-
-class NormalBehaviour(TestCase):
-    pass
 
 
 class UnexpectedBehaviour(TestCase):
