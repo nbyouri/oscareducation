@@ -11,12 +11,10 @@ class ProblemModel:
     @abc.abstractmethod
     def get_desc(self):
         """Return the description of the problem"""
-        return
 
     @abc.abstractmethod
     def get_sol(self):
         """Return the solution of the problem"""
-        return
 
     @abc.abstractmethod
     def gen_values(self):
