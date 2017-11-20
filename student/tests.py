@@ -14,7 +14,7 @@ from django.test import TestCase,Client
 # pass tests
 
 class passTestsTest(TestCase):
-    d
+
 
     # We test to access to a test but without logging, the server shall forbid us and send us a 404 error.
     # We take the id of a test already created, 21, in our case.
@@ -27,14 +27,14 @@ class passTestsTest(TestCase):
     def testNotRunnnig(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
-        response = c.get("/test/465/start/")
+        response = c.get("/student/test/start/465")
         self.assertTemplateUsed(response,'examinations/test_closed.haml')
 
     #
     def testStarted(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
-        response = c.get("/student/23")
+        response = c.get("/student/test/23")
         self.assertTemplateUsed(response,"examinations/pass_test.haml")
 
     # We test to access to the test page where we've already passed the test.
@@ -50,6 +50,10 @@ class passTestsTest(TestCase):
         c.login(username="eleve.eleve",password="eleve")
         response = c.get("/student/test/28")
         self.assertTemplateUsed(response,"examinations/take_exercice.haml")
+
+        """
+if __name__ == '__main__':
+    unittest.main()"""
 
 
 # skill pedagogic

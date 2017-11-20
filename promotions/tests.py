@@ -53,9 +53,9 @@ class PageLoadTest(TestCase):
 
 
 # exercice_validation_form_validate_exercice
-"""     Tests unfinished for promotions but canceled because Celine & Adrien did them. I'll continue if I've time.
 
 
+"""
 class ExerciceFromExerciceTest(TestCase):
     # We set up the paramters of login
     def setUp(self):
@@ -88,4 +88,4 @@ class ExerciceSubmitTest(TestCase):
 
     def testGraph():
 
-"""
+        """
