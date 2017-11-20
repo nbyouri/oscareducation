@@ -27,3 +27,10 @@ class ArithmeticForm(ProblemForm):
             if (range_to - range_from) < 5:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 5"
                 self.add_error('range_from', msg)
+
+
+class SimpleInterestForm(forms.Form):
+    TIME_CHOICES = (('year', 'Années'), ('month', 'Mois'))
+
+    time_placed = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Temps de placement')
+    type_rate = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Ratio appliqué par')

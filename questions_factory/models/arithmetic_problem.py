@@ -11,8 +11,12 @@ from skills.models import Skill
 
 
 class ArithmeticPolynomialSecondDegree(ProblemModel):
-    def __init__(self, domain, image, range, val=None):
-        ProblemModel.__init__(self, "Polynomial second degree", domain, image, range)
+    def __init__(self, domain, image, range=(0, 20), val=None):
+        ProblemModel.__init__(self)
+        self.desc = "Polynomial second degree"
+        self.domain = domain
+        self.image = image
+        self.range = range
         if val and len(val) == 3:
             self.val = val
         else:
