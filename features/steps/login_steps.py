@@ -5,7 +5,7 @@ from features.pages import *
 @given('I am on the login page')
 def step_impl(context):
     context.login_page.navigate(context.base_url)
-    assert context.browser.current_url().endswith(LoginPageLocator.USERNAME_LOGIN_URL)
+    assert context.login_page.currently_on_username_page()
 
 
 @then('I enter my username')
@@ -20,7 +20,7 @@ def step_impl(context):
 
 @then('I am on the password page')
 def step_impl(context):
-    assert context.browser.current_url().endswith(LoginPageLocator.PASSWORD_LOGIN_URL)
+    assert context.login_page.currently_on_password_page()
 
 
 @then('I enter my password')
@@ -67,5 +67,4 @@ def step_impl(context):
 def step_impl(context):
     assert context.browser.current_url_endswith('/accounts/passwordlogin/') or \
         context.browser.current_url_endswith('/accounts/usernamelogin/')
-    #assert context.browser.driver.find_element_by_class_name('alert-danger')
     assert context.login_page.find_alert()
