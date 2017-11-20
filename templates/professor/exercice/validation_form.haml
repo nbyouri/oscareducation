@@ -124,7 +124,7 @@
                           %button.btn.btn-danger{type: "button", ng-if: "table.length > 1", ng-click: "removeRowTableBlank(table, x)"}
                             %span.glyphicon.glyphicon-remove
                         %td{ng-repeat: "column in row track by $index", ng-init:"y = $index.toString()"}
-                          %input.form-control{type: "text", ng-model: "table[x][y]"}
+                          %input.form-control{type: "text", ng-model: "table[x][y]", ng-change:"onQuestionTableChange(table)"}
                       %tr
                         %td
                           %button.btn.btn-success{ng-click: "addRowTableBlank(table)", type: "button"}
