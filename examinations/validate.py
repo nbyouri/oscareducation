@@ -90,6 +90,13 @@ def validate_exercice_yaml_structure(exercice):
         elif data["type"] == "fill-table-blanks":
             if len(data["answers"]) == 0:
                 return (u'Un tableau à trous doit avoir au moins un blanc (cliquez sur le "Générer les champs" pour en ajouter)')
+            counter = 0
+            for answer in data["answers"]:
+                counter += 1
+                if answer["type"] not in ["text", "math-simple", "math-advanced"]:
+                    return (u'Le type de la question %s est illégal' % (counter)).encode("Utf-8")
+                if len(answer["answers"]) == 0:
+                    return (u'Le champs %s doit avoir au moins une réponse possible' % (counter)).encode("Utf-8")
 
 
         elif data["type"] == "fill-text-blanks":
