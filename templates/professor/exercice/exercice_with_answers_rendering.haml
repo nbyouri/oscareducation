@@ -69,14 +69,14 @@
         -elif answer.type == "fill-table-blanks"
           .well.question-description
             -with toploop_counter0=forloop.counter0
-              %table.table.table-bordered
+              %table.table.table-bordered{style: "table-layout:fixed"}
                 %tbody
                 -for row in answer.table
                   %tr
                   -for col in row
                     -if col.blank
                       %td
-                        %input{id: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", type: "text", value: "{{ col.text }}", autocomplete: "off",  disabled: "disabled", style: "text-align:center"}
+                        %input{id: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ forloop.counter0 }}", type: "text", value: "{{ col.text }}", autocomplete: "off",  disabled: "disabled", style: "text-align:center;width:100%"}
                     -else
                       %td= col.text
 

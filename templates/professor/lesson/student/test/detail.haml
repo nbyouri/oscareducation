@@ -161,6 +161,13 @@
                                 .answers-panel.panel{class: "{% if correct == 1 %}panel-success{% elif correct == 0 %}panel-danger{% else %}panel-warning{% endif %}"}
                                   .panel-heading
                                     =question.description|safe
+                                    -if type == "fill-table-blanks"
+                                      %table.table.table-bordered{style: "table-layout:fixed"}
+                                        %tbody
+                                          -for row in question.get_answer.table
+                                            %tr
+                                              -for col in row
+                                                %td= col.text
                                   .panel-body.answers-panel
                                     -# The student_answer is an array, even if it contains one answer
                                     %table.answers-table
@@ -268,7 +275,13 @@
                                                         -with inloop_counter0=forloop.counter0
                                                           -for stu_ans in student_answer
                                                             -if stu_ans.0 == inloop_counter0
-                                                              =stu_ans.1.0
+                                                              -if ans.type != "text"
+                                                                \\(
+                                                                  =stu_ans.1.0
+                                                                \\)
+                                                                (code latex : <code>{{ stu_ans.1.0 }}</code>)
+                                                              -else
+                                                                =stu_ans.1.0
                                                       %td{width: "50%", display: "block"}
                                                         -for answ in ans.answers
                                                             %ul
@@ -281,15 +294,7 @@
                                                               -else
                                                                 %li=answ.text
 
-                                       -elif type == "fill-table-blanks"
-                                         %br
-                                          %table.table.table-bordered
-                                            %tbody
-                                            -for row in question.get_answer.table
-                                                %tr
-                                                -for col in row
-                                                  %td= col.text
-
+                                      -elif type == "fill-table-blanks"
                                         -for ans in question.get_answer.answers
                                           %tr
                                             %td{colspan: 2}
@@ -305,7 +310,13 @@
                                                         %td.right-border{width: "50%"}
                                                           -for stu_ans in student_answer
                                                             -if stu_ans.0 == inloop_counter0
-                                                              =stu_ans.1.0
+                                                              -if ans.type != "text"
+                                                                \\(
+                                                                  =stu_ans.1.0
+                                                                \\)
+                                                                (code latex : <code>{{ stu_ans.1.0 }}</code>)
+                                                              -else
+                                                                =stu_ans.1.0
                                                         %td{width: "50%", display: "block"}
                                                           -for answ in ans.answers
                                                               %ul
@@ -317,6 +328,7 @@
                                                                     (code latex : <code>{{ answ.latex }}</code>)
                                                                 -else
                                                                   %li=answ.text
+
 
                                   %a.btn.btn-default.infos{id: "{{ question.id }}"} Afficher les sources/informations
                                   %p.hiddeninfo{id: "source_{{ question.id }}"}

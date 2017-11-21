@@ -53,7 +53,7 @@
 			              -if ans.type == "math" or ans.type == "math-simple" or ans.type == "math-advanced"
 			                %span
 			                  %textarea.keyboard
-			                  %span.mathquill{data-keyboard-type: "{{ ans.type }}"}
+			                  %span.mathquill{data-keyboard-type: "{{ ans.type }}", style: "width:241px"}
 			                  %input.form-control.hidden-math-form{id: "fill-{{ toploop_counter0 }}-{{ inloop_counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ inloop_counter0 }}", type: "text", autocomplete: "off"}
 			              -else
 			                %input{id: "fill-{{ toploop_counter0 }}-{{ inloop_counter0 }}", name: "fill-{{ toploop_counter0 }}-{{ inloop_counter0 }}", type: "text", autocomplete: "off"}
@@ -61,7 +61,7 @@
 					-elif answer.type == "fill-table-blanks"
 						.well.question-description
 							-with toploop_counter0=forloop.counter0
-								%table.table.table-bordered
+								%table.table.table-bordered{style: "table-layout:fixed"}
 									%tbody
 									-for row in answer.table
 										%tr
@@ -71,10 +71,10 @@
 			                    -if col.blank.type == "math" or col.blank.type  == "math-simple" or col.blank.type  == "math-advanced"
 			                      %span
 			                        %textarea.keyboard
-			                        %span.mathquill{data-keyboard-type: "{{ col.blank.type }}"}
+			                        %span.mathquill{data-keyboard-type: "{{ col.blank.type }}", style: "width:100%"}
 			                        %input.form-control.hidden-math-form{id: "fill-{{ toploop_counter0 }}-{{ col.index }}", name: "fill-{{ toploop_counter0 }}-{{ col.index }}", type: "text", autocomplete: "off"}
 			                    -else
-			                      %input{id: "fill-{{ toploop_counter0 }}-{{ col.index }}", name: "fill-{{ toploop_counter0 }}-{{ col.index }}", type: "text", autocomplete: "off"}
+			                      %input{id: "fill-{{ toploop_counter0 }}-{{ col.index }}", name: "fill-{{ toploop_counter0 }}-{{ col.index }}", type: "text", autocomplete: "off", style: "width:100%"}
 			                -else
 			                  %td= col.text
 					-else

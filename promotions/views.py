@@ -1409,7 +1409,7 @@ def exercice_validation_form_validate_exercice(request):
             }
 
         elif question["type"] == "fill-text-blanks":
-            temp = re.split(r'#\[\d\]#',question["instructions"])
+            temp = re.split(r'#\[\d+\]#',question["instructions"])
 
             i = 0
             for ans in question["answers"]:
@@ -1433,13 +1433,12 @@ def exercice_validation_form_validate_exercice(request):
                     closed_list = {}
                     closed_list["index"]=i
                     closed_list["text"]=cell
-                    if re.match(r'#\[\d\]#',cell) is not None:
+                    if re.match(r'#\[\d+\]#',cell) is not None:
                         closed_list["blank"]=question["answers"][i]
                         i+=1
                     temp.append(closed_list)
                 new_table.append(temp)
 
-            print(new_table)
             question["table"] = new_table
 
             questions[question["instructions"]] = {
@@ -1559,7 +1558,7 @@ def exercice_validation_form_submit(request, pk=None):
                     "answers": [x["text"] for x in question["answers"]],
                 }
             elif question["type"] == "fill-text-blanks":
-                temp = re.split(r'#\[\d\]#',question["instructions"])
+                temp = re.split(r'#\[\d+\]#',question["instructions"])
 
                 i = 0
                 for ans in question["answers"]:
@@ -1583,13 +1582,12 @@ def exercice_validation_form_submit(request, pk=None):
                         closed_list = {}
                         closed_list["index"]=i
                         closed_list["text"]=cell
-                        if re.match(r'#\[\d\]#',cell) is not None:
+                        if re.match(r'#\[\d+\]#',cell) is not None:
                             closed_list["blank"]=question["answers"][i]
                             i+=1
                         temp.append(closed_list)
                     new_table.append(temp)
 
-                print(new_table)
                 question["table"] = new_table
 
                 new_question_answers = {
