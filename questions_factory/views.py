@@ -21,6 +21,8 @@ def get_form(generator_name, request):
         form = SimpleInterestProblem.make_form(request.POST or None)
     elif generator_name == "StatisticsProblem":
         form = StatisticsProblem.make_form(request.POST or None)
+    elif generator_name == "VolumeProblem":
+        form = VolumeProblem.make_form(request.POST or None)
     return form
 
 
