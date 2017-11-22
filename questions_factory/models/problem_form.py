@@ -5,21 +5,19 @@ DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
 IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
 
 GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
-                    ("TrianglePerimeter", "Périmetre de Triangle"))
+                    ("SimpleInterestProblem", "Problème d'intêret"),
+                    ("StatisticsProblem", "Problème de statistiques"))
 
 
 class GeneratorChoiceForm(forms.Form):
     generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
 
 
-class ProblemForm(GeneratorChoiceForm):
-    domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')
-    image = forms.ChoiceField(widget=forms.Select, choices=IMAGE_CHOICES, label='Image')
-
-
-class ArithmeticForm(ProblemForm):
+class ArithmeticForm(GeneratorChoiceForm):
     range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
     range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')
+    image = forms.ChoiceField(widget=forms.Select, choices=IMAGE_CHOICES, label='Image')
 
     def clean(self):
         cleaned_data = super(ArithmeticForm, self).clean()
@@ -36,8 +34,30 @@ class ArithmeticForm(ProblemForm):
                 self.add_error('range_from', msg)
 
 
-class SimpleInterestForm(forms.Form):
+class SimpleInterestForm(GeneratorChoiceForm):
     TIME_CHOICES = (('year', 'Années'), ('month', 'Mois'))
 
     time_placed = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Temps de placement')
     type_rate = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Ratio appliqué par')
+
+
+class StatisticsForm(GeneratorChoiceForm):
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    nb = forms.IntegerField(widget=forms.TextInput, required=True, label='Nombre d''éléments')
+
+    def clean(self):
+        cleaned_data = super(StatisticsForm, self).clean()
+        range_from = cleaned_data.get("range_from")
+        range_to = cleaned_data.get("range_to")
+        nb = cleaned_data.get("nb")
+        if isinstance(range_from, float) and isinstance(range_to, float) and isinstance(nb, int):
+            if range_from >= range_to:
+                msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
+                self.add_error('range_from', msg)
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un interval de valeurs supérieur ou égal à 1"
+                self.add_error('range_from', msg)
+            if (nb < 5):
+                msg = "Le nombre d''élément doit être au minimum de 5"
+                self.add_error('nb', msg)

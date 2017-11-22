@@ -22,17 +22,16 @@
                 =question.source|safe
             -with answer=question.get_answer
               -include "professor/exercice/exercice_with_answers_rendering.haml"
-            -#%button.btn-primary{type: "submit", onclick: "submitQuestion()"}
-              Choisir cet exercice
-          %form{method: "POST", enctype: 'application/json'}
+
+          %form{method:"POST", enctype: 'application/json'}
             -csrf_token
             %input{type: "hidden", name: "question_description", value: "{{question.description}}"}
             %input{type: "hidden", name: "question_source", value: "{{question.source}}"}
             %input{type: "hidden", name: "question_answer", value: "{{question.answer}}"}
             %input{type: "hidden", name: "exercise_id", value: "{{ new_test_exercise.id }}"}
-            %button.btn-primary{type: "submit"}
-              Choisir cet exercice
-
+            .text-center
+              %button.btn.btn-primary{type: "submit"}
+                Choisir cet exercice
 
       %h3
         Revenir au test
@@ -43,25 +42,23 @@
   :javascript
 
     $(function() {
-
-      $('form').submit(function(){
-        var form = $(this)
+      $('form').submit(function(event){
+        event.preventDefault();
+        var divForm = $(this).parent();
         $.ajax({
           type: 'post',
           url: 'submit/',
           data: $(this).serialize(),
           success: function (data) {
-            console.log(data.msg);
-            form.hide()
+            divForm.fadeOut();
           }
         });
-        return false;
       });
 
       {% for exercice in new_test_exercise.skill.exercice_set.all %}
       {% for _, question in exercice.get_questions.items %}
       {% if question.type == "graph" %}
-      new Graph('graph-' + {{ forloop.counter0 }})
+        new Graph('graph-' + {{ forloop.counter0 }})
       {% endif %}
       {% endfor %}
       {% endfor %}

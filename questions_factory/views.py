@@ -12,31 +12,28 @@ from models.problem_form import GeneratorChoiceForm
 from promotions.utils import user_is_professor
 
 
+
 def get_form(generator_name, request):
     form = None
     if generator_name == "ArithmeticProblem":
         form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
-    #elif generator_name == "TrianglePerimeter":
-    #    form = ProblemForm(request.POST or None)
+    elif generator_name == "SimpleInterestProblem":
+        form = SimpleInterestProblem.make_form(request.POST or None)
+    elif generator_name == "StatisticsProblem":
+        form = StatisticsProblem.make_form(request.POST or None)
     return form
 
 
 @user_is_professor
 def generator(request, lesson_id, skill_id, test_id):
     form = GeneratorChoiceForm(None)
+    valid = True
     if request.POST:
         form = get_form(request.POST["generator_name"], request)
         if not form:
             return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
         if form.is_valid():
-            # TODO : remove this **** in the model depending on generator_name and form
-            dom = form.cleaned_data['domain']
-            image = form.cleaned_data['image']
-            range = [int(form.cleaned_data['range_from']), int(form.cleaned_data['range_to'])]
-            problem_type = "Arithmetic_Polynomial_Second_degree"
-            data = {'problem': problem_type, 'image': image, 'domain': dom,
-                    'range': range}
-            problem = ProblemGenerator.factory(json.dumps(data))
+            problem = ProblemGenerator.factory(form.cleaned_data)
             exercise = problem.get_context()
             new_test_exercise = TestExercice()
             new_test_exercise.skill_id = skill_id
@@ -48,26 +45,24 @@ def generator(request, lesson_id, skill_id, test_id):
             return render(request, "questions_factory/questions_list.haml",
                           {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise,
                            'test_id': test_id, 'lesson_id': lesson_id})
-
-    return render(request, "questions_factory/settings_problems.haml", {'form': form})
+        else:
+            valid = False
+    return render(request, "questions_factory/settings_problems.haml", {'form': form, 'valid': valid})
 
 
 @user_is_professor
 def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
-    if request.GET:
-        form = get_form(generator_name, request)
-        if not form:
-            return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
-        t = loader.get_template("questions_factory/generator_form.haml")
-        c = {'generator_name': generator_name, 'form': form}
-        return HttpResponse(t.render(c, request))
-    else:
-        return HttpResponseNotFound('<h1>Erreur 404</h1>')
+    form = get_form(generator_name, request)
+    if not form:
+        return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
+    t = loader.get_template("questions_factory/generator_form.haml")
+    c = {'generator_name': generator_name, 'form': form}
+    return HttpResponse(t.render(c, request))
 
 
 @user_is_professor
 def generator_submit(request, lesson_id, skill_id, test_id):
-    if request.method == "POST":
+    if request.POST:
         test_exercise = get_object_or_404(TestExercice, pk=int(request.POST["exercise_id"]))
         question_desc = request.POST["question_description"]
         question_source = request.POST["question_source"]
