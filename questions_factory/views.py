@@ -24,6 +24,7 @@ def get_form(generator_name, request):
 @user_is_professor
 def generator(request, lesson_id, skill_id, test_id):
     form = GeneratorChoiceForm(None)
+    valid = True
     if request.POST:
         form = get_form(request.POST["generator_name"], request)
         if not form:
@@ -41,8 +42,9 @@ def generator(request, lesson_id, skill_id, test_id):
             return render(request, "questions_factory/questions_list.haml",
                           {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise,
                            'test_id': test_id, 'lesson_id': lesson_id})
-
-    return render(request, "questions_factory/settings_problems.haml", {'form': form})
+        else:
+            valid = False
+    return render(request, "questions_factory/settings_problems.haml", {'form': form, 'valid': valid})
 
 
 @user_is_professor

@@ -19,11 +19,13 @@
         -csrf_token
 
         -for field in form
-          =field.label_tag
-          =field
-          %br/
+          -if field.name == "generator_name"
+            =field.label_tag
+            =field
+            %br/
         %hr
         #container-settings
+          -include 'questions_factory/generator_form.haml'
 
 -block javascript
   :javascript
@@ -39,7 +41,8 @@
     $('#id_generator_name').on('change', function(){
         get_form();
       });
-
-    $(function() {
-       get_form();
-    });
+    {% if valid %}
+      $(function() {
+         get_form();
+      });
+    {% endif %}
