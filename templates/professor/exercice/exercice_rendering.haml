@@ -63,7 +63,7 @@
                       %span
                         %textarea.keyboard
                         %span.mathquill{data-keyboard-type: "{{ col.blank.type }}", style: "width:100%"}
-                        %input.hidden-math-form{id: "fill-{{ toploop_counter0 }}-{{ col.index }}", name: "fill-{{ toploop_counter0 }}-{{ col.index }}", type: "text", autocomplete: "off",  disabled:"disabled"}
+                        %input.hidden-math-form{id: "fill-{{ toploop_counter0 }}-{{ col.index }}", name: "fill-{{ toploop_counter0 }}-{{ col.index }}", type: "text", autocomplete: "off",  disabled:"disabled", style: "width:100%"}
                     -else
                       %input{id: "fill-{{ toploop_counter0 }}-{{ col.index }}", name: "fill-{{ toploop_counter0 }}-{{ col.index }}", type: "text", autocomplete: "off",  disabled:"disabled", style: "width:100%"}
                 -else
