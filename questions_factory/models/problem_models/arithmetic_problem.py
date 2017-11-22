@@ -1,11 +1,7 @@
 # coding=utf-8
 import random
-import re
 from collections import OrderedDict
 
-import sympy
-from sympy import sympify
-from sympy import latex
 from fractions import Fraction
 import numpy
 import math
