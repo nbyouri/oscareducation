@@ -1,6 +1,5 @@
-from arithmetic_problem import *
-from simple_interest_problem import *
-import json
+from questions_factory.models.problem_models.arithmetic_problem import *
+from questions_factory.models.problem_models.simple_interest_problem import *
 
 
 class ProblemGenerator:

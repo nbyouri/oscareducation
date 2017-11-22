@@ -1,17 +1,19 @@
 # coding=utf-8
 from examinations.models import *
-from questions_factory.models import ProblemModel, yaml, Context
+import yaml
+
 from questions_factory.models.problem_form import *
+from questions_factory.models.problem_models.problem import *
 from collections import OrderedDict
 import random
 
 from skills.models import Skill
 
 
-class SimpleInterestProblem(ProblemModel):
+class SimpleInterestProblem(Problem):
 
     def __init__(self, time_placed, type_rate):
-        ProblemModel.__init__(self)
+        Problem.__init__(self)
         if time_placed != "year" and time_placed != "month":
             raise ValueError
         if type_rate != "year" and type_rate != "month":

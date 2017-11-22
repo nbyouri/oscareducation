@@ -1,18 +1,19 @@
 # coding=utf-8
-from problem_model import *
-from problem_form import ArithmeticForm
 import random
-import numpy
-from examinations.models import *
-from collections import OrderedDict
 import re
+from collections import OrderedDict
 
+import numpy
+
+from examinations.models import *
+from questions_factory.models.problem_form import ArithmeticForm
+from questions_factory.models.problem_models.problem import *
 from skills.models import Skill
 
 
-class ArithmeticPolynomialSecondDegree(ProblemModel):
+class ArithmeticPolynomialSecondDegree(Problem):
     def __init__(self, domain, image, range=(0, 20), val=None):
-        ProblemModel.__init__(self)
+        Problem.__init__(self)
         self.desc = "Polynomial second degree"
         self.domain = domain
         self.image = image
