@@ -1,0 +1,13 @@
+%div
+  -for field in form
+    -if field.name != "generator_name"
+      =field.label_tag
+      =field
+    %br/
+  -#%input{type: "hidden", name: "generator_name", value: "{{generator_name}}" }
+
+  .submit-row
+    %label
+      &nbsp
+    %input.btn.btn-primary{type: "submit", value: "Créer", id: "id_generate_button"}
+

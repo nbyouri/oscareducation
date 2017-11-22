@@ -4,8 +4,15 @@ from django import forms
 DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
 IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
 
+GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
+                    ("TrianglePerimeter", "Périmetre de Triangle"))
 
-class ProblemForm(forms.Form):
+
+class GeneratorChoiceForm(forms.Form):
+    generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
+
+
+class ProblemForm(GeneratorChoiceForm):
     domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')
     image = forms.ChoiceField(widget=forms.Select, choices=IMAGE_CHOICES, label='Image')
 

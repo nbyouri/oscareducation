@@ -1,21 +1,35 @@
 # encoding: utf-8
 
 from django.db import transaction
-from django.http import Http404, HttpResponseNotFound
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.template import loader
 
-from examinations.models import *
-from examinations.models import TestExercice, List_question
 from models import *
+from models.problem_form import GeneratorChoiceForm
 from promotions.utils import user_is_professor
+
+
+def get_form(generator_name, request):
+    form = None
+    if generator_name == "ArithmeticProblem":
+        form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
+    #elif generator_name == "TrianglePerimeter":
+    #    form = ProblemForm(request.POST or None)
+    return form
 
 
 @user_is_professor
 def generator(request, lesson_id, skill_id, test_id):
-    form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
-    if request.method == "POST":
+    form = GeneratorChoiceForm(None)
+    if request.POST:
+        form = get_form(request.POST["generator_name"], request)
+        if not form:
+            return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
         if form.is_valid():
+            # TODO : remove this **** in the model depending on generator_name and form
             dom = form.cleaned_data['domain']
             image = form.cleaned_data['image']
             range = [int(form.cleaned_data['range_from']), int(form.cleaned_data['range_to'])]
@@ -34,9 +48,24 @@ def generator(request, lesson_id, skill_id, test_id):
             return render(request, "questions_factory/questions_list.haml",
                           {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise,
                            'test_id': test_id, 'lesson_id': lesson_id})
+
     return render(request, "questions_factory/settings_problems.haml", {'form': form})
 
 
+@user_is_professor
+def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
+    if request.GET:
+        form = get_form(generator_name, request)
+        if not form:
+            return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
+        t = loader.get_template("questions_factory/generator_form.haml")
+        c = {'generator_name': generator_name, 'form': form}
+        return HttpResponse(t.render(c, request))
+    else:
+        return HttpResponseNotFound('<h1>Erreur 404</h1>')
+
+
+@user_is_professor
 def generator_submit(request, lesson_id, skill_id, test_id):
     if request.method == "POST":
         test_exercise = get_object_or_404(TestExercice, pk=int(request.POST["exercise_id"]))
@@ -49,9 +78,9 @@ def generator_submit(request, lesson_id, skill_id, test_id):
         with transaction.atomic():
             link = List_question.objects.create(
                 context_id=test_exercise.exercice.id,
-                   question_id=question.id,
+                question_id=question.id,
             )
             link.save()
         return JsonResponse({'msg': 'La question a été ajoutée au test'})
     else:
-        return HttpResponseNotFound('<h1>No matches the given query.</h1>')
+        return HttpResponseNotFound('<h1>Erreur 404</h1>')

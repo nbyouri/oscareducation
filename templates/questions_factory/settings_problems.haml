@@ -14,22 +14,23 @@
 
     .panel-body
       .left.column
-      Subject
-      .subject_menu
-        %select{:name => "subject"}
-          %option subject1
-          %option subject2
 
-      Assessment type
-      .assessment_menu{:name => "assessment"}
-        %select
-          %option assessment1
-          %option assessment2
-
-      Compétence
-      .skill_menu{:skill => "skill"}
-        %select
-          %option Problème arithmétique
+      -#Subject
+      -#.subject_menu
+      -#  %select{:name => "subject"}
+      -#    %option subject1
+      -#    %option subject2
+      -#
+      -#Assessment type
+      -#.assessment_menu{:name => "assessment"}
+      -#  %select
+      -#    %option assessment1
+      -#    %option assessment2
+      -#
+      -#Compétence
+      -#.skill_menu{:skill => "skill"}
+      -#  %select
+      -#    %option Problème arithmétique
 
       %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
         -csrf_token
@@ -38,18 +39,30 @@
           =field.label_tag
           =field
           %br/
-        -# Not needed now
-          .input_menu
-            A
-            %input{:type => "integer", :name => "input_a"}
-            B
-            %input{:type => "integer", :name => "input_b"}
-            C
-            %input{:type => "integer", :name => "input_c"}
-            &nbsp
-        .submit-row
-          %label
-            &nbsp
-          %input.btn.btn-primary{type: "submit", value: "Créer", id: "id_generate_button"}
 
+        -#.submit-row
+        -#  %label
+        -#    &nbsp
+        -#  %input.btn.btn-primary{type: "submit", value: "Choisir", id: "id_generate_button"}
+        #container-settings
 
+-block javascript
+  :javascript
+    function get_form() {
+      $.ajax({
+          type: 'GET',
+          url: $("#id_generator_name").val() + '/',
+          cache: false
+        }).done(function ( data ) {
+           $( "#container-settings" ).html( data );
+        });
+    }
+
+    $('#id_generator_name').on('change', function(){
+        console.log("select change")
+        get_form();
+      });
+
+    $(function() {
+       get_form();
+    });
