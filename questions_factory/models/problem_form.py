@@ -5,21 +5,18 @@ DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
 IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
 
 GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
-                    ("TrianglePerimeter", "Périmetre de Triangle"))
+                    ("SimpleInterestProblem", "Problème d'intêret"))
 
 
 class GeneratorChoiceForm(forms.Form):
     generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
 
 
-class ProblemForm(GeneratorChoiceForm):
-    domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')
-    image = forms.ChoiceField(widget=forms.Select, choices=IMAGE_CHOICES, label='Image')
-
-
-class ArithmeticForm(ProblemForm):
+class ArithmeticForm(GeneratorChoiceForm):
     range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
     range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')
+    image = forms.ChoiceField(widget=forms.Select, choices=IMAGE_CHOICES, label='Image')
 
     def clean(self):
         cleaned_data = super(ArithmeticForm, self).clean()
@@ -36,7 +33,7 @@ class ArithmeticForm(ProblemForm):
                 self.add_error('range_from', msg)
 
 
-class SimpleInterestForm(forms.Form):
+class SimpleInterestForm(GeneratorChoiceForm):
     TIME_CHOICES = (('year', 'Années'), ('month', 'Mois'))
 
     time_placed = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Temps de placement')

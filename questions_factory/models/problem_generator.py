@@ -8,16 +8,14 @@ class ProblemGenerator:
     def __init__(self):
         pass
 
-    def factory(json_i):
-        global problem, domain, image, range, values
-        input = json.loads(json_i)
-        problem = input["problem"]
-        if problem == "Arithmetic_Polynomial_Second_degree":
-            domain, range, image = input.pop("domain"), input.pop("range"), input.pop("image")
-            values = input.pop("val", None)
+    def factory(input_dict):
+        problem = input_dict["generator_name"]
+        if problem == "ArithmeticProblem":
+            domain, range, image = input_dict.pop("domain"), input_dict.pop("range"), input_dict.pop("image")
+            values = input_dict.pop("val", None)
             return ArithmeticPolynomialSecondDegree(domain, image, range, values)
-        elif problem == "Simple_Interest_Problem":
-            time_placed, type_rate = input.pop("time_placed"), input.pop("type_rate")
+        elif problem == "SimpleInterestProblem":
+            time_placed, type_rate = input_dict.pop("time_placed"), input_dict.pop("type_rate")
             return SimpleInterestProblem(time_placed, type_rate)
         else:
             raise ValueError('Wrong problem type')

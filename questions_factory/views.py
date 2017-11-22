@@ -16,8 +16,8 @@ def get_form(generator_name, request):
     form = None
     if generator_name == "ArithmeticProblem":
         form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
-    #elif generator_name == "TrianglePerimeter":
-    #    form = ProblemForm(request.POST or None)
+    elif generator_name == "SimpleInterestProblem":
+        form = SimpleInterestProblem.make_form(request.POST or None)
     return form
 
 
@@ -29,14 +29,7 @@ def generator(request, lesson_id, skill_id, test_id):
         if not form:
             return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
         if form.is_valid():
-            # TODO : remove this **** in the model depending on generator_name and form
-            dom = form.cleaned_data['domain']
-            image = form.cleaned_data['image']
-            range = [int(form.cleaned_data['range_from']), int(form.cleaned_data['range_to'])]
-            problem_type = "Arithmetic_Polynomial_Second_degree"
-            data = {'problem': problem_type, 'image': image, 'domain': dom,
-                    'range': range}
-            problem = ProblemGenerator.factory(json.dumps(data))
+            problem = ProblemGenerator.factory(form.cleaned_data)
             exercise = problem.get_context()
             new_test_exercise = TestExercice()
             new_test_exercise.skill_id = skill_id

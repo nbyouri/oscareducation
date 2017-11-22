@@ -15,23 +15,6 @@
     .panel-body
       .left.column
 
-      -#Subject
-      -#.subject_menu
-      -#  %select{:name => "subject"}
-      -#    %option subject1
-      -#    %option subject2
-      -#
-      -#Assessment type
-      -#.assessment_menu{:name => "assessment"}
-      -#  %select
-      -#    %option assessment1
-      -#    %option assessment2
-      -#
-      -#Compétence
-      -#.skill_menu{:skill => "skill"}
-      -#  %select
-      -#    %option Problème arithmétique
-
       %form#parameters-form{action: "{{ app_path }}", method: "post", role: "form"}
         -csrf_token
 
@@ -39,11 +22,7 @@
           =field.label_tag
           =field
           %br/
-
-        -#.submit-row
-        -#  %label
-        -#    &nbsp
-        -#  %input.btn.btn-primary{type: "submit", value: "Choisir", id: "id_generate_button"}
+        %hr
         #container-settings
 
 -block javascript
