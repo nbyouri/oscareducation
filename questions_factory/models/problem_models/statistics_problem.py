@@ -58,7 +58,9 @@ class StatisticsProblem(Problem) :
 
     @staticmethod
     def default_context():
-        description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> "
+        description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> " \
+                      "<b> Attention : </b> les réponses doivent être sous la forme " \
+                      "$$ [x_1, x_2, x_3] $$ dans l'ordre croissant et arrondis à 2 chiffres après la virgule"
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",
