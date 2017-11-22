@@ -41,15 +41,15 @@ class StatisticsProblem(Problem) :
 
     def new_question(self, sol):
         question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(self.nb) + " jours : <br/>" \
-                        "<table style=""width:100%"", border=1px, text-align=""center""> <tr>"
+                        "<div align=""center"" style=""width:100%;""><table style=""width:100%;"", border=1px, text-align=""center""> <tr>"
         n = 1
         for j in self.values:
-            question_desc += "<th padding=15px> jour " + str(n) + "</th>"
+            question_desc += "<th> jour " + str(n) + "</th>"
             n += 1
         question_desc += "</tr>"
         for v in self.values:
-            question_desc +=  "<td padding=15px>" + str(v) + "</td>"
-        question_desc +="</tr> </table>"
+            question_desc +=  "<td align=""center"">" + str(v) + "</td>"
+        question_desc +="</tr> </table> </div>"
 
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
@@ -70,7 +70,7 @@ class StatisticsProblem(Problem) :
     def default_context():
         description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> " \
                       "<b> Attention : </b> les réponses doivent être sous la forme " \
-                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne ,Médiane, Ecart-Type avec 2 chiffres après la virgule et non arrondis"
+                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne, Médiane, Ecart-Type avec 2 chiffres après la virgule et non arrondis"
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",

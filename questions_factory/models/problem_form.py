@@ -43,8 +43,8 @@ class SimpleInterestForm(GeneratorChoiceForm):
 
 
 class StatisticsForm(GeneratorChoiceForm):
-    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
-    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur des valeurs')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur des valeurs')
     nb = forms.IntegerField(widget=forms.TextInput, required=True, label='Nombre d''éléments')
 
     def clean(self):
