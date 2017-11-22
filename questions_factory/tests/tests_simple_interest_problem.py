@@ -91,9 +91,10 @@ class InstanceTests(TestCase):
 
 def create_problem(time_placed="year", type_rate="year"):
     values = new_interest_values()
+    values["generator_name"] = "SimpleInterestProblem"
     values["time_placed"] = time_placed
     values["type_rate"] = type_rate
-    problem = ProblemGenerator.factory(json.dumps(values))
+    problem = ProblemGenerator.factory(values)
     return problem
 
 

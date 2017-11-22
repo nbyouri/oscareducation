@@ -111,12 +111,14 @@ def new_arithmetic_dict():
 
 def create_problem(domain="Integer", image="Rational", range=[0, 20], val=None):
     dict = new_arithmetic_dict()
+    dict["generator_name"] = "ArithmeticProblem"
     dict["domain"] = domain
     dict["image"] = image
-    dict['range'] = range
+    dict['range_from'] = range[0]
+    dict['range_to'] = range[1]
     if val:
         dict["val"] = val
-    problem = ProblemGenerator.factory(json.dumps(dict))
+    problem = ProblemGenerator.factory(dict)
     return problem
 
 
