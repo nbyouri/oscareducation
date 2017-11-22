@@ -5,4 +5,6 @@ from create_class_page import *
 from add_student_class_page import *
 from class_page import *
 from add_online_test_page import *
-
+from generator_page import *
+from test_modify_page import *
+from generated_questions_page import *

@@ -6,10 +6,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.shortcuts import resolve_url
 import os
 import codecs
-
 from features import Browser
 from features.pages import *
-
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 
 
@@ -27,6 +25,9 @@ def before_all(context):
     context.add_student_class_page = AddStudentClassPage()
     context.class_page = ClassPage()
     context.add_online_test_page = AddOnlineTestPage()
+    context.test_modify_page = TestModifyPage()
+    context.generator_page = GeneratorPage()
+    context.generated_questions_page = GeneratedQuestionsPage()
 
 
 class BehaviorDrivenTestCase(StaticLiveServerTestCase):
