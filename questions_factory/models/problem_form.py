@@ -6,7 +6,8 @@ IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer
 
 GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
                     ("SimpleInterestProblem", "Problème d'intêret"),
-                    ("StatisticsProblem", "Problème de statistiques"))
+                    ("StatisticsProblem", "Problème de statistiques"),
+                    ("VolumeProblem", "Problèmes de volumes"))
 
 
 class GeneratorChoiceForm(forms.Form):
@@ -61,3 +62,15 @@ class StatisticsForm(GeneratorChoiceForm):
             if (nb < 5):
                 msg = "Le nombre d''élément doit être au minimum de 5"
                 self.add_error('nb', msg)
+
+
+class VolumeProblemForm(GeneratorChoiceForm):
+    OBJECT_TYPE = (('cylinder', 'Cylindre'),
+                   ('pyramid', 'Pyramide'),
+                   ('cone', 'Cône'),
+                   ('prism', 'Prisme'),
+                   ('cube', 'Cube'))
+
+    object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
