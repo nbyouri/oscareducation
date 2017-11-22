@@ -1,7 +1,5 @@
 # coding=utf-8
 from django.test import TestCase
-import json
-
 from examinations.models import *
 from questions_factory.models import SimpleInterestProblem, ProblemGenerator
 
