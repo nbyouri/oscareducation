@@ -10,8 +10,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     };
 
-    $scope.addAnswerField = function(question){
-  			elem = document.getElementById("blank-text");
+    $scope.addAnswerField = function(question, index){
+  			elem = document.getElementById("blank-text"+index);
   			text = elem.value;
   			matches = text.match(/#\[\d+]#/g);
   			if (matches === null) { //If it is the first field
@@ -70,7 +70,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             numberBlank = $scope.parseTableQuestion(question);
 
         }else {
-            var elem = document.getElementById("blank-text");
+            var elem = document.getElementById("blank-text"+topIndex);
             var text = elem.value;
             //console.log(question);
             var matches = text.match(/#\[/g);
