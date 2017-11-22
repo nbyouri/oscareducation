@@ -3,7 +3,11 @@ import random
 import re
 from collections import OrderedDict
 
+import sympy
+from sympy import sympify
+from sympy import latex
 import numpy
+import math
 
 from examinations.models import *
 from questions_factory.models.problem_form import ArithmeticForm
@@ -38,6 +42,8 @@ class ArithmeticPolynomialSecondDegree(Problem):
                 self.val.append(random.uniform(self.range[0], self.range[1]))
         else:
             raise ValueError("Wrong value for domain: ", self.domain)
+        if self.val[0] == 0:
+            self.val[0] = 1
 
     def gen_values_from_sol(self):
         # Max_val for value is rng_range³
@@ -70,16 +76,59 @@ class ArithmeticPolynomialSecondDegree(Problem):
         tmp_sol = numpy.roots(self.val).tolist()
         sol = list()
         if self.image == "Rational" or self.image == "Integer":
-            sol = list()
-            for root in tmp_sol:
-                if not isinstance(root, complex):
-                    sol.append(root)
+            # sol = list()
+            # for root in tmp_sol:
+            if not isinstance(tmp_sol[0], complex):
+                # sol.append(root)
+                sol = (self.compute_sol())
         elif self.image == "Complex":
-            sol = tmp_sol
+            for root in tmp_sol:
+                sol.append(str(root))
         else:
             raise ValueError("Wrong value for image:", self.image)
 
-        return self.round(sol)
+        #  return self.round(sol)
+        return sol
+
+    def rho(self):
+        return self.val[1] ** 2 - 4 * self.val[0] * self.val[2]
+
+    def compute_sol(self):
+        #return [r"\frac{2-\sqrt{2}}{3}"+','+r"\frac{3}{2}"]
+        rho = self.rho()
+        sqrt_rho = math.sqrt(rho)
+        num_neg = -1 * self.val[1] - math.sqrt(rho)
+        num_pos = -1 * self.val[1] + math.sqrt(rho)
+        if self.domain == "Integer" or self.image == "Integer":
+            num_neg = int(num_neg)
+            num_pos = int(num_pos)
+        den = 2 * self.val[0]
+        ans1, ans2 = "0", "0"
+
+        if sqrt_rho.is_integer():
+            if num_neg % den == 0:
+                ans1 = self.simple_answer(num_neg, den)
+                # ans1 = ans1.format(num_neg / den)
+                # ans1 = latex(sympify(str(num_neg/den)))
+            else:
+                ans1 = self.ans_with_frac(num_neg, den)
+                # ans1 = ans1.format(num_neg, den)
+                # ans1 = latex(sympify(str(num_neg)+"/"+str(den), evaluate=False))
+            if num_pos % den == 0:
+                ans2 = self.simple_answer(num_pos, den)
+                #ans2 = ans2.format(num_pos / den)
+                # ans2 = latex(sympify(str(num_pos/den)))
+            else:
+                ans2 = self.ans_with_frac(num_pos, den)
+                #ans2 = ans2.format(num_pos, den)
+                # ans2 = latex(sympify(str(num_pos) + "/" + str(den), evaluate=False))
+        else:
+            pass
+            ans1 = self.ans_with_root(rho, "-") #.format(-1 * self.val[1], rho, 2 * self.val[2])
+            ans2 = self.ans_with_root(rho, "+") #.format(-1 * self.val[1], rho, 2 * self.val[2])
+            # ans1 = latex(sympify("("+"-"+str(self.val[1])+"-"+str(math.sqrt(rho))+")"+"/"+str(den), evaluate=False))
+            # ans2 = latex(sympify("("+"-" + str(self.val[1]) + "+" + str(math.sqrt(rho))+ ")"+ "/" + str(den), evaluate=False))
+        return [ans1 + ',' + ans2]
 
     def new_question(self, sol):
         question_desc = "Calculer les racines de: "
@@ -93,7 +142,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
             sol = tuple(sol)
         else:
             sol = sol[0]
-        answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
+        answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "math-advanced")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
 
@@ -132,6 +181,24 @@ class ArithmeticPolynomialSecondDegree(Problem):
     @staticmethod
     def make_form(post_values):
         return ArithmeticForm(post_values)
+
+    def ans_with_root(self, rho, sign):
+        #if self.domain == "Integer" or self.image == "Integer":
+        return r"\frac{" + str(-1*self.val[1]) + sign + "\sqrt{" + str(rho) + "}}{" + str(2*self.val[2]) +"}"
+        # else:
+        #     return r"\frac{{:+f}}+\sqrt{{:-f}}}}{{:-f}}"
+
+    def ans_with_frac(self, num, den):
+        # if self.domain == "Integer" or self.image == "Integer":
+        return r"\frac{" + str(num) + "}{" + str(den) + "}"
+        # else:
+        #  return r"\frac{{:+f}}{{:-f}}"
+
+    def simple_answer(self, num, den):
+        # if self.domain == "Integer" or self.image == "Integer":
+        return str(num/den)
+        # else:
+        #     return "{:-f}"
 
     @staticmethod
     # TODO Make it prettier
