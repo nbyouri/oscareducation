@@ -47,20 +47,17 @@ def generator(request, lesson_id, skill_id, test_id):
 
 @user_is_professor
 def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
-    if request.GET:
-        form = get_form(generator_name, request)
-        if not form:
-            return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
-        t = loader.get_template("questions_factory/generator_form.haml")
-        c = {'generator_name': generator_name, 'form': form}
-        return HttpResponse(t.render(c, request))
-    else:
-        return HttpResponseNotFound('<h1>Erreur 404</h1>')
+    form = get_form(generator_name, request)
+    if not form:
+        return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
+    t = loader.get_template("questions_factory/generator_form.haml")
+    c = {'generator_name': generator_name, 'form': form}
+    return HttpResponse(t.render(c, request))
 
 
 @user_is_professor
 def generator_submit(request, lesson_id, skill_id, test_id):
-    if request.method == "POST":
+    if request.POST:
         test_exercise = get_object_or_404(TestExercice, pk=int(request.POST["exercise_id"]))
         question_desc = request.POST["question_description"]
         question_source = request.POST["question_source"]
