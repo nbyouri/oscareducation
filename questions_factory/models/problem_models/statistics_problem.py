@@ -14,7 +14,7 @@ class StatisticsProblem(Problem) :
         self.range = range
         self.values = None
         self.nb = nb
-        self.gen_values(self)
+        self.gen_values()
 
     def gen_values(self):
         self.values = random.sample(self.range, self.nb)
@@ -22,11 +22,11 @@ class StatisticsProblem(Problem) :
 
     def get_sol(self):
         sol = list()
-        average = self.get_average(self)
+        average = self.get_average()
         sol.append(average)
-        median = self.get_median(self)
+        median = self.get_median()
         sol.append(median)
-        standard_deviation = self.get_standard_deviation(self)
+        standard_deviation = self.get_standard_deviation()
         sol.append(standard_deviation)
 
 
@@ -44,8 +44,9 @@ class StatisticsProblem(Problem) :
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
 
-    """def make_form(self):"""
-
+    @staticmethod
+    def make_form(post_values):
+        return StatisticsForm(post_values)
 
 
     def get_average(self):

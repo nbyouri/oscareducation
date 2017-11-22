@@ -12,12 +12,15 @@ from models.problem_form import GeneratorChoiceForm
 from promotions.utils import user_is_professor
 
 
+
 def get_form(generator_name, request):
     form = None
     if generator_name == "ArithmeticProblem":
         form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
     elif generator_name == "SimpleInterestProblem":
         form = SimpleInterestProblem.make_form(request.POST or None)
+    elif generator_name == "StatisticsProblem":
+        form = StatisticsProblem.make_form(request.POST or None)
     return form
 
 
