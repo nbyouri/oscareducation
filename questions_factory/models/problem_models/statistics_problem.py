@@ -29,6 +29,7 @@ class StatisticsProblem(Problem) :
         sol.append(median)
         standard_deviation = self.get_standard_deviation()
         sol.append(standard_deviation)
+        return sol
 
 
     def gen_questions(self, number_of_questions):
