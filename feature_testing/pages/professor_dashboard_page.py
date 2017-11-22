@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from features import Browser
+from feature_testing import Browser
 
 
 class ProfessorDashboardPageLocator(object):
@@ -22,3 +22,6 @@ class ProfessorDashboardPage(Browser):
 
     def click_add_class(self):
         self.click_element(*ProfessorDashboardPageLocator.ADD_CLASS_BUTTON)
+
+    def currently_on_this_page(self):
+        return self.current_url_endswith(ProfessorDashboardPageLocator.URL)

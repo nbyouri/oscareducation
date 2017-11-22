@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from features import Browser
+from feature_testing import Browser
 
 
 class TestModifyPageLocator(object):

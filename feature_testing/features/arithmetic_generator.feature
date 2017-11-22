@@ -4,8 +4,7 @@ Feature: ArithmeticGenerator
   In order to easily populates my assessments
 
   Scenario: Successfully creating an arithmetic problem
-    Given I am an existing non logged professor
-    Then I log in
+    Given I am a logged in professor
     Then I create the class "fuzzz", with students "Millui" "Cenlignes" and "Fatmodels" "Skinnycontrollers"
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
@@ -18,8 +17,7 @@ Feature: ArithmeticGenerator
     Then I click on going back to the test
 
   Scenario: Successfully creating an arithmetic problem with rational domain
-    Given I am an existing non logged professor
-    Then I log in
+    Given I am a logged in professor
     Then I create the class "fuzzz", with students "Millui" "Cenlignes" and "Fatmodels" "Skinnycontrollers"
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
@@ -34,8 +32,7 @@ Feature: ArithmeticGenerator
 
 
   Scenario: Trying to create an arithmetic problem without parameters
-    Given I am an existing non logged professor
-    Then I log in
+    Given I am a logged in professor
     Then I create the class "fuzzz", with students "Millui" "Cenlignes" and "Fatmodels" "Skinnycontrollers"
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
@@ -45,8 +42,7 @@ Feature: ArithmeticGenerator
     Then I see an error panel
 
   Scenario: Trying to create an arithmetic problem with invalid range
-    Given I am an existing non logged professor
-    Then I log in
+    Given I am a logged in professor
     Then I create the class "fuzzz", with students "Millui" "Cenlignes" and "Fatmodels" "Skinnycontrollers"
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
@@ -57,8 +53,7 @@ Feature: ArithmeticGenerator
     Then I see an error panel
 
   Scenario: Trying to create an arithmetic problem with too small range
-    Given I am an existing non logged professor
-    Then I log in
+    Given I am a logged in professor
     Then I create the class "fuzzz", with students "Millui" "Cenlignes" and "Fatmodels" "Skinnycontrollers"
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question

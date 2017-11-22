@@ -4,7 +4,7 @@ from django.test.runner import DiscoverRunner
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.shortcuts import resolve_url
 import os
-from features.pages import *
+from pages import *
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 
 

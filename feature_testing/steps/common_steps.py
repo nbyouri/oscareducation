@@ -1,7 +1,6 @@
 # encoding: utf-8
 from behave import given, when, then
 from django.contrib.auth.hashers import make_password
-from features.pages import *
 
 
 @given('I am an existing non logged professor')
@@ -11,32 +10,28 @@ def step_impl(context):
     u.save()
 
 
-@then('I log in')
+@given('I am a logged in professor')
 def step_impl(context):
-    context.login_page.navigate(context.base_url)
-    assert context.login_page.currently_on_username_page()
-    context.login_page.enter_username("username")
-    context.login_page.submit()
-    assert context.login_page.currently_on_password_page()
-    context.login_page.enter_password('password')
-    context.login_page.submit()
-    assert context.browser.current_url_endswith(ProfessorDashboardPageLocator.URL)
+    context.execute_steps(u"""
+        Given I am an existing non logged professor
+        Given I am on the login page
+        Then I enter my username
+        When I submit my username
+        Then I am on the password page
+        Then I enter my password
+        When I submit my password
+        Then I am redirected to the professor home page
+    """)
 
 
 @then('I create the class "{classname}", with students "{firstname1}" "{lastname1}" and "{firstname2}" "{lastname2}"')
 def step_impl(context, classname, firstname1, lastname1, firstname2, lastname2):
-    context.professor_dashboard_page.click_add_class()
-    assert context.create_class_page.currently_on_this_page()
-    context.create_class_page.enter_class_name(classname)
-    context.create_class_page.select_id_stage("13")
-    context.create_class_page.submit()
-    assert context.add_student_class_page.currently_on_this_page()
-    context.add_student_class_page.fill_student_1_first_name(firstname1)
-    context.add_student_class_page.fill_student_1_last_name(lastname1)
-    context.add_student_class_page.fill_student_2_first_name(firstname2)
-    context.add_student_class_page.fill_student_2_last_name(lastname2)
-    context.add_student_class_page.submit()
-    assert context.class_page.currently_on_this_page()
+    context.execute_steps(u"""
+        Then I go on class creation page
+        Then I create a class "{classname}"
+        Then I create two students, "{firstname1}" "{lastname1}" and "{firstname2}" "{lastname2}" for my class
+        Then I am on the class homepage
+        """.format(classname=classname, firstname1=firstname1, firstname2=firstname2, lastname2=lastname2, lastname1=lastname1))
 
 
 @then('I create the test "{test_name}" for skill "{skill}"')

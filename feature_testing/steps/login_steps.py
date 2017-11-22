@@ -1,5 +1,4 @@
 from behave import given, when, then
-from features.pages import *
 
 
 @given('I am on the login page')
@@ -42,12 +41,12 @@ def step_impl(context):
 
 @then('I am redirected to the professor home page')
 def step_impl(context):
-    assert context.browser.current_url_endswith(ProfessorDashboardPageLocator.URL)
+    assert context.professor_dashboard_page.currently_on_this_page()
 
 
 @then('I am redirected to the student home page')
 def step_impl(context):
-    assert context.browser.current_url_endswith(StudentDashboardPageLocator.URL)
+    assert context.student_dashboard_page.currently_on_this_page()
 
 
 @then('I enter an invalid username')

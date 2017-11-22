@@ -1,6 +1,4 @@
-import re
-from behave import given, when, then
-from features.pages import *
+from behave import then
 
 
 @then('I go on class creation page')

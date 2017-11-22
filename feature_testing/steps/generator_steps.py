@@ -1,7 +1,4 @@
-import re
-
 from behave import given, when, then
-from selenium.webdriver.support.select import Select
 
 
 @then('I click on generate the question')

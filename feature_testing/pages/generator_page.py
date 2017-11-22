@@ -1,6 +1,6 @@
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
-from features import Browser
+from feature_testing import Browser
 
 
 class GeneratorPageLocator(object):
@@ -37,6 +37,17 @@ class GeneratorPage(Browser):
     def select(self, text, *locator):
         Select(self.driver.find_element(*locator)).select_by_value(text)
 
+    def generate_questions(self):
+        self.click_element(*GeneratorPageLocator.GENERATE_BUTTON)
+
+    def currently_on_this_page(self):
+        return self.driver.find_element(*GeneratorPageLocator.PAGE_TITLE)
+
+    def error_displayed(self):
+        return self.driver.find_element(*GeneratorPageLocator.ERROR)
+
+    # Arithmetic Setup
+
     def select_arithmetic_problem_generator(self):
         self.select(GeneratorPageLocator.ARITHMETIC_PROBLEM_GENERATOR,
                     *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
@@ -49,15 +60,6 @@ class GeneratorPage(Browser):
 
     def select_rational_domain(self):
         self.select("Rational", *GeneratorPageLocator.DOMAIN_SELECT)
-
-    def generate_questions(self):
-        self.click_element(*GeneratorPageLocator.GENERATE_BUTTON)
-
-    def currently_on_this_page(self):
-        return self.driver.find_element(*GeneratorPageLocator.PAGE_TITLE)
-
-    def error_displayed(self):
-        return self.driver.find_element(*GeneratorPageLocator.ERROR)
 
     # Simple Interest
 
