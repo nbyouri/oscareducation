@@ -6,6 +6,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.shortcuts import resolve_url
 import os
 import codecs
+from features import Browser
+from features.pages import *
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 
 
@@ -13,22 +15,24 @@ def before_all(context):
     django.setup()
     context.test_runner = DiscoverRunner()
     context.old_db_config = context.test_runner.setup_databases()
-    # PhantomJS is used there (headless browser - meaning we can execute tests in a command-line environment,
-    # which is what we want for use with SemaphoreCI
-    # For debugging purposes, you can use the Firefox driver instead.
-    context.browser = webdriver.PhantomJS()
-    # Small unit of wait between instructions, allowing things to load
-    context.browser.implicitly_wait(10)
-    # Screen size must be wide enough to let PhantomJS find elements
-    context.browser.set_window_size(1920, 1080)
-    # Using a different port, not conflicting if server is booted up
-    context.server_url = 'http://localhost:8080'
+    context.browser = Browser()
+
+    # Page Objects
+    context.login_page = LoginPage()
+    context.professor_dashboard_page = ProfessorDashboardPage()
+    context.student_dashboard_page = StudentDashboardPage()
+    context.create_class_page = CreateClassPage()
+    context.add_student_class_page = AddStudentClassPage()
+    context.class_page = ClassPage()
+    context.add_online_test_page = AddOnlineTestPage()
+    context.test_modify_page = TestModifyPage()
+    context.generator_page = GeneratorPage()
+    context.generated_questions_page = GeneratedQuestionsPage()
 
 
 class BehaviorDrivenTestCase(StaticLiveServerTestCase):
     """
     Test case attached to the context during behave execution
-
     This test case prevents the regular tests from running.
     """
 
@@ -67,12 +71,4 @@ def before_feature(context, feature):
 # After a single step
 def after_step(context, step):
     if step.status == 'failed':
-        # Screenshots where that step failed
-        context.browser.save_screenshot('features/failures/screenshots/'
-                                        + str(datetime.now()) + '-' + step.name + '.png')
-        save_path = 'features/failures/pages'
-        file_name = str(datetime.now()) + '-' + str(step.name) + '.html'
-        complete_name = os.path.join(save_path, file_name)
-        file_object = codecs.open(complete_name, "w", "utf-8")
-        html = context.browser.page_source
-        file_object.write(html)
+        context.browser.save_screen_shot(context, step)

@@ -1,12 +1,9 @@
 import abc
 
 
-class ProblemModel:
-    def __init__(self, desc, domain, image, range=(0, 20), val=None):
-        self.desc = desc
-        self.domain = domain
-        self.image = image
-        self.range = range
+class Problem:
+    def __init__(self):
+        pass
 
     @abc.abstractmethod
     def get_desc(self):
@@ -19,6 +16,10 @@ class ProblemModel:
     @abc.abstractmethod
     def gen_values(self):
         """Generate new random values for the problem"""
+
+    @abc.abstractmethod
+    def gen_questions(self, number_of_questions):
+        """Generate questions for use in context"""
 
     @abc.abstractmethod
     def make_form(self):

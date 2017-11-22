@@ -1,0 +1,12 @@
+-# Partial template
+-for field in form
+  -if field.name != "generator_name"
+    =field.label_tag
+    =field
+    %br/
+
+.submit-row
+  %label
+    &nbsp
+  %input.btn.btn-primary.btn-block.center{type: "submit", value: "Créer", id: "id_generate_button"}
+
