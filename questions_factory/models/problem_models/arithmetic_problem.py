@@ -169,7 +169,8 @@ class ArithmeticPolynomialSecondDegree(Problem):
     def default_context():
         description = "Calculer les racines $$ x_1, x_2 $$ d'un polyonme du second degré <br/> " \
                       "<b> Attention : </b> les réponses doivent être sous la forme " \
-                      "$$ (x_1, x_2) $$ dans l'ordre croissant et arrondis à 2 chiffres après la virgule"
+                      "$$ x_1, x_2 $$ les réponses sous formes de fractions doivent être simplifiés au maximum <br/>" \
+                      "utilisez le clavier spécial pour taper vos réponses sous formes d'équations"
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",
