@@ -371,6 +371,24 @@ class Answer(models.Model):
         """Get the list of answers"""
         return json.loads(self.raw_answer)[0]
 
+    def get_answers_blanks_tab(self):
+        """Get the list of answers"""
+        ans = json.loads(self.raw_answer)[0]
+        print(ans)
+        quest = [None]*len(ans)
+        j = 0
+        for index in ans:
+            # print(ans[index])
+            answers = ans[index]['response']
+            resp = [None] * len(answers)
+            i = 0
+            for stu_ans in answers:
+                resp[i] = [int(stu_ans)-int(index), answers[stu_ans]]
+                i += 1
+            quest[j] = [int(index), resp, int(ans[index]['correct'])]
+            j += 1
+        return quest
+
 
 class TestStudent(models.Model):
     """A student test
