@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
-from feature_testing import Browser
+from features import Browser
 
 
 class CreateClassPageLocator(object):

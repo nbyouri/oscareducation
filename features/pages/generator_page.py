@@ -1,6 +1,6 @@
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
-from feature_testing import Browser
+from features import Browser
 
 
 class GeneratorPageLocator(object):

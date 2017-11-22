@@ -1,5 +1,4 @@
-from selenium.webdriver.common.by import By
-from feature_testing import Browser
+from features import Browser
 
 
 class StudentDashboardPageLocator(object):
