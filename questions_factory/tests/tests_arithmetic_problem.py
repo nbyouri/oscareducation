@@ -9,29 +9,19 @@ from questions_factory.models.problem_generator import ProblemGenerator
 
 class NormalBehaviour(TestCase):
 
-    def test_get_unique_solution_integer_integer_problem(self):
-        val = [0, 1, -2]
-        problem = create_problem("Integer", "Integer", [0, 10], val)
-        [x_1] = problem.get_sol()
-        assert_that(2, equal_to(x_1))
-        question = problem.new_question(problem.get_sol())
-        self.assertTrue(isinstance(question, Question))
-
     @staticmethod
     def test_get_solution_integer_rational_problem():
         val = [1, -3, 2]
         problem = create_problem("Integer", "Rational", [0, 20], val)
-        [x_1, x_2] = problem.get_sol()
-        assert_that(2, equal_to(x_1))
-        assert_that(1, equal_to(x_2))
+        [x_1, _] = problem.get_sol()
+        assert_that(x_1, equal_to("1,2"))
 
     @staticmethod
     def test_get_solution_integer_integer_problem():
         val = [1, -3, 2]
         problem = create_problem("Integer", "Integer", [0, 10], val)
-        [x_1, x_2] = problem.get_sol()
-        assert_that(2, equal_to(x_1))
-        assert_that(1, equal_to(x_2))
+        [x_1, _] = problem.get_sol()
+        assert_that(x_1, equal_to("1,2"))
 
     @staticmethod
     def test_get_val_integer_rational_problem():
@@ -57,15 +47,17 @@ class ComplexImageProblems(TestCase):
     def test_get_solution_random_val_integer_complex_problem():
         problem = create_problem("Integer", "Complex", [0, 20])
         val = problem.get_val()
-        ans = numpy.roots(val)
-        assert_that([round(ans.tolist())], contains(problem.get_sol()))
+        ans = numpy.roots(val).tolist()
+        ans = round(ans)
+        assert_that(problem.get_sol(), has_item(str(ans[0])+','+str(ans[1])))
 
     @staticmethod
     def test_get_solution_random_val_rational_complex_problem():
         problem = create_problem("Rational", "Complex", [0, 20])
         val = problem.get_val()
         ans = numpy.roots(val)
-        assert_that([round(ans.tolist())], contains(problem.get_sol()))
+        ans = round(ans)
+        assert_that(problem.get_sol(), has_item(str(ans[0]) + ',' + str(ans[1])))
 
     @staticmethod
     def test_high_number_solutions_rational_complex_problem():
@@ -73,7 +65,8 @@ class ComplexImageProblems(TestCase):
             problem = create_problem("Rational", "Complex", [0, 20])
             val = problem.get_val()
             ans = numpy.roots(val)
-            assert_that([round(ans.tolist())], contains(problem.get_sol()))\
+            ans = round(ans)
+            assert_that(problem.get_sol(), has_item(str(ans[0]) + ',' + str(ans[1])))
 
 
     @staticmethod
@@ -82,7 +75,8 @@ class ComplexImageProblems(TestCase):
             problem = create_problem("Integer", "Complex", [0, 20])
             val = problem.get_val()
             ans = numpy.roots(val)
-            assert_that([round(ans.tolist())], contains(problem.get_sol()))
+            ans = round(ans)
+            assert_that(problem.get_sol(), has_item(str(ans[0]) + ',' + str(ans[1])))
 
 
 class UnexpectedBehaviour(TestCase):

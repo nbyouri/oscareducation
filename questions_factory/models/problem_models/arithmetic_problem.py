@@ -71,16 +71,15 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     def get_sol(self):
         tmp_sol = numpy.roots(self.val).tolist()
-        sol = list()
+        sol = ""
         if self.image == "Rational" or self.image == "Integer":
-            # sol = list()
-            # for root in tmp_sol:
-            if not isinstance(tmp_sol[0], complex):
-                # sol.append(root)
+            if self.rho() > 0:
                 sol = (self.compute_sol())
+            else:
+                return []
         elif self.image == "Complex":
-            for root in tmp_sol:
-                sol.append(str(root))
+            tmp_sol = self.round(tmp_sol)
+            sol = [str(tmp_sol[0]) + ',' + str(tmp_sol[1]), str(tmp_sol[1]) + ',' + str(tmp_sol[0])]
         else:
             raise ValueError("Wrong value for image:", self.image)
 
@@ -91,8 +90,9 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return self.val[1] ** 2 - 4 * self.val[0] * self.val[2]
 
     def compute_sol(self):
-        #return [r"\frac{2-\sqrt{2}}{3}"+','+r"\frac{3}{2}"]
         rho = self.rho()
+        if rho < 0 and (self.domain == "Integer" or self.domain == "Rational"):
+            return None
         sqrt_rho = math.sqrt(rho)
         num_neg = -1 * self.val[1] - math.sqrt(rho)
         num_pos = -1 * self.val[1] + math.sqrt(rho)
@@ -113,16 +113,16 @@ class ArithmeticPolynomialSecondDegree(Problem):
                 # ans1 = latex(sympify(str(num_neg)+"/"+str(den), evaluate=False))
             if num_pos % den == 0:
                 ans2 = self.simple_answer(num_pos, den)
-                #ans2 = ans2.format(num_pos / den)
+                # ans2 = ans2.format(num_pos / den)
                 # ans2 = latex(sympify(str(num_pos/den)))
             else:
                 ans2 = self.ans_with_frac(num_pos, den, True)
-                #ans2 = ans2.format(num_pos, den)
+                # ans2 = ans2.format(num_pos, den)
                 # ans2 = latex(sympify(str(num_pos) + "/" + str(den), evaluate=False))
         else:
             pass
-            ans1 = self.ans_with_root(rho, "-") #.format(-1 * self.val[1], rho, 2 * self.val[2])
-            ans2 = self.ans_with_root(rho, "+") #.format(-1 * self.val[1], rho, 2 * self.val[2])
+            ans1 = self.ans_with_root(rho, "-")  # .format(-1 * self.val[1], rho, 2 * self.val[2])
+            ans2 = self.ans_with_root(rho, "+")  # .format(-1 * self.val[1], rho, 2 * self.val[2])
             # ans1 = latex(sympify("("+"-"+str(self.val[1])+"-"+str(math.sqrt(rho))+")"+"/"+str(den), evaluate=False))
             # ans2 = latex(sympify("("+"-" + str(self.val[1]) + "+" + str(math.sqrt(rho))+ ")"+ "/" + str(den), evaluate=False))
         return [ans1 + ',' + ans2, ans2 + ',' + ans1]
@@ -181,23 +181,19 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return ArithmeticForm(post_values)
 
     def ans_with_root(self, rho, sign):
-        #if self.domain == "Integer" or self.image == "Integer":
-        return r"\frac{" + str(-1*self.val[1]) + sign + "\sqrt{" + str(rho) + "}}{" + str(2*self.val[2]) +"}"
-        # else:
-        #     return r"\frac{{:+f}}+\sqrt{{:-f}}}}{{:-f}}"
+        return r"\frac{" + str(-1 * self.val[1]) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * self.val[2]) + "}"
 
-    def ans_with_frac(self, num, den, simplify=False):
+    @staticmethod
+    def ans_with_frac(num, den, simplify=False):
         if not simplify:
             return r"\frac{" + str(num) + "}{" + str(den) + "}"
         else:
             f = Fraction(num, den)
             return r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}"
 
-    def simple_answer(self, num, den):
-        # if self.domain == "Integer" or self.image == "Integer":
-        return str(num/den)
-        # else:
-        #     return "{:-f}"
+    @staticmethod
+    def simple_answer(num, den):
+        return str(num / den)
 
     @staticmethod
     # TODO Make it prettier
