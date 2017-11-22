@@ -12,7 +12,7 @@ from django.test import TestCase,Client
     We create a test that the user eleve.eleve didn't begin and we access it for the first time
 """
 # pass tests
-
+"""
 class passTestsTest(TestCase):
 
 
@@ -51,7 +51,7 @@ class passTestsTest(TestCase):
         response = c.get("/student/test/28")
         self.assertTemplateUsed(response,"examinations/take_exercice.haml")
 
-        """
+        """"""
 if __name__ == '__main__':
     unittest.main()"""
 

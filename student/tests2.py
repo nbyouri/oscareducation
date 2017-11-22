@@ -14,7 +14,7 @@ class StudentTest(unittest.TestCase):
         c = Client()
         response = c.get("/test/21/start/")
             #self.assertEqual(response.status_code, 404)
-        assert_that(response.status_code,404)
+        assert_that(response.status_code,414)
 
 
     # We test to access to a test that the professor hasn't activated.
