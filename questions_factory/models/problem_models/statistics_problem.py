@@ -17,7 +17,7 @@ class StatisticsProblem(Problem) :
         self.gen_values()
 
     def gen_values(self):
-        self.values = random.sample(self.range, self.nb)
+        self.values = [random.randint(0, 20) for _ in range(self.nb)]
 
 
     def get_sol(self):
