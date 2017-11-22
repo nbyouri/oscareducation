@@ -128,12 +128,16 @@
                       %tr
                         %td
                           %button.btn.btn-success{ng-click: "addRowTableBlank(table)", type: "button"}
-                            %span.glyphicon.glyphicon-plus
+                            %span.glyphicon.glyphicon-plus                      	
+                        	
               .form-group{ng-if : "question.type.startsWith(\"fill-\")"}
                 %label.control-label.col-sm-2 Réponses
                 .col-sm-10
-                  %button.btn.btn-success{ng-disabled:"question.type == \"fill-text-blanks\" && !isPlaceholder(question)", id: 'parserField', ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
-                    Générer les champs
+                	%span
+		                %button.btn.btn-success{ng-disabled:"question.type == \"fill-text-blanks\" && !isPlaceholder(question) || (question.type == \"fill-table-blanks\" && tableHasField(question.table))", id: 'parserField', ng-click: "parseFieldsInQuestion(topIndex, question)", type: "button"}
+		                  Générer les champs
+		                %p.help-block{ng-hide: "(question.type == \"fill-text-blanks\" && isPlaceholder(question))||(question.type == \"fill-table-blanks\" && !tableHasField(question.table))"} 
+		                	Aucun champ détecté
                   %ul.list-group{ng-if: "question.type.startsWith(\"fill-\")"}
                     %li.list-group-item{ng-repeat: "answer in question.answers", ng-init: "answerIndex = ($index+1).toString()"}
                       %p

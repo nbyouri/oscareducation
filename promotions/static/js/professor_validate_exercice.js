@@ -143,7 +143,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             newLine.push("")
         }
         table.push(newLine);
-        $scope.onQuestionTableChange(table);
     };
 
     /**
@@ -160,7 +159,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             for (var i = 0; i < nRows; i++) {
                 table[i].push("");
             }
-            $scope.onQuestionTableChange(table);
         }
         else{
             alert("Impossible d'avoir plus de dix colonnes par tableau")
@@ -177,7 +175,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     $scope.removeRowTableBlank = function (table, x){
         if(table.length > 1){
             table.splice(x,1);
-            $scope.onQuestionTableChange(table);
         }
         else{
             $scope.flag = true;
@@ -196,21 +193,19 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             for(var i = 0; i < table.length; i++){
                 table[i].splice(y,1)
             }
-            $scope.onQuestionTableChange(table);
         }
     };
     
-    $scope.onQuestionTableChange =  function(table){
+    $scope.tableHasField =  function(table){
     	for(var i = 0; i < table.length; i++){
     		for(var j = 0; j < table[i].length; j++){
     			matches = table[i][j].match(/#\[\d+]#/g);
 					if (table[i][j] == "" || matches != null) {
-						$('#parserField').prop('disabled', false);
-						return;
+						return false;
 					}
     		}
     	}
-    	$('#parserField').prop('disabled', true);
+    	return true;
     };
 
 
