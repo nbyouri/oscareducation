@@ -67,8 +67,8 @@ class GeneratorPage(Browser):
         self.select(GeneratorPageLocator.SIMPLE_INTEREST_PROBLEM_GENERATOR,
                     *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
 
-    def set_time_placed_to_month(self):
-        self.select("month", *GeneratorPageLocator.TIME_PLACED_SELECTOR)
+    def set_time_placed_to(self, time):
+        self.select(time, *GeneratorPageLocator.TIME_PLACED_SELECTOR)
 
-    def set_type_rate_to_month(self):
-        self.select("month", *GeneratorPageLocator.TYPE_RATE_SELECTOR)
+    def set_type_rate_to(self, time):
+        self.select(time, *GeneratorPageLocator.TYPE_RATE_SELECTOR)

@@ -26,8 +26,8 @@ class Browser(object):
 
     def save_screen_shot(self, context, step):
         # Screenshots where that step failed
-        self.driver.save_screenshot('features/failures/screenshots/' + str(datetime.now()) + '-' + step.name + '.png')
-        save_path = 'features/failures/pages'
+        self.driver.save_screenshot('feature_testing/failures/screenshots/' + str(datetime.now()) + '-' + step.name + '.png')
+        save_path = 'feature_testing/failures/pages'
         file_name = str(datetime.now()) + '-' + str(step.name) + '.html'
         complete_name = os.path.join(save_path, file_name)
         file_object = codecs.open(complete_name, "w", "utf-8")

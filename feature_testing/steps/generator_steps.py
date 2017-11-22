@@ -57,13 +57,13 @@ def step_impl(context):
     context.generator_page.select_rational_domain()
 
 
-@then('I set the time placed to month')
-def step_impl(context):
-    context.generator_page.set_time_placed_to_month()
+@then('I set the time placed to "{time}"')
+def step_impl(context, time):
+    context.generator_page.set_time_placed_to(time)
 
 
-@then('I set the type of rate to month')
-def step_impl(context):
-    context.generator_page.set_type_rate_to_month()
+@then('I set the type of rate to "{time}"')
+def step_impl(context, time):
+    context.generator_page.set_type_rate_to(time)
 
 

@@ -47,5 +47,26 @@ def step_impl(context, test_name, skill):
     context.add_online_test_page.add_skill()
     context.add_online_test_page.add_skill()
     context.add_online_test_page.add_skill()
+    context.add_online_test_page.add_skill()
+    context.add_online_test_page.add_skill()
     context.add_online_test_page.add_test_name(test_name)
     context.add_online_test_page.create_test()
+
+
+@then('I create the test "{test_name}" for skill "{skill}" and access question generator')
+def step_impl(context, test_name, skill):
+    context.execute_steps(u"""
+        Then I create the test "{test_name}" for skill "{skill}"
+        Then I click on generate the question
+        Given I am on the generator page
+    """.format(test_name=test_name, skill=skill))
+
+
+@given('I am logged with a fresh class, created a test and accessed question generator')
+def step_impl(context):
+    context.execute_steps(u"""
+        Given I am a logged in professor
+        Then I create the class "{classname}", with students "{firstname1}" "{lastname1}" and "{firstname2}" "{lastname2}"
+        Then I create the test "{test_name}" for skill "{skill}" and access question generator
+    """.format(classname="fooo", firstname1="bar", firstname2="baz",
+               lastname2="bak", lastname1="bek", test_name="test", skill="T4-U5-A1b"))

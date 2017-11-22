@@ -11,6 +11,6 @@ documentation/build/
 oscar-data.sql
 temp.sql
 ghostdriver.log
-features/failures/*
+feature_testing/failures/*
 json_tmp.txt
 .coverage
