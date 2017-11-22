@@ -5,7 +5,8 @@ DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
 IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
 
 GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
-                    ("SimpleInterestProblem", "Problème d'intêret"))
+                    ("SimpleInterestProblem", "Problème d'intêret"),
+                    ("StatisticsProblem", "Problème de statistiques"))
 
 
 class GeneratorChoiceForm(forms.Form):
@@ -38,6 +39,7 @@ class SimpleInterestForm(GeneratorChoiceForm):
 
     time_placed = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Temps de placement')
     type_rate = forms.ChoiceField(widget=forms.Select, choices=TIME_CHOICES, label='Ratio appliqué par')
+
 
 class StatisticsForm(GeneratorChoiceForm):
     range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')

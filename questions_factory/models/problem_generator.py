@@ -1,6 +1,6 @@
 from questions_factory.models.problem_models.arithmetic_problem import *
 from questions_factory.models.problem_models.simple_interest_problem import *
-
+from questions_factory.models.problem_models.statistics_problem import *
 
 class ProblemGenerator:
 
@@ -16,6 +16,9 @@ class ProblemGenerator:
         elif problem == "SimpleInterestProblem":
             time_placed, type_rate = input_dict["time_placed"], input_dict["type_rate"]
             return SimpleInterestProblem(time_placed, type_rate)
+        elif problem == "StatisticsProblem":
+            range, nb = (input_dict["range_from"], input_dict["range_to"]), input_dict["nb"]
+            return StatisticsProblem(nb, range)
         else:
             raise ValueError('Wrong problem type')
 
