@@ -5,6 +5,7 @@ from features import Browser
 class ProfessorDashboardPageLocator(object):
     # Login page elements locator
     URL = '/professor/dashboard/'
+    ADD_CLASS_BUTTON = (By.ID, 'id_add_lesson')
 
 
 class ProfessorDashboardPage(Browser):
@@ -18,3 +19,6 @@ class ProfessorDashboardPage(Browser):
 
     def click_element(self, *locator):
         self.driver.find_element(*locator).click()
+
+    def click_add_class(self):
+        self.click_element(*ProfessorDashboardPageLocator.ADD_CLASS_BUTTON)

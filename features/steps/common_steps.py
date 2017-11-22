@@ -3,6 +3,7 @@ from behave import given, when, then
 from django.contrib.auth.hashers import make_password
 from selenium.webdriver.support.select import Select
 import re
+from features.pages import *
 
 
 @given('I am an existing non logged professor')
@@ -14,32 +15,30 @@ def step_impl(context):
 
 @then('I log in')
 def step_impl(context):
-    br = context.browser
-    br.get(context.base_url + '/accounts/usernamelogin/')
-    assert br.current_url.endswith('/accounts/usernamelogin/')
-    br.find_element_by_id("id_username").send_keys('username')
-    br.find_element_by_xpath("//input[@type='submit']").click()
-    assert br.current_url.endswith('/accounts/passwordlogin/')
-    br.find_element_by_id("id_password").send_keys('password')
-    br.find_element_by_xpath("//input[@type='submit']").click()
-    assert br.current_url.endswith('/professor/dashboard/')
+    context.login_page.navigate(context.base_url)
+    assert context.login_page.currently_on_username_page()
+    context.login_page.enter_username("username")
+    context.login_page.submit()
+    assert context.login_page.currently_on_password_page()
+    context.login_page.enter_password('password')
+    context.login_page.submit()
+    assert context.browser.current_url_endswith(ProfessorDashboardPageLocator.URL)
 
 
 @then('I create the class "{classname}", with students "{firstname1}" "{lastname1}" and "{firstname2}" "{lastname2}"')
 def step_impl(context, classname, firstname1, lastname1, firstname2, lastname2):
-    br = context.browser
-    br.find_element_by_id("id_add_lesson").click()
-    assert br.current_url.endswith('professor/lesson/add/')
-    br.find_element_by_id("id_name").send_keys(classname)
-    Select(br.find_element_by_id("id_stage")).select_by_value("13")
-    br.find_element_by_xpath("//button[@type='submit']").click()
-    assert re.search(r'/professor/lesson/[0-9]+/student/add/', br.current_url)
-    br.find_element_by_xpath("//input[@name='first_name_0']").send_keys(firstname1)
-    br.find_element_by_xpath("//input[@name='last_name_0']").send_keys(lastname1)
-    br.find_element_by_xpath("//input[@name='first_name_1']").send_keys(firstname2)
-    br.find_element_by_xpath("//input[@name='last_name_1']").send_keys(lastname2)
-    br.find_element_by_xpath("//button[@type='submit']").click()
-    assert re.search(r'/professor/lesson/[0-9]+', br.current_url)
+    context.professor_dashboard_page.click_add_class()
+    assert context.create_class_page.currently_on_this_page()
+    context.create_class_page.enter_class_name(classname)
+    context.create_class_page.select_id_stage("13")
+    context.create_class_page.submit()
+    assert context.add_student_class_page.currently_on_this_page()
+    context.add_student_class_page.fill_student_1_first_name(firstname1)
+    context.add_student_class_page.fill_student_1_last_name(lastname1)
+    context.add_student_class_page.fill_student_2_first_name(firstname2)
+    context.add_student_class_page.fill_student_2_last_name(lastname2)
+    context.add_student_class_page.submit()
+    assert context.class_page.currently_on_this_page()
 
 
 @then('I create the test "{test_name}" for skill "{skill}"')

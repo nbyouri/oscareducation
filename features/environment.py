@@ -8,7 +8,7 @@ import os
 import codecs
 
 from features import Browser
-from features.pages import LoginPage
+from features.pages import *
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 
@@ -18,7 +18,14 @@ def before_all(context):
     context.test_runner = DiscoverRunner()
     context.old_db_config = context.test_runner.setup_databases()
     context.browser = Browser()
+
+    # Page Objects
     context.login_page = LoginPage()
+    context.professor_dashboard_page = ProfessorDashboardPage()
+    context.student_dashboard_page = StudentDashboardPage()
+    context.create_class_page = CreateClassPage()
+    context.add_student_class_page = AddStudentClassPage()
+    context.class_page = ClassPage()
 
 
 class BehaviorDrivenTestCase(StaticLiveServerTestCase):
