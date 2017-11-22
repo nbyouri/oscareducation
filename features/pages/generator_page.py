@@ -15,11 +15,13 @@ class GeneratorPageLocator(object):
 
     ARITHMETIC_PROBLEM_GENERATOR = "ArithmeticProblem"
     SIMPLE_INTEREST_PROBLEM_GENERATOR = "SimpleInterestProblem"
-    STATISTICS_PROBLEM = "StatisticsProblem"
-    VOLUME_PROBLEM = "VolumeProblem"
+    STATISTIC_PROBLEM_GENERATOR = "StatisticsProblem"
+    VOLUME_PROBLEM_GENERATOR = "VolumeProblem"
 
     TIME_PLACED_SELECTOR = (By.ID, "id_time_placed")
     TYPE_RATE_SELECTOR = (By.ID, "id_type_rate")
+
+    NB_ELEMENTS = (By.ID, "id_nb")
 
 
 class GeneratorPage(Browser):
@@ -72,3 +74,11 @@ class GeneratorPage(Browser):
 
     def set_type_rate_to(self, time):
         self.select(time, *GeneratorPageLocator.TYPE_RATE_SELECTOR)
+
+    # Statistics
+    def select_statistic_problem_generator(self):
+        self.select(GeneratorPageLocator.STATISTIC_PROBLEM_GENERATOR,
+                    *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
+
+    def fill_statistic_elements(self, number):
+        self.fill(number, *GeneratorPageLocator.NB_ELEMENTS)

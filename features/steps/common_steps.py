@@ -1,4 +1,5 @@
 # encoding: utf-8
+import time
 from behave import given, when, then
 from django.contrib.auth.hashers import make_password
 
@@ -44,11 +45,9 @@ def step_impl(context, test_name, skill):
     context.class_page.add_online_test()
     context.add_online_test_page.currently_on_this_page()
     context.add_online_test_page.select_skill(skill)
+    time.sleep(1)
     context.add_online_test_page.add_skill()
-    context.add_online_test_page.add_skill()
-    context.add_online_test_page.add_skill()
-    context.add_online_test_page.add_skill()
-    context.add_online_test_page.add_skill()
+    time.sleep(1)
     context.add_online_test_page.add_test_name(test_name)
     context.add_online_test_page.create_test()
 

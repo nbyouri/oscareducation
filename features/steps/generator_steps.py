@@ -1,8 +1,10 @@
+import time
 from behave import given, when, then
 
 
 @then('I click on generate the question')
 def step_impl(context):
+    time.sleep(1)
     context.test_modify_page.click_on_generate_questions()
 
 
@@ -21,14 +23,25 @@ def step_impl(context):
     context.generator_page.select_arithmetic_problem_generator()
 
 
+@then("I select the statistic problem generator")
+def step_impl(context):
+    context.generator_page.select_statistic_problem_generator()
+
+
 @then('I enter "{low}" as lower range and "{up}" as upper range')
 def step_impl(context, low, up):
     context.generator_page.fill_range_from(low)
     context.generator_page.fill_range_to(up)
 
 
+@then('I enter "{elements}" elements asked')
+def step_impl(context, elements):
+    context.generator_page.fill_statistic_elements(elements)
+
+
 @when('I click on the create button')
 def step_impl(context):
+    time.sleep(2)
     context.generator_page.generate_questions()
 
 
