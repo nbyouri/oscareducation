@@ -1,6 +1,6 @@
-Feature: Generator
+Feature: ArithmeticGenerator
   As a user
-  I want to be able to automatically creates questions
+  I want to be able to automatically creates arithmetical polynomial questions
   In order to easily populates my assessments
 
   Scenario: Successfully creating an arithmetic problem
@@ -11,6 +11,7 @@ Feature: Generator
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
     Given I am on the generator page
+    Then I select the arithmetic problem generator
     Then I enter "0" as lower range and "60" as upper range
     When I click on the create button
     Then I see a list of generated problems
@@ -25,6 +26,7 @@ Feature: Generator
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
     Given I am on the generator page
+    Then I select the arithmetic problem generator
     Then I enter "0" as lower range and "60" as upper range
     Then I select the rational domain
     When I click on the create button
@@ -41,6 +43,7 @@ Feature: Generator
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
     Given I am on the generator page
+    Then I select the arithmetic problem generator
     When I click on the create button
     Then I see an error panel
 
@@ -52,6 +55,7 @@ Feature: Generator
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
     Given I am on the generator page
+    Then I select the arithmetic problem generator
     Then I enter "99999" as lower range and "-1" as upper range
     When I click on the create button
     Then I see an error panel
@@ -64,6 +68,7 @@ Feature: Generator
     Then I create the test "fizz" for skill "T4-U5-A1b"
     Then I click on generate the question
     Given I am on the generator page
+    Then I select the arithmetic problem generator
     Then I enter "0" as lower range and "1" as upper range
     When I click on the create button
     Then I see an error panel

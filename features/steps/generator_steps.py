@@ -14,6 +14,16 @@ def step_impl(context):
     assert context.generator_page.currently_on_this_page()
 
 
+@then("I select the simple interest problem generator")
+def step_impl(context):
+    context.generator_page.select_simple_interest_problem_generator()
+
+
+@then("I select the arithmetic problem generator")
+def step_impl(context):
+    context.generator_page.select_arithmetic_problem_generator()
+
+
 @then('I enter "{low}" as lower range and "{up}" as upper range')
 def step_impl(context, low, up):
     context.generator_page.fill_range_from(low)
@@ -48,4 +58,15 @@ def step_impl(context):
 @then('I select the rational domain')
 def step_impl(context):
     context.generator_page.select_rational_domain()
+
+
+@then('I set the time placed to month')
+def step_impl(context):
+    context.generator_page.set_time_placed_to_month()
+
+
+@then('I set the type of rate to month')
+def step_impl(context):
+    context.generator_page.set_type_rate_to_month()
+
 
