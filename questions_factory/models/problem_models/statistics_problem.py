@@ -7,6 +7,7 @@ from collections import OrderedDict
 from examinations.models import *
 from questions_factory.models.problem_form import *
 from questions_factory.models.problem_models.problem import *
+from skills.models import Skill
 
 
 class StatisticsProblem(Problem) :
@@ -17,7 +18,7 @@ class StatisticsProblem(Problem) :
         self.gen_values()
 
     def gen_values(self):
-        self.values = [random.randint(0, 20) for _ in range(self.nb)]
+        self.values = [random.randint(self.range[0],self.range[1]) for _ in range(self.nb)]
 
 
     def get_sol(self):
@@ -38,8 +39,7 @@ class StatisticsProblem(Problem) :
         return questions
 
     def new_question(self, sol):
-        question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant" + str(self.nb) + " jours : "
-        + str(self.values)
+        question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(self.nb) + " jours : " + str(self.values)
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
@@ -47,6 +47,25 @@ class StatisticsProblem(Problem) :
     @staticmethod
     def make_form(post_values):
         return StatisticsForm(post_values)
+
+
+    def get_context(self):
+        default_context = self.default_context()
+        # TODO Get from db if already Context already exist
+        # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
+        return default_context
+
+    @staticmethod
+    def default_context():
+        description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> "
+        skill_id = "T4-U5-A1b"
+        default_context = Context.objects.create(
+            file_name="generated",
+            skill=Skill.objects.get(code=skill_id),
+            context=description,
+            added_by=None
+        )
+        return default_context
 
 
     def get_average(self):
