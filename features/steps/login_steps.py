@@ -42,14 +42,12 @@ def step_impl(context):
 
 @then('I am redirected to the professor home page')
 def step_impl(context):
-    # TODO PAGE OBJECT
-    assert context.browser.current_url().endswith('/professor/dashboard/')
+    assert context.browser.current_url_endswith(ProfessorDashboardPageLocator.URL)
 
 
 @then('I am redirected to the student home page')
 def step_impl(context):
-    # TODO PAGE OBJECT
-    assert context.browser.current_url().endswith('/student/dashboard/')
+    assert context.browser.current_url_endswith(StudentDashboardPageLocator.URL)
 
 
 @then('I enter an invalid username')
@@ -65,6 +63,6 @@ def step_impl(context):
 # NOTE : This distinction should not even occur as it gives to much information about whether a username is valid
 @then('I am redirected to the login fail page')
 def step_impl(context):
-    assert context.browser.current_url_endswith('/accounts/passwordlogin/') or \
-        context.browser.current_url_endswith('/accounts/usernamelogin/')
+    assert context.browser.current_url_endswith(LoginPageLocator.USERNAME_LOGIN_URL) or \
+        context.browser.current_url_endswith(LoginPageLocator.PASSWORD_LOGIN_URL)
     assert context.login_page.find_alert()

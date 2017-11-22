@@ -1,6 +1,7 @@
 """
 Browser configuration for the Behaviour-Driven-Development environment
 """
+import abc
 import codecs
 import os
 from selenium import webdriver
@@ -35,3 +36,15 @@ class Browser(object):
 
     def current_url_endswith(self, url):
         return self.driver.current_url.endswith(url)
+
+    # Pages methods
+
+    def fill(self, text, *locator):
+        self.driver.find_element(*locator).send_keys(text)
+
+    def click_element(self, *locator):
+        self.driver.find_element(*locator).click()
+
+    @abc.abstractmethod
+    def navigate(self, base_url):
+        pass

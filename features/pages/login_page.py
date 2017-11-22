@@ -15,12 +15,6 @@ class LoginPageLocator(object):
 class LoginPage(Browser):
     # Login page actions
 
-    def fill(self, text, *locator):
-        self.driver.find_element(*locator).send_keys(text)
-
-    def click_element(self, *locator):
-        self.driver.find_element(*locator).click()
-
     def navigate(self, base_url):
         self.driver.get(base_url + LoginPageLocator.USERNAME_LOGIN_URL)
 
