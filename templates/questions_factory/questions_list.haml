@@ -22,16 +22,16 @@
                 =question.source|safe
             -with answer=question.get_answer
               -include "professor/exercice/exercice_with_answers_rendering.haml"
-            -#%button.btn-primary{type: "submit", onclick: "submitQuestion()"}
-              Choisir cet exercice
+
           %form{method: "POST", enctype: 'application/json'}
             -csrf_token
             %input{type: "hidden", name: "question_description", value: "{{question.description}}"}
             %input{type: "hidden", name: "question_source", value: "{{question.source}}"}
             %input{type: "hidden", name: "question_answer", value: "{{question.answer}}"}
             %input{type: "hidden", name: "exercise_id", value: "{{ new_test_exercise.id }}"}
-            %button.btn-primary{type: "submit"}
-              Choisir cet exercice
+            .text-center
+              %button.btn.btn-primary.btn-block{type: "submit"}
+                Choisir cet exercice
 
 
       %h3
@@ -59,11 +59,11 @@
       });
 
       {% for exercice in new_test_exercise.skill.exercice_set.all %}
-      {% for _, question in exercice.get_questions.items %}
-      {% if question.type == "graph" %}
-      new Graph('graph-' + {{ forloop.counter0 }})
-      {% endif %}
-      {% endfor %}
+        {% for _, question in exercice.get_questions.items %}
+          {% if question.type == "graph" %}
+            new Graph('graph-' + {{ forloop.counter0 }})
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     });
 
