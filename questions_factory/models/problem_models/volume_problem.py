@@ -14,15 +14,15 @@ from skills.models import Skill
 
 
 class VolumeProblem(Problem):
-    default_cube = ('cote (a)', 1)
-    default_cylinder = [('rayon de la base (r)', 1), ('hauteur (h)', 2)]
-    default_prism = [('base (b)', 1), ('hauteur de la base (h)', 1), ('hauteur (l)', 2)]
-    default_cone = [('rayon de la base (r)', 1), ('hauteur (h)', 2)]
-    default_pyramid = [('longueur de la base (l)', 1), ('largeur de la base (w)', 1), ('hauteur (h)', 2)]
+    default_cube = 'cote (a)'
+    default_cylinder = ['rayon de la base (r)', 'hauteur (h)']
+    default_prism = ['base (b)', 'hauteur de la base (h)', 'hauteur (l)']
+    default_cone = ['rayon de la base (r)', 'hauteur (h)']
+    default_pyramid = ['longueur de la base (l)', 'largeur de la base (w)', 'hauteur (h)']
     object_type = None
     object_name = None
 
-    def __init__(self, object_type):
+    def __init__(self, object_type, range_from, range_to):
         Problem.__init__(self)
         if object_type != 'cube'            \
             and object_type != 'cylinder'   \
@@ -32,37 +32,39 @@ class VolumeProblem(Problem):
                 raise ValueError
         self.object_type = object_type
         self.figure = None
+        self.range_from = range_from
+        self.range_to = range_to
         self.gen_values()
 
     def gen_values(self):
         # form to specify XXX
         # round values XXX
         # units XXX
-        scale_base_length = random.randint(0, 100)
-        scale_base_width = random.randint(0, 100)
-        scale_height = random.randint(0, 100)
+        base_length = random.randint(self.range_from, self.range_to)
+        base_width = random.randint(self.range_from, self.range_to)
+        height = random.randint(self.range_from, self.range_to)
 
         if self.object_type == 'cube':
             self.object_name = 'du cube'
-            self.figure = [(self.default_cube[0], scale_base_length * self.default_cube[1])]
+            self.figure = [(self.default_cube, base_length)]
         elif self.object_type == 'cylinder':
             self.object_name = 'du cylindre'
-            self.figure = [(self.default_cylinder[0][0], self.default_cylinder[0][1] * scale_base_length),  # radius
-                           (self.default_cylinder[1][0], self.default_cylinder[1][1] * scale_height)]
+            self.figure = [(self.default_cylinder[0], base_length),  # radius
+                           (self.default_cylinder[1], height)]
         elif self.object_type == 'prism':
             self.object_name = 'du prisme'
-            self.figure = [(self.default_prism[0][0], self.default_prism[0][1] * scale_base_length),
-                           (self.default_prism[1][0], self.default_prism[1][1] * scale_base_width),  # triangle height
-                           (self.default_prism[2][0], self.default_prism[2][1] * scale_height)]
+            self.figure = [(self.default_prism[0], base_length),
+                           (self.default_prism[1], base_width),  # triangle height
+                           (self.default_prism[2], height)]
         elif self.object_type == 'cone':
             self.object_name = 'du cone'
-            self.figure = [(self.default_cone[0][0], self.default_cone[0][1] * scale_base_length),  # radius
-                           (self.default_cone[1][0], self.default_cone[1][1] * scale_height)]
+            self.figure = [(self.default_cone[0], base_length),  # radius
+                           (self.default_cone[1], height)]
         elif self.object_type == 'pyramid':
             self.object_name = 'de la pyramide'
-            self.figure = [(self.default_pyramid[0][0], self.default_pyramid[0][1] * scale_base_length),
-                           (self.default_pyramid[1][0], self.default_pyramid[1][1] * scale_base_width),
-                           (self.default_pyramid[2][0], self.default_pyramid[2][1] * scale_height)]
+            self.figure = [(self.default_pyramid[0], base_length),
+                           (self.default_pyramid[1], base_width),
+                           (self.default_pyramid[2], height)]
         else:
             raise ValueError
 

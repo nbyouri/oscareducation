@@ -72,3 +72,5 @@ class VolumeProblemForm(GeneratorChoiceForm):
                    ('cube', 'Cube'))
 
     object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
