@@ -27,3 +27,8 @@ class ArithmeticForm(ProblemForm):
             if (range_to - range_from) < 5:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 5"
                 self.add_error('range_from', msg)
+
+
+class TrianglePerimeterForm(ProblemForm):
+    UNIT_CHOICES = ('unit', 'unit')
+    unit = forms.ChoiceField(widget=forms.Select, choices=UNIT_CHOICES, label='Unité de longueur')
