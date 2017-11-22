@@ -37,7 +37,6 @@ class VolumeProblem(Problem):
         self.gen_values()
 
     def gen_values(self):
-        # form to specify XXX
         # round values XXX
         # units XXX
         base_length = random.randint(self.range_from, self.range_to)
