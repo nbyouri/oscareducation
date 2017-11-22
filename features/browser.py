@@ -14,7 +14,7 @@ class Browser(object):
     # For debugging purposes, you can use the Firefox driver instead.
     driver = webdriver.PhantomJS()
     # Small unit of wait between instructions, allowing things to load
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(10)
     # Screen size must be wide enough to let PhantomJS find elements
     driver.set_window_size(1920, 1080)
 
@@ -27,7 +27,7 @@ class Browser(object):
     def save_screen_shot(self, context, step):
         # Screenshots where that step failed
         self.driver.save_screenshot('feature_testing/failures/screenshots/' + str(datetime.now()) + '-' + step.name + '.png')
-        save_path = 'feature_testing/failures/pages'
+        save_path = 'features/failures/pages'
         file_name = str(datetime.now()) + '-' + str(step.name) + '.html'
         complete_name = os.path.join(save_path, file_name)
         file_object = codecs.open(complete_name, "w", "utf-8")
