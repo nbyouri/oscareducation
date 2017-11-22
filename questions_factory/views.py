@@ -12,7 +12,6 @@ from models.problem_form import GeneratorChoiceForm
 from promotions.utils import user_is_professor
 
 
-
 def get_form(generator_name, request):
     form = None
     if generator_name == "ArithmeticProblem":

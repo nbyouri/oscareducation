@@ -33,13 +33,24 @@
               %button.btn.btn-primary{type: "submit"}
                 Choisir cet exercice
 
-      %h3
+    .panel-body
+      %a.btn.btn-primary{id:"more-question-btn"}
+        Générer plus de question TODO
+      %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}", id:"return-to-test-modify"}
         Revenir au test
-        .panel-body
-          %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}", id:"return-to-test-modify"}
-            Revenir au test
+
 -block javascript
   :javascript
+
+    $('#more-question-btn').click( function(e) {
+      e.preventDefault();
+      more_questions();
+      return false;
+    } );
+
+    function more_questions(){
+      // TODO
+    }
 
     $(function() {
       $('form').submit(function(event){
@@ -54,6 +65,7 @@
           }
         });
       });
+
 
       {% for exercice in new_test_exercise.skill.exercice_set.all %}
       {% for _, question in exercice.get_questions.items %}
