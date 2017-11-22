@@ -4,7 +4,6 @@ Feature: SimpleInterestGenerator
   In order to easily populates my assessments
 
   Scenario: Successfully creating an arithmetic problem
-    Given The db is populated
     Given I am an existing non logged professor
     Then I log in
     Then I create the class "fuzzz", with students "Millui" "Cenlignes" and "Fatmodels" "Skinnycontrollers"
