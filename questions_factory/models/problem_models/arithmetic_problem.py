@@ -6,6 +6,7 @@ from collections import OrderedDict
 import sympy
 from sympy import sympify
 from sympy import latex
+from fractions import Fraction
 import numpy
 import math
 
@@ -111,7 +112,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
                 # ans1 = ans1.format(num_neg / den)
                 # ans1 = latex(sympify(str(num_neg/den)))
             else:
-                ans1 = self.ans_with_frac(num_neg, den)
+                ans1 = self.ans_with_frac(num_neg, den, True)
                 # ans1 = ans1.format(num_neg, den)
                 # ans1 = latex(sympify(str(num_neg)+"/"+str(den), evaluate=False))
             if num_pos % den == 0:
@@ -119,7 +120,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
                 #ans2 = ans2.format(num_pos / den)
                 # ans2 = latex(sympify(str(num_pos/den)))
             else:
-                ans2 = self.ans_with_frac(num_pos, den)
+                ans2 = self.ans_with_frac(num_pos, den, True)
                 #ans2 = ans2.format(num_pos, den)
                 # ans2 = latex(sympify(str(num_pos) + "/" + str(den), evaluate=False))
         else:
@@ -128,7 +129,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
             ans2 = self.ans_with_root(rho, "+") #.format(-1 * self.val[1], rho, 2 * self.val[2])
             # ans1 = latex(sympify("("+"-"+str(self.val[1])+"-"+str(math.sqrt(rho))+")"+"/"+str(den), evaluate=False))
             # ans2 = latex(sympify("("+"-" + str(self.val[1]) + "+" + str(math.sqrt(rho))+ ")"+ "/" + str(den), evaluate=False))
-        return [ans1 + ',' + ans2]
+        return [ans1 + ',' + ans2, ans2 + ',' + ans1]
 
     def new_question(self, sol):
         question_desc = "Calculer les racines de: "
@@ -138,11 +139,11 @@ class ArithmeticPolynomialSecondDegree(Problem):
             equation = ("{:-0.2f}x²{:+0.2f}x{:+0.2f}".format(self.val[0], self.val[1], self.val[2]))
         equation = self.pretty_polynomial_string(equation)
         question_desc += equation
-        if sol.__len__() > 1:
-            sol = tuple(sol)
-        else:
-            sol = sol[0]
-        answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "math-advanced")]))
+        # if sol.__len__() > 1:
+        #     sol = tuple(sol)
+        # else:
+        #     sol = sol[0]
+        answers = yaml.dump(OrderedDict([("answers", sol), ("type", "math-advanced")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
 
@@ -188,11 +189,12 @@ class ArithmeticPolynomialSecondDegree(Problem):
         # else:
         #     return r"\frac{{:+f}}+\sqrt{{:-f}}}}{{:-f}}"
 
-    def ans_with_frac(self, num, den):
-        # if self.domain == "Integer" or self.image == "Integer":
-        return r"\frac{" + str(num) + "}{" + str(den) + "}"
-        # else:
-        #  return r"\frac{{:+f}}{{:-f}}"
+    def ans_with_frac(self, num, den, simplify=False):
+        if not simplify:
+            return r"\frac{" + str(num) + "}{" + str(den) + "}"
+        else:
+            f = Fraction(num, den)
+            return r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}"
 
     def simple_answer(self, num, den):
         # if self.domain == "Integer" or self.image == "Integer":
