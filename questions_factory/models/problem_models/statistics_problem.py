@@ -41,15 +41,13 @@ class StatisticsProblem(Problem) :
 
     def new_question(self, sol):
         question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(self.nb) + " jours : <br/>" \
-                        "<div align=""center"" style=""width:100%;""><table style=""width:100%;"", border=1px, text-align=""center""> <tr>"
+                        "<div align=""center"" style=""overflow-x:auto;""><table style=""width:100%;"", style=""height: 100%;"", border=1px, text-align=""center""> <tr> <td align=""center""><b>Numéros de Journée </b></th> <td align=""center""> <b>Valeurs </b></th></tr>"
         n = 1
-        for j in self.values:
-            question_desc += "<th> jour " + str(n) + "</th>"
-            n += 1
-        question_desc += "</tr>"
         for v in self.values:
-            question_desc +=  "<td align=""center"">" + str(v) + "</td>"
-        question_desc +="</tr> </table> </div>"
+            question_desc += "<tr><td> journée numéro " + str(n) + "</td>"
+            question_desc +=  "<td align=""center"">" + str(v) + "</td></tr>"
+            n += 1
+        question_desc +="</table> </div>"
 
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
