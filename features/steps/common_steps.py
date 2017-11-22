@@ -1,8 +1,6 @@
 # encoding: utf-8
 from behave import given, when, then
 from django.contrib.auth.hashers import make_password
-from selenium.webdriver.support.select import Select
-import re
 from features.pages import *
 
 
@@ -43,22 +41,18 @@ def step_impl(context, classname, firstname1, lastname1, firstname2, lastname2):
 
 @then('I create the test "{test_name}" for skill "{skill}"')
 def step_impl(context, test_name, skill):
-    br = context.browser
-    br.find_element_by_id("id_my_tests_button").click()
-    assert re.search(r'/professor/lesson/[0-9]+/test/', br.current_url)
-    br.find_element_by_id("id_add_test_button").click()
-    assert re.search(r'/professor/lesson/[0-9]+/test/add', br.current_url)
-    br.find_element_by_id("id_add_test_online_button").click()
-    assert re.search(r'/professor/lesson/[0-9]+/test/online/add', br.current_url)
-    Select(br.find_element_by_xpath("//select[@ng-model='stage13SelectedSkill']")).select_by_value(skill)
-    # Adding the competence
-    br.find_element_by_id("addSkillToTestButtonForStage13").click()
-    br.find_element_by_id("addSkillToTestButtonForStage13").click()
-    br.find_element_by_id("addSkillToTestButtonForStage13").click()
-    # Add name to test
-    br.find_element_by_id("test_name").send_keys(test_name)
-    # Create the test
-    br.find_element_by_id("id_create_test_button").click()
+
+    context.class_page.access_class_tests()
+    assert context.class_page.currently_on_class_tests_page()
+    context.class_page.add_new_test()
+    assert context.class_page.currently_on_test_type_choice()
+    context.class_page.add_online_test()
+    context.add_online_test_page.currently_on_this_page()
+    context.add_online_test_page.select_skill(skill)
+    context.add_online_test_page.select_skill(skill)
+    context.add_online_test_page.select_skill(skill)
+    context.add_online_test_page.add_test_name(test_name)
+    context.add_online_test_page.create_test()
 
 
 @given('The db is populated')

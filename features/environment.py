@@ -26,6 +26,7 @@ def before_all(context):
     context.create_class_page = CreateClassPage()
     context.add_student_class_page = AddStudentClassPage()
     context.class_page = ClassPage()
+    context.add_online_test_page = AddOnlineTestPage()
 
 
 class BehaviorDrivenTestCase(StaticLiveServerTestCase):
