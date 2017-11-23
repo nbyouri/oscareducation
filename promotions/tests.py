@@ -2,7 +2,37 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from users.models import Professor, Student
 from django.core.urlresolvers import reverse
+from hamcrest import *
+import unittest
 
+from django.test import Client
+
+
+
+login = "prof"
+pwd = "prof"
+
+
+class PromotionsTest(unittest.TestCase):
+
+    """def testWithoutLog(self):
+        c = Client()
+        response = c.get("/test/21/start/")
+            #self.assertEqual(response.status_code, 404)
+        assert_that(response.status_code,404)"""
+
+    def test(self):
+        c = Client()
+        c.login(username=login, password=pwd)
+        response = c.get("/")
+        print(response)
+        assert_that(response, assert_that(equal_to('examinations/test_closed.haml')))
+
+        """def test(self):
+        c = Client()
+        c.login(username=login, password=pwd)
+        response = c.get("/")
+        assert_that(response, 'examinations/test_closed.haml')
 
 class PermissionsTest(TestCase):
     def setUp(self):
@@ -56,7 +86,7 @@ class PageLoadTest(TestCase):
 
 
 """
-class ExerciceFromExerciceTest(TestCase):
+"""class ExerciceFromExerciceTest(TestCase):
     # We set up the paramters of login
     def setUp(self):
         self.c = Client()

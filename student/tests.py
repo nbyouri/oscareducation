@@ -12,7 +12,19 @@ from django.test import TestCase,Client
     We create a test that the user eleve.eleve didn't begin and we access it for the first time
 """
 # pass tests
-"""
+
+
+login = "eleve.elve"
+pwd = "eleve"
+n1 = "21" # Number of a test. Used to test the access without logging
+n2 = "38" # Number of a test allowed.
+n3 = "27" # Number of a test that we have not finished
+n4 = "22" # Number of a test that we have finished
+n5 = "28"
+n6 = 1
+n7 = 1
+
+
 class passTestsTest(TestCase):
 
 
@@ -20,67 +32,89 @@ class passTestsTest(TestCase):
     # We take the id of a test already created, 21, in our case.
     def testWithoutLog(self):
         c = Client()
-        response = c.get("/test/21/start/")
-        self.assertEqual(response.status_code,404)
+        response = c.get("/student/test/"+ n1 + "/")
+        self.assertEqual(response.status_code,302)
 
-    # We test to access to a test that the professor hasn't activated.
-    def testNotRunnnig(self):
+    # We test to access to a test that the professor hasn't activated. 404 expected
+    """def testNotRunnnig(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
         response = c.get("/student/test/start/465")
-        self.assertTemplateUsed(response,'examinations/test_closed.haml')
+        self.assertEqual(response.status_code,404)"""
 
-    #
+    # We test to access to the test page and we're authorized.
     def testStarted(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
-        response = c.get("/student/test/23")
-        self.assertTemplateUsed(response,"examinations/pass_test.haml")
+        response = c.get("/student/test/"+n2+"/")
+        self.assertRedirects(response,"examinations/pass_test.haml")
+        #self.assertEqual(response.status_code, 200)
 
     # We test to access to the test page where we've already passed the test.
     def testFinished(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
-        response = c.get("/student/test/28")
-        self.assertTemplateUsed(response,"examinations/test_finished.haml")
+        response = c.get("/student/test/" + n4+"/")
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, 'examinations/test_finished.haml')
+        #self.assertTemplateUsed(response,"examinations/test_finished.haml/")
 
     # We test to access to a test that we didn't finished
     def testRender(self):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
-        response = c.get("/student/test/28")
-        self.assertTemplateUsed(response,"examinations/take_exercice.haml")
+        response = c.get("/student/test/"+n5+"/")
+        self.assertRedirects(response,"examinations/take_exercice.haml")
 
-        """"""
-if __name__ == '__main__':
+"""if __name__ == '__main__':
     unittest.main()"""
 
 
 # skill pedagogic
-"""
+
+login = "eleve.eleve"
+pwd = "eleve"
+
 class skillPedagogicTest(TestCase):
     def setUp(self):
         self.s = Client()
         self.s.login(username="eleve.eleve",password="eleve")
-    def testSkill(self):
-        response = self.c.get('/pedagogical/skill/S41b/')
+
+    def testHome(self):
+        self.s = Client()
+        self.s.login(username="eleve.eleve", password="eleve")
+        response = self.s.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'home.haml')
+
+    def testProf(self):
+        self.p = Client()
+        self.p.login(username="prof",password="prof")
+        response = self.p.get('/professor/lesson/134/')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, 'professor/lesson/detail.haml')
+
+    """def testSkill(self):
+        self.s = Client()
+        self.s.login(username="eleve.eleve", password="eleve")
+        response = self.s.get('/student/pedagogical/skill/S41b/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'professor/skill/update_pedagogical_resources.haml')
 
     def testSkill2(self):
-        response = self.c.get('/pedagogical/skill/S22b/')
-        self.assertEqual(response.status_code, 200)
+        response = self.s.get('/student/pedagogical/skill/S22b/')
+        self.assertEqual(response.status_code, 302)
         self.assertTemplateUsed(response,'professor/skill/update_pedagogical_resources.haml')
 
     def testSkill3(self):
-        response = self.c.get('/pedagogical/skill/S31fII/')
-        self.assertEqual(response.status_code, 200)
+        response = self.s.get('/student/pedagogical/skill/S31fII/')
+        self.assertEqual(response.status_code, 302)
         self.assertTemplateUsed(response,'professor/skill/update_pedagogical_resources.haml')
 
     def testSkill4(self):
-        response = self.c.get('/pedagogical/skill/S13aI/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,'professor/skill/update_pedagogical_resources.haml')
+        response = self.s.get('/student/pedagogical/skill/S41aII/')
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateUsed(response,'professor/skill/update_pedagogical_resources.haml')"""
 
 
-"""
+
