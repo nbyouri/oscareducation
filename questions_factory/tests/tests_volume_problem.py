@@ -4,7 +4,7 @@ from examinations.models import *
 from questions_factory.models import VolumeProblem, ProblemGenerator
 import math
 # TODO DEACTIVATED UNTIL WORKING
-""" 
+"""
 class SolutionsTests(TestCase):
     def test_cube(self):
         problem = create_problem("cube")
@@ -25,6 +25,7 @@ class SolutionsTests(TestCase):
     def test_cylinder(self):
         problem = create_problem("cylinder")
         self.assertTrue(problem.get_sol() == (problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]) / 3)
+"""
 
 
 class GeneratingQuestionsTests(TestCase):
@@ -107,5 +108,3 @@ def create_problem(object_type="cube", range_from=1, range_to=2):
 
 def new_volume_values():
     return {"problem": "Volume_Problem"}
-    
-"""""
