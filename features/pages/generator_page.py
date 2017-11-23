@@ -18,10 +18,20 @@ class GeneratorPageLocator(object):
     STATISTIC_PROBLEM_GENERATOR = "StatisticsProblem"
     VOLUME_PROBLEM_GENERATOR = "VolumeProblem"
 
+    # Interest form
     TIME_PLACED_SELECTOR = (By.ID, "id_time_placed")
     TYPE_RATE_SELECTOR = (By.ID, "id_type_rate")
 
+    # Statistic form
     NB_ELEMENTS = (By.ID, "id_nb")
+
+    # Volume form
+    OBJECT_VOLUME_SELECTOR = (By.ID, "id_object_type")
+    CYLINDER_SELECT_OPTION = 'cylinder'
+    PYRAMID_SELECT_OPTION = 'pyramid'
+    PRISM_SELECT_OPTION = 'prism'
+    CUBE_SELECT_OPTION = 'cube'
+    CONE_SELECT_OPTION = 'cone'
 
 
 class GeneratorPage(Browser):
@@ -77,8 +87,28 @@ class GeneratorPage(Browser):
 
     # Statistics
     def select_statistic_problem_generator(self):
-        self.select(GeneratorPageLocator.STATISTIC_PROBLEM_GENERATOR,
-                    *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
+        self.select(GeneratorPageLocator.STATISTIC_PROBLEM_GENERATOR, *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
 
     def fill_statistic_elements(self, number):
         self.fill(number, *GeneratorPageLocator.NB_ELEMENTS)
+
+    # Volume
+
+    def select_volume_problem_generator(self):
+        self.select(GeneratorPageLocator.VOLUME_PROBLEM_GENERATOR, *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
+
+    def select_volume_object_cylinder(self):
+        self.select(GeneratorPageLocator.CYLINDER_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
+
+    def select_volume_object_pyramid(self):
+        self.select(GeneratorPageLocator.PYRAMID_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
+
+    def select_volume_object_cone(self):
+        self.select(GeneratorPageLocator.CONE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
+
+    def select_volume_object_prism(self):
+        self.select(GeneratorPageLocator.PRISM_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
+
+    def select_volume_object_cube(self):
+        self.select(GeneratorPageLocator.CUBE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
+
