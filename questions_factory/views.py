@@ -44,7 +44,8 @@ def generator(request, lesson_id, skill_id, test_id):
                 new_test_exercise.exercice = exercise
                 new_test_exercise.save()
             return render(request, "questions_factory/questions_list.haml",
-                          {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise,
+                          {'questions': problem.gen_questions(int(form.cleaned_data["nb_question"])),
+                           'new_test_exercise': new_test_exercise,
                            'test_id': test_id, 'lesson_id': lesson_id})
         else:
             valid = False

@@ -10,10 +10,10 @@
       #question-list
         -include 'questions_factory/_questions.haml'
 
-    .panel-body
-      %a.btn.btn-primary{id:"more-question-btn"}
-        Générer plus de question TODO
-      %a.btn.btn-primary{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}", id:"return-to-test-modify"}
+    .panel-body.text-center
+      -#%a.btn.btn-primary{id:"more-question-btn"}
+        Générer plus de question
+      %a.btn.btn-info.btn-lg{href: "{% url 'professor:lesson_test_online_exercices' lesson_id test_id %}", id:"return-to-test-modify"}
         Revenir au test
 
 -block javascript
