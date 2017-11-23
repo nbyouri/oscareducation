@@ -53,3 +53,27 @@ Feature: VolumeGenerator
     Then I choose a generated problem
     Then I click on going back to the test
 
+  # Error Scenarios
+
+  Scenario: Trying to create a volume problem without parameters
+    Given I am logged with a fresh class, created a test and accessed question generator
+    Then I select the volume problem generator
+    Then I select the object cylinder
+    When I click on the create button
+    Then I see an error panel
+
+  Scenario: Trying to create a volume problem without a wrong range
+    Given I am logged with a fresh class, created a test and accessed question generator
+    Then I select the volume problem generator
+    Then I select the object cylinder
+    Then I enter "60" as lower range and "2" as upper range
+    When I click on the create button
+    Then I see an error panel
+
+  Scenario: Trying to create a volume problem without a too small range
+    Given I am logged with a fresh class, created a test and accessed question generator
+    Then I select the volume problem generator
+    Then I select the object cylinder
+    Then I enter "1" as lower range and "1" as upper range
+    When I click on the create button
+    Then I see an error panel
