@@ -27,7 +27,7 @@ class SimpleInterestProblem(Problem):
 
     def gen_values(self):
         self.amount = random.randint(5, 200000)
-        self.rate = random.random()
+        self.rate = self.round(random.random())
         self.time = random.randint(1, 30)
 
     @staticmethod
@@ -41,9 +41,9 @@ class SimpleInterestProblem(Problem):
         if self.time_placed == self.type_rate:
             return self.round(self.amount * self.time * self.rate)
         elif self.time_placed == "month" and self.type_rate == "year":
-            return self.round(self.amount * (self.time/12) * self.rate)
+            return self.round((self.amount * (self.time/12.0) * self.rate))
         elif self.time_placed == "year" and self.type_rate == "month":
-            return self.round(self.amount * (self.time*12) * self.rate)
+            return self.round((self.amount * (self.time*12.0) * self.rate))
 
     def gen_questions(self, number_of_questions):
         questions = list()
@@ -56,8 +56,9 @@ class SimpleInterestProblem(Problem):
         time_unit = "mois" if self.time_placed == "month" else "ans"
         rate_unit = "mois" if self.type_rate == "month" else "ans"
         question_desc = "Si on place une somme de " + str(self.amount) + " euros à la " \
-            "banque pour une durée de " + str(self.time_placed) + " " + str(time_unit) + " à " \
-            "un taux de " + str(self.rate) + "% par " + str(rate_unit) + ", combien d'intérêts touche-t-on?"
+            "banque pour une durée de " + str(self.time) + " " + str(time_unit) + " à " \
+            "un taux de " + str(self.rate) + "% par " + str(rate_unit) + ", quelle somme d'intérêts touche-t-on " \
+            "au bout de cette période?"
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
@@ -70,8 +71,10 @@ class SimpleInterestProblem(Problem):
 
     @staticmethod
     def default_context():
-        description = "Calculer un taux d'intérêt pour un placement en banque à taux fixe pour une durée " \
-                      "déterminée."
+        description = "Calcul d'intérêt simple. Calculer un taux d'intérêt pour un placement en banque à taux fixe " \
+                      "pour une durée " \
+                      "déterminée, sachant que l'intérêt reçu n'est pas repris en compte pour le calcul " \
+                      "de la somme d'intérêt suivante."
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",

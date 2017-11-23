@@ -15,11 +15,11 @@ class SolutionsTests(TestCase):
 
     def test_time_placed_month_rate_year(self):
         problem = create_problem("month", "year")
-        self.assertTrue(problem.get_sol() == problem.round(problem.amount * (problem.time / 12) * problem.rate))
+        self.assertTrue(problem.get_sol() == problem.round(problem.amount * (problem.time / 12.0) * problem.rate))
 
     def test_time_placed_year_rate_month(self):
         problem = create_problem("year", "month")
-        self.assertTrue(problem.get_sol() == problem.round(problem.amount * problem.time * 12 * problem.rate))
+        self.assertTrue(problem.get_sol() == problem.round(problem.amount * problem.time * 12.0 * problem.rate))
 
 
 class GeneratingQuestionsTests(TestCase):
