@@ -1,5 +1,6 @@
 # coding=utf-8
 import django
+import time
 from django.test.runner import DiscoverRunner
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.shortcuts import resolve_url
@@ -64,6 +65,10 @@ def after_all(context):
 def before_feature(context, feature):
     # Code to be executed each time a feature is going to be tested
     pass
+
+
+def before_step(context, step):
+    time.sleep(0.01)
 
 
 # After a single step
