@@ -71,9 +71,6 @@ class VolumeProblem(Problem):
     def make_form(post_values):
         return VolumeProblemForm(post_values)
 
-    def get_desc(self):
-        pass
-
     def get_sol(self):
         if self.object_type == 'cube':
             return pow(self.figure[0][1], 3)

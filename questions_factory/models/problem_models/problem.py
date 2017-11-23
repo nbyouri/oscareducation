@@ -6,10 +6,6 @@ class Problem:
         pass
 
     @abc.abstractmethod
-    def get_desc(self):
-        """Return the description of the problem"""
-
-    @abc.abstractmethod
     def get_sol(self):
         """Return the solution of the problem"""
 

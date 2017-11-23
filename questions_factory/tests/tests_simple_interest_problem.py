@@ -1,5 +1,7 @@
 # coding=utf-8
 from django.test import TestCase
+from hamcrest import equal_to, assert_that
+
 from examinations.models import *
 from questions_factory.models import SimpleInterestProblem, ProblemGenerator
 
@@ -86,8 +88,8 @@ class InstanceTests(TestCase):
         with self.assertRaises(ValueError):
             SimpleInterestProblem("wrong", "wrong")
 
-
 # Utils
+
 
 def create_problem(time_placed="year", type_rate="year"):
     values = new_interest_values()

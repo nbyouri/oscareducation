@@ -34,9 +34,6 @@ class SimpleInterestProblem(Problem):
     def make_form(post_values):
         return SimpleInterestForm(post_values)
 
-    def get_desc(self):
-        pass
-
     def get_sol(self):
         if self.time_placed == self.type_rate:
             return self.round(self.amount * self.time * self.rate)

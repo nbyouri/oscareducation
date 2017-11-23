@@ -20,7 +20,6 @@ class StatisticsProblem(Problem) :
     def gen_values(self):
         self.values = [random.randint(self.range[0],self.range[1]) for _ in range(self.nb)]
 
-
     def get_sol(self):
         sol = list()
         average = self.get_average()
@@ -30,7 +29,6 @@ class StatisticsProblem(Problem) :
         standard_deviation = self.get_standard_deviation()
         sol.append(float("{0:.2f}".format(standard_deviation)))
         return sol
-
 
     def gen_questions(self, number_of_questions):
         questions = list()
@@ -57,7 +55,6 @@ class StatisticsProblem(Problem) :
     def make_form(post_values):
         return StatisticsForm(post_values)
 
-
     def get_context(self):
         default_context = self.default_context()
         # TODO Get from db if already Context already exist
@@ -77,7 +74,6 @@ class StatisticsProblem(Problem) :
             added_by=None
         )
         return default_context
-
 
     def get_average(self):
         m = numpy.mean(self.values)
