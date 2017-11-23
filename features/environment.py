@@ -68,7 +68,7 @@ def before_feature(context, feature):
 
 
 def before_step(context, step):
-    time.sleep(0.01)
+    pass
 
 
 # After a single step
