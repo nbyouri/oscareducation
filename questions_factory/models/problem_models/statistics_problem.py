@@ -20,17 +20,15 @@ class StatisticsProblem(Problem) :
     def gen_values(self):
         self.values = [random.randint(self.range[0],self.range[1]) for _ in range(self.nb)]
 
-
     def get_sol(self):
         sol = list()
         average = self.get_average()
-        sol.append(average)
+        sol.append(float("{0:.2f}".format(average)))
         median = self.get_median()
-        sol.append(median)
+        sol.append(float("{0:.2f}".format(median)))
         standard_deviation = self.get_standard_deviation()
-        sol.append(standard_deviation)
+        sol.append(float("{0:.2f}".format(standard_deviation)))
         return sol
-
 
     def gen_questions(self, number_of_questions):
         questions = list()
@@ -40,7 +38,15 @@ class StatisticsProblem(Problem) :
         return questions
 
     def new_question(self, sol):
-        question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(self.nb) + " jours : " + str(self.values)
+        question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(self.nb) + " jours : <br/>" \
+                        "<div align=""center"" style=""overflow-x:auto;""><table style=""width:100%;"", style=""height: 100%;"", border=1px, text-align=""center""> <tr> <td align=""center""><b>Numéros de Journée </b></th> <td align=""center""> <b>Valeurs </b></th></tr>"
+        n = 1
+        for v in self.values:
+            question_desc += "<tr><td> journée numéro " + str(n) + "</td>"
+            question_desc +=  "<td align=""center"">" + str(v) + "</td></tr>"
+            n += 1
+        question_desc +="</table> </div>"
+
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
@@ -48,7 +54,6 @@ class StatisticsProblem(Problem) :
     @staticmethod
     def make_form(post_values):
         return StatisticsForm(post_values)
-
 
     def get_context(self):
         default_context = self.default_context()
@@ -60,7 +65,7 @@ class StatisticsProblem(Problem) :
     def default_context():
         description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> " \
                       "<b> Attention : </b> les réponses doivent être sous la forme " \
-                      "$$ [x_1, x_2, x_3] $$ dans l'ordre croissant et arrondis à 2 chiffres après la virgule"
+                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne, Médiane, Ecart-Type avec 2 chiffres après la virgule et non arrondis"
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",
@@ -69,7 +74,6 @@ class StatisticsProblem(Problem) :
             added_by=None
         )
         return default_context
-
 
     def get_average(self):
         m = numpy.mean(self.values)

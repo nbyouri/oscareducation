@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from features import Browser
 
 
@@ -18,3 +17,6 @@ class StudentDashboardPage(Browser):
 
     def click_element(self, *locator):
         self.driver.find_element(*locator).click()
+
+    def currently_on_this_page(self):
+        return self.current_url_endswith(StudentDashboardPageLocator.URL)

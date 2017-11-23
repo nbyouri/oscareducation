@@ -5,6 +5,9 @@ import math
 
 
 # this code take the correct side at triangle perimeter problem, is it true?
+from questions_factory.models.triangle_perimeter_problem import TrianglePerimeterProblem
+
+
 class TriangleLeghtPythagorasProblem(TrianglePerimeterProblem):
     def gen_values(self):
         pass

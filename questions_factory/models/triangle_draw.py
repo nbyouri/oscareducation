@@ -1,6 +1,7 @@
 import math
 import turtle
 from questions_factory.models import *
+from questions_factory.models.triangle_perimeter_problem import TrianglePerimeterProblem
 
 MOLT = 20
 

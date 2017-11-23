@@ -44,7 +44,8 @@ def generator(request, lesson_id, skill_id, test_id):
                 new_test_exercise.exercice = exercise
                 new_test_exercise.save()
             return render(request, "questions_factory/questions_list.haml",
-                          {'questions': problem.gen_questions(5), 'new_test_exercise': new_test_exercise,
+                          {'questions': problem.gen_questions(int(form.cleaned_data["nb_question"])),
+                           'new_test_exercise': new_test_exercise,
                            'test_id': test_id, 'lesson_id': lesson_id})
         else:
             valid = False
@@ -53,10 +54,11 @@ def generator(request, lesson_id, skill_id, test_id):
 
 @user_is_professor
 def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
+    """Return partial html content"""
     form = get_form(generator_name, request)
     if not form:
         return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
-    t = loader.get_template("questions_factory/generator_form.haml")
+    t = loader.get_template("questions_factory/_generator_form.haml")
     c = {'generator_name': generator_name, 'form': form}
     return HttpResponse(t.render(c, request))
 

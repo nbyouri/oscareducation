@@ -14,7 +14,7 @@ class Browser(object):
     # For debugging purposes, you can use the Firefox driver instead.
     driver = webdriver.PhantomJS()
     # Small unit of wait between instructions, allowing things to load
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(30)
     # Screen size must be wide enough to let PhantomJS find elements
     driver.set_window_size(1920, 1080)
 

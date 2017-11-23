@@ -1,9 +1,9 @@
 -# Partial template
 -for field in form
-  -if field.name != "generator_name"
-    =field.label_tag
-    =field
-    %br/
+  -if field.name != "generator_name" and field.name != "nb_question"
+    .form-group
+      =field.label_tag
+      =field
 
 .submit-row
   %label

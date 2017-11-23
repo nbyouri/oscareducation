@@ -7,10 +7,10 @@
     .panel-heading{id: "id_question_generator"} Outil de création de questions
     -if form.errors
       .alert.alert-danger{:id => "id_error_panel"}
-        - for field in form
-          - if field.errors
-            = field.label_tag
-            = field.errors
+        -for field in form
+          -if field.errors
+            =field.label_tag
+            =field.errors
 
     .panel-body
       .left.column
@@ -19,13 +19,13 @@
         -csrf_token
 
         -for field in form
-          -if field.name == "generator_name"
-            =field.label_tag
-            =field
-            %br/
+          -if field.name == "generator_name" or field.name == "nb_question"
+            .form-group
+              =field.label_tag
+              =field
         %hr
         #container-settings
-          -include 'questions_factory/generator_form.haml'
+          -include 'questions_factory/_generator_form.haml'
 
 -block javascript
   :javascript

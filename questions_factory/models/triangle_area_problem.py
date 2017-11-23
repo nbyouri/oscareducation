@@ -7,6 +7,7 @@ import screen as screen
 
 from questions_factory.models import *
 from questions_factory.models.triangle_draw import TriangleDraw, draw_triangle
+from questions_factory.models.triangle_perimeter_problem import TrianglePerimeterProblem
 
 
 class TriangleAreaProblem(TrianglePerimeterProblem):

@@ -12,6 +12,17 @@ GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
 
 class GeneratorChoiceForm(forms.Form):
     generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
+    nb_question = forms.FloatField(widget=forms.TextInput, required=True, initial=5,
+                                   label='Nombre de question')
+
+    def clean(self):
+        cleaned_data = super(GeneratorChoiceForm, self).clean()
+        nb_question = cleaned_data.get("nb_question")
+        if nb_question < 1 or nb_question > 50:
+            msg = "Le nombre de question générée doit être entre 1 et 50"
+            self.add_error('nb_question', msg)
+
+        return cleaned_data
 
 
 class ArithmeticForm(GeneratorChoiceForm):
@@ -30,7 +41,7 @@ class ArithmeticForm(GeneratorChoiceForm):
             if range_from >= range_to:
                 msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
                 self.add_error('range_from', msg)
-            if (range_to - range_from) < 5:
+            if (abs(range_to) - abs(range_from)) < 5:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 5"
                 self.add_error('range_from', msg)
 
@@ -42,8 +53,8 @@ class SimpleInterestForm(GeneratorChoiceForm):
 
 
 class StatisticsForm(GeneratorChoiceForm):
-    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
-    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur des valeurs')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur des valeurs')
     nb = forms.IntegerField(widget=forms.TextInput, required=True, label='Nombre d''éléments')
 
     def clean(self):
@@ -55,10 +66,10 @@ class StatisticsForm(GeneratorChoiceForm):
             if range_from >= range_to:
                 msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
                 self.add_error('range_from', msg)
-            if (range_to - range_from) < 1:
+            if (abs(range_to) - abs(range_from)) < 1:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 1"
                 self.add_error('range_from', msg)
-            if (nb < 5):
+            if nb < 5:
                 msg = "Le nombre d''élément doit être au minimum de 5"
                 self.add_error('nb', msg)
 
