@@ -16,7 +16,7 @@ class SolutionsTests(TestCase):
 
     def test_triangle(self):
         problem = create_problem("triangle")
-        self.assertTrue(problem.get_sol() == pow(problem.figure[0][1], 3))
+        self.assertTrue(problem.get_sol() ==problem.figure[0][1]+problem.figure[1][1]+problem.figure[2][1])
 
     def test_circle(self):
         problem = create_problem("circle")
@@ -28,12 +28,15 @@ class SolutionsTests(TestCase):
 
     def test_rhombus(self):
         problem = create_problem("rhombus")
-        self.assertTrue(problem.get_sol() == 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2)))
+        self.assertTrue(problem.get_sol() == 2 * math.sqrt(math.pow(problem.figure[0][1], 2) + math.pow(problem.figure[1][1], 2)))
 
     def test_trapezium(self):
         problem = create_problem("trapezium")
-        self.assertTrue(problem.get_sol() == self.figure[0][1] + self.figure[1][1] + math.sqrt(math.pow((self.figure[0][1]-self.figure[1][1])/2, 2) + math.pow(self.figure[2][1], 2)))
+        self.assertTrue(problem.get_sol() == problem.figure[0][1] + problem.figure[1][1] + math.sqrt(math.pow((problem.figure[0][1]-problem.figure[1][1])/2, 2) + math.pow(problem.figure[2][1], 2)))
 
+    def test_parallelogram(self):
+        problem = create_problem("parallelogram")
+        self.assertTrue(problem.get_sol() == 2 * problem.figure[0][1] + 2 * problem.figure[1][1])
 
 class GeneratingQuestionsTests(TestCase):
 
@@ -95,6 +98,14 @@ class GeneratingQuestionsTests(TestCase):
 
     def test_trapezium(self):
         problem = create_problem("trapezium")
+        questions = problem.gen_questions(5)
+        self.assertTrue(isinstance(problem.get_context(), Context))
+        for question in questions:
+            self.assertTrue(isinstance(question, Question))
+            self.assertTrue(question.description is not None)
+
+    def test_parallelogram(self):
+        problem = create_problem("parallelogram")
         questions = problem.gen_questions(5)
         self.assertTrue(isinstance(problem.get_context(), Context))
         for question in questions:

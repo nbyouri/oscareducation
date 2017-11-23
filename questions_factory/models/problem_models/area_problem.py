@@ -21,7 +21,6 @@ class PerimeterProblem(Problem):
     default_quadrilateral = ['cote (a)', 'cote (b)', 'cote (c)', 'cote (d)']
     default_trapezium = ['grande base (B)', 'petite base (b)', 'hauteur (h)']
     default_circle = 'rayon (r)'
-    default_parallelogram = ['grand cote (a)', 'grand cote (b)']
     object_type = None
     object_name = None
 
@@ -33,7 +32,6 @@ class PerimeterProblem(Problem):
             and object_type != 'rhombus'       \
             and object_type != 'trapezium'      \
             and object_type != 'circle'\
-            and object_type != 'parallelogram' \
                 and object_type != 'quadrilateral':
                 raise ValueError
         self.object_type = object_type
@@ -96,13 +94,6 @@ class PerimeterProblem(Problem):
             radius = random.randint(self.range_from, self.range_to)
             self.figure = [(self.default_circle[0], radius)]
 
-        elif self.object_type == 'parallelogram':
-            self.object_name = 'du parallelogramme'
-            long_side = random.randint(self.range_from, self.range_to)
-            small_side = random.randint(self.range_from, long_side)
-            self.figure = [(self.default_circle[0], long_side),
-                           (self.default_circle[1], small_side)]
-
         else:
             raise ValueError
 
@@ -130,8 +121,6 @@ class PerimeterProblem(Problem):
             return g_base + p_base + math.sqrt(math.pow((g_base-p_base)/2, 2) + math.pow(self.figure[2][1], 2))
         elif self.object_type == 'triangle':
             return self.figure[0][1] + self.figure[1][1] + self.figure[2][1]  # a+b+c
-        elif self.object_type == 'parallelogram':
-            return 2 * self.figure[0][1] + 2 * self.figure[1][1]  # 2 *a+ 2*b
         else:
             raise ValueError
 
