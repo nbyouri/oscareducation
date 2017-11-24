@@ -93,6 +93,15 @@ class InstanceTests(TestCase):
             VolumeProblem("wrong", 1, 2)
 
 
+class BadValuesTests(TestCase):
+    def test_wrong_type_object(self):
+        problem = VolumeProblem("cube", 1, 2)
+        problem.object_type = "kek"
+        with self.assertRaises(ValueError):
+            problem.get_sol()
+        with self.assertRaises(ValueError):
+            problem.gen_values()
+
 # Utils
 
 
