@@ -15,14 +15,14 @@ from skills.models import Skill
 
 class AreaProblem(Problem):
     default_triangle = ['base (b)', 'hauteur (h)']
-    default_square = 'cote (c)'
+    default_square = 'côté (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']
     default_rhombus = ['grande diagonale (d1)', 'petite diagonale (d2)']
-    default_quadrilateral = ['cote (a)', 'cote (b)', 'cote (c)', 'cote (d)', 'angle(A)', 'angle (C)']
+    default_quadrilateral = ['côté (a)', 'côté (b)', 'côté (c)', 'côté (d)', 'angle(A)', 'angle (C)']
     default_trapezium = ['grande base (B)', 'petite base (b)', 'hauteur (h)']
     default_circle = 'rayon (r)'
     default_parallelogram = ['base (b)', 'hauteur (h)']
-    default_regular_polygon = ['nombre de cotes (n)', 'cote(c)']
+    default_regular_polygon = ['nombre de côtés (n)', 'côté(c)']
     object_type = None
     object_name = None
 

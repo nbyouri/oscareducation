@@ -17,7 +17,7 @@ class PythagorasProblem(Problem):
     default_triangle_rectangle = ['côté (a)', 'côté (b)']
     object_type = 'triangle_rectangle'
     object_name = 'du triangle rectangle'
-    surname = 'pythagoras'
+    surname = 'right_triangle'
 
     def __init__(self, range_from, range_to):
         Problem.__init__(self)
@@ -25,7 +25,7 @@ class PythagorasProblem(Problem):
         self.range_from = range_from
         self.range_to = range_to
         # self.unit = unit
-        self.surname = ''
+        #self.surname = ''
         self.gen_values()
 
 
@@ -56,7 +56,7 @@ class PythagorasProblem(Problem):
         return questions
 
     def new_question(self, sol):
-        question_desc = '<img style = "max-width: 600px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + 'cone' + '.png\" /><br>' #self.surname + '.png\" /><br>'
+        question_desc = '<img style = "max-width: 600px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + self.surname + '.png\" /><br>'
         question_desc += 'Trouvez, en utilisant le Théorème de Pythagore, la longueur du côté (c) ' + self.object_name + ', dont les paramètres sont:<ul>'
         for e in self.figure:
             question_desc += '<br><li>%s = %s</li>' % (e[0], e[1])

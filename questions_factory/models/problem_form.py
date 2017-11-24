@@ -22,7 +22,7 @@ class GeneratorChoiceForm(forms.Form):
         cleaned_data = super(GeneratorChoiceForm, self).clean()
         nb_question = cleaned_data.get("nb_question")
         if nb_question < 1 or nb_question > 50:
-            msg = "Le nombre de question générée doit être compris entre 1 et 50"
+            msg = "Le nombre de questions générées doit être compris entre 1 et 50"
             self.add_error('nb_question', msg)
 
         return cleaned_data
@@ -42,7 +42,7 @@ class ArithmeticForm(GeneratorChoiceForm):
         # Checking instance to avoid problem with 0 values
         if isinstance(range_from, float) and isinstance(range_to, float):
             if range_from >= range_to:
-                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal au supérieur."
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
             if (range_to - range_from) < 5:
                 msg = "Fournissez un intervalle de valeur supérieur ou égal à 5"
@@ -68,13 +68,13 @@ class StatisticsForm(GeneratorChoiceForm):
         nb = cleaned_data.get("nb")
         if isinstance(range_from, float) and isinstance(range_to, float) and isinstance(nb, int):
             if range_from >= range_to:
-                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal au supérieur."
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
             if (range_to - range_from) < 1:
-                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
+                msg = "Fournissez un intervalle de valeur supérieur ou égal à 1"
                 self.add_error('range_from', msg)
             if nb < 5:
-                msg = "Le nombre d''élément doit être au minimum de 5"
+                msg = "Le nombre d''éléments doit être au minimum de 5"
                 self.add_error('nb', msg)
 
 
@@ -98,7 +98,7 @@ class VolumeProblemForm(GeneratorChoiceForm):
                 msg = "Les valeurs doivent être plus grandes que 0."
                 self.add_error('range_from', msg)
             if range_from >= range_to:
-                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal au supérieur."
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
             if (range_to - range_from) < 1:
                 msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"

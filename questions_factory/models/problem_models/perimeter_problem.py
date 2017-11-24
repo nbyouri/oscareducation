@@ -14,15 +14,15 @@ from skills.models import Skill
 
 
 class PerimeterProblem(Problem):
-    default_triangle = ['coté (a)', 'coté (b)', 'coté (c)']
-    default_square = 'coté (c)'
+    default_triangle = ['côté (a)', 'côté (b)', 'côté (c)']
+    default_square = 'côté (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']
     default_rhombus = ['grande diagonale (d1)', 'petite diagonale (d2)']
-    default_quadrilateral = ['coté (a)', 'coté (b)', 'coté (c)', 'coté (d)']
+    default_quadrilateral = ['côté (a)', 'côté (b)', 'côté (c)', 'côté (d)']
     default_trapezium = ['grande base (B)', 'petite base (b)', 'hauteur (h)']
     default_circle = 'rayon (r)'
-    default_parallelogram = ['grand coté (a)', 'grand coté (b)']
-    default_regular_polygon = ['nombre de cotés (n)', 'coté(c)']
+    default_parallelogram = ['grand côté (a)', 'grand côté (b)']
+    default_regular_polygon = ['nombre de côtés (n)', 'côté(c)']
     object_type = None
     object_name = None
 
