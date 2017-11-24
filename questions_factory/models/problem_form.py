@@ -43,9 +43,10 @@ class ArithmeticForm(GeneratorChoiceForm):
             if range_from >= range_to:
                 msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
                 self.add_error('range_from', msg)
-            if (abs(range_to) - abs(range_from)) < 5:
+            if (range_to - range_from) < 5:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 5"
                 self.add_error('range_from', msg)
+
 
 class SimpleInterestForm(GeneratorChoiceForm):
     TIME_CHOICES = (('year', 'Années'), ('month', 'Mois'))
@@ -68,7 +69,7 @@ class StatisticsForm(GeneratorChoiceForm):
             if range_from >= range_to:
                 msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
                 self.add_error('range_from', msg)
-            if (abs(range_to) - abs(range_from)) < 1:
+            if (range_to - range_from) < 1:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 1"
                 self.add_error('range_from', msg)
             if nb < 5:
@@ -133,6 +134,7 @@ class PerimeterProblemForm(GeneratorChoiceForm):
             if (range_to - range_from) < 1:
                 msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
                 self.add_error('range_from', msg)
+
 
 class AreaProblemForm(GeneratorChoiceForm):
     OBJECT_TYPE = (('rhombus', 'Losange'),
