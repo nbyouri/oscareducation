@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.test import TestCase
 from examinations.models import *
-from questions_factory.models import PerimeterProblem, ProblemGenerator
+from questions_factory.models import AreaProblem, ProblemGenerator
 import math
 
 
@@ -18,11 +18,11 @@ class SolutionsTests(TestCase):
 
     def test_triangle(self):
         problem = create_problem("triangle")
-        self.assertTrue(problem.get_sol() == problem.figure[0][1] * problem.figure[1][1] / 2)
+        self.assertTrue(problem.get_sol() == (problem.figure[0][1] * problem.figure[1][1] / 2))
 
     def test_circle(self):
         problem = create_problem("circle")
-        self.assertTrue(math.pow(problem.figure[0][1],2)*math.pi)
+        self.assertTrue(math.pow(problem.figure[0][1], 2)*math.pi)
 
     def test_rectangle(self):
         problem = create_problem("rectangle")
@@ -131,23 +131,23 @@ class GeneratingQuestionsTests(TestCase):
 class InstanceTests(TestCase):
     def test_of_instantiation_via_generator(self):
         problem = create_problem()
-        self.assertTrue(isinstance(problem, PerimeterProblem))
+        self.assertTrue(isinstance(problem, AreaProblem))
 
     def test_of_raw_instantiation(self):
-        problem = PerimeterProblem("square", 1, 2)
-        self.assertTrue(isinstance(problem, PerimeterProblem))
+        problem = AreaProblem("square", 1, 2)
+        self.assertTrue(isinstance(problem, AreaProblem))
 
     def test_of_instantiation_with_wrong_values(self):
         with self.assertRaises(ValueError):
-            PerimeterProblem("wrong", 1, 2)
+            AreaProblem("wrong", 1, 2)
 
 
 # Utils
 
 
 def create_problem(object_type="square", range_from=1, range_to=10):
-    values = new_perimeter_values()
-    values["generator_name"] = "PerimeterProblem"
+    values = new_area_values()
+    values["generator_name"] = "AreaProblem"
     values["object_type"] = object_type
     values["range_from"] = range_from
     values["range_to"] = range_to
@@ -155,5 +155,5 @@ def create_problem(object_type="square", range_from=1, range_to=10):
     return problem
 
 
-def new_perimeter_values():
-    return {"problem": "Perimeter_Problem"}
+def new_area_values():
+    return {"problem": "Area_Problem"}
