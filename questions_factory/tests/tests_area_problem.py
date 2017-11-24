@@ -13,8 +13,8 @@ class SolutionsTests(TestCase):
     def test_quadrilateral(self):
         problem = create_problem("quadrilateral")
         self.assertTrue(problem.get_sol() ==
-                        ((problem.figure[0][1] * problem.figure[3][1]) / 2) * math.sin(problem.figure[4][1]) +
-                        ((problem.figure[1][1] * problem.figure[2][1]) / 2) * math.sin(problem.figure[5][1]))
+                        0.5 * problem.figure[0][1] * problem.figure[3][1] * math.sin(math.radians(problem.figure[4][1])) +
+                        0.5 * problem.figure[1][1] * problem.figure[2][1] * math.sin(math.radians(problem.figure[5][1])))
 
     def test_triangle(self):
         problem = create_problem("triangle")

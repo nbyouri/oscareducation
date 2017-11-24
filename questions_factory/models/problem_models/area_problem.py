@@ -90,8 +90,8 @@ class AreaProblem(Problem):
             side_b = random.randint(self.range_from, self.range_to)
             side_c = random.randint(self.range_from, self.range_to)
             side_d = random.randint(self.range_from, self.range_to)
-            angle_a = random.uniform(math.pi/2, math.pi)
-            angle_c = random.uniform(math.pi/2, math.pi)
+            angle_a = self.round(random.uniform(math.pi / 2, math.pi))
+            angle_c = self.round(random.uniform(math.pi / 2, math.pi))
             self.figure = [(self.default_quadrilateral[0], side_a),
                            (self.default_quadrilateral[1], side_b),
                            (self.default_quadrilateral[2], side_c),
@@ -160,11 +160,9 @@ class AreaProblem(Problem):
         elif self.object_type == 'rectangle':
             return self.figure[0][1] * self.figure[1][1]  # l*L
         elif self.object_type == 'quadrilateral':
-            #TODO formula needs to be verified (doesn't seem to give the correct answer
-            return ((self.figure[0][1] * self.figure[3][1]) / 2) * math.sin(self.figure[4][1]) +\
-                   ((self.figure[1][1] * self.figure[2][1]) / 2) * math.sin(self.figure[5][1])  # (a*d*sin(ab)/2) + (b*c*sin(bc)/2)
-                    # self.figure[0][1]/2 * self.figure[3][1] * math.sin(self.figure[4][1]) + \
-                    # self.figure[1][1]/2 * self.figure[2][1] * math.sin(self.figure[5][1])
+            return (0.5 * self.figure[0][1] * self.figure[3][1] * math.sin(math.radians(self.figure[4][1]))) + \
+                    (0.5 * self.figure[1][1] * self.figure[2][1] * math.sin(math.radians(self.figure[5][1])))
+            # (a*d*sin(ab)/2) + (b*c*sin(bc)/2)
         elif self.object_type == 'rhombus':
             return 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2))  # 2sqr(d^2+D^2)
         elif self.object_type == 'trapezium':
