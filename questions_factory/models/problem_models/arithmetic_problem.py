@@ -233,21 +233,21 @@ class ArithmeticPolynomialSecondDegree(Problem):
         """Return most reduced form of square root
         of n as the couple (coefficient, reduced_form)
         """
+        if isinstance(n, int):
+            root = int(math.sqrt(n))
 
-        root = int(math.sqrt(n))
-
-        for factor_root in range(root, 1, -1):
-            factor = factor_root * factor_root
-            if n % factor == 0:
-                reduced = n // factor
-                return factor_root, reduced
+            for factor_root in range(root, 1, -1):
+                factor = factor_root * factor_root
+                if n % factor == 0:
+                    reduced = n // factor
+                    return factor_root, reduced
 
         return 1, n
 
     @staticmethod
     def common_divisor(num_1, num_2, den):
-
-        for div in range(min(abs(num_1), abs(num_2), abs(den)), 1, -1):
-            if num_1 % div == 0 and num_2 % div == 0 and den % div == 0:
-                return num_1 / div, num_2 / div, den / div
+        if isinstance(num_1, int) and isinstance(num_2, int) and isinstance(den, int):
+            for div in range(min(abs(num_1), abs(num_2), abs(den)), 1, -1):
+                if num_1 % div == 0 and num_2 % div == 0 and den % div == 0:
+                    return num_1 / div, num_2 / div, den / div
         return num_1, num_2, den
