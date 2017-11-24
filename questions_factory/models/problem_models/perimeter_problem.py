@@ -50,7 +50,6 @@ class PerimeterProblem(Problem):
     def gen_values(self):
         # round values XXX
         # units XXX
-        print (self.object_type)
         if self.object_type == 'square':
             self.object_name = 'du carre'
             self.surname = 'square'
