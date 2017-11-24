@@ -110,7 +110,9 @@ class PerimeterProblemForm(GeneratorChoiceForm):
                    ('triangle', 'Triangle'),
                    ('trapezium', 'Trapèze'),
                    ('quadrilateral', 'Quadrilatère'),
-                   ('circle', 'Cercle')
+                   ('circle', 'Cercle'),
+                   ('parallelogram', 'Parralélogramme'),
+                   ('regular_polygon', 'Polygone régulier')
                    )
 
     object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')

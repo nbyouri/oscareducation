@@ -27,6 +27,7 @@ class ProblemGenerator:
         elif problem == "PerimeterProblem":
             object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict[
                 "range_to"]
+
             return PerimeterProblem(object_type, range_from, range_to)
         else:
             raise ValueError('Wrong problem type')

@@ -38,6 +38,10 @@ class SolutionsTests(TestCase):
         problem = create_problem("parallelogram")
         self.assertTrue(problem.get_sol() == 2 * problem.figure[0][1] + 2 * problem.figure[1][1])
 
+    def test_polygon(self):
+        problem = create_problem("regular_polygon")
+        self.assertTrue(problem.get_sol() == problem.figure[0][1] * problem.figure[1][1])
+
 class GeneratingQuestionsTests(TestCase):
 
     def setUp(self):
@@ -111,6 +115,15 @@ class GeneratingQuestionsTests(TestCase):
         for question in questions:
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
+
+    def test_polygon(self):
+        problem = create_problem("regular_polygon")
+        questions = problem.gen_questions(5)
+        self.assertTrue(isinstance(problem.get_context(), Context))
+        for question in questions:
+            self.assertTrue(isinstance(question, Question))
+            self.assertTrue(question.description is not None)
+
 class InstanceTests(TestCase):
     def test_of_instantiation_via_generator(self):
         problem = create_problem()
