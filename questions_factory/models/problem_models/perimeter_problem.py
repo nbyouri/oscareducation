@@ -188,7 +188,7 @@ class PerimeterProblem(Problem):
         return questions
 
     def new_question(self, sol):
-        question_desc = '<img style = "max-width: 600px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + self.surname + '.png\" /><br>'
+        question_desc = '<img style = "max-width: 300px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + self.surname + '.png\" /><br>'
         question_desc += 'Calculer le perimetre ' + self.object_name + ' dont les parametres sont:<ul>'
         for e in self.figure:
             question_desc += '<br><li>%s = %s</li>' % (e[0], e[1])
