@@ -171,7 +171,7 @@ class AreaProblem(Problem):
             p_base = self.figure[1][1]
             return (g_base+p_base) * self.figure[2][1] / 2
         elif self.object_type == 'triangle':
-            return self.figure[0][1] * self.figure[1][1] / 2
+            return float(self.figure[0][1]) * self.figure[1][1] / 2 # a*b / 2
         elif self.object_type == 'parallelogram':
             return self.figure[0][1] * self.figure[1][1]  # 2 *a+ 2*b
         elif self.object_type == 'regular_polygon':
