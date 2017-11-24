@@ -7,7 +7,7 @@ import math
 
 class SolutionsTests(TestCase):
     def test_square(self):
-        problem = create_problem("carre")
+        problem = create_problem("square")
         self.assertTrue(problem.get_sol() == 4 * problem.figure[0][1])
 
     def test_quadrilateral(self):
