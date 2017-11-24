@@ -7,13 +7,13 @@ def step_impl(context):
     assert context.generator_page.currently_on_this_page()
 
 
-@then('I enter "{low}" as lower range and "{up}" as upper range')
+@then('I enter "{low:d}" as lower range and "{up:d}" as upper range')
 def step_impl(context, low, up):
     context.generator_page.fill_range_from(low)
     context.generator_page.fill_range_to(up)
 
 
-@then('I enter "{elements}" elements asked')
+@then('I enter "{elements:d}" elements asked')
 def step_impl(context, elements):
     context.generator_page.fill_statistic_elements(elements)
 
@@ -49,12 +49,12 @@ def step_impl(context):
     context.generator_page.select_rational_domain()
 
 
-@then('I set the time placed to "{time_unit}"')
+@then('I set the time placed to "{time_unit:d}"')
 def step_impl(context, time_unit):
     context.generator_page.set_time_placed_to(time_unit)
 
 
-@then('I set the type of rate to "{time_unit}"')
+@then('I set the type of rate to "{time_unit:d}"')
 def step_impl(context, time_unit):
     context.generator_page.set_type_rate_to(time_unit)
 
@@ -81,6 +81,6 @@ def step_impl(context):
     context.generator_page.select_volume_problem_generator()
 
 
-@then('I chose to generate "{number}" questions')
+@then('I chose to generate "{number:d}" questions')
 def step_impl(context, number):
     context.generator_page.select_number_of_questions(number)

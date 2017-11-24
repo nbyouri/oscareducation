@@ -7,6 +7,8 @@ import os
 from selenium import webdriver
 from datetime import datetime
 
+from selenium.webdriver.support.select import Select
+
 
 class Browser(object):
     # PhantomJS is used there (headless browser - meaning we can execute tests in a command-line environment,
@@ -40,10 +42,14 @@ class Browser(object):
     # Pages methods
 
     def fill(self, text, *locator):
+        self.driver.find_element(*locator).clear()
         self.driver.find_element(*locator).send_keys(text)
 
     def click_element(self, *locator):
         self.driver.find_element(*locator).click()
+
+    def select(self, text, *locator):
+        Select(self.driver.find_element(*locator)).select_by_value(text)
 
     @abc.abstractmethod
     def navigate(self, base_url):

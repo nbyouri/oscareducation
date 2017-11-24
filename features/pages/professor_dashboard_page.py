@@ -14,12 +14,6 @@ class ProfessorDashboardPage(Browser):
 
     # Login page actions
 
-    def fill(self, text, *locator):
-        self.driver.find_element(*locator).send_keys(text)
-
-    def click_element(self, *locator):
-        self.driver.find_element(*locator).click()
-
     def click_add_class(self):
         self.click_element(*ProfessorDashboardPageLocator.ADD_CLASS_BUTTON)
 

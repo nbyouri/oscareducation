@@ -19,7 +19,7 @@ class GeneratorChoiceForm(forms.Form):
         cleaned_data = super(GeneratorChoiceForm, self).clean()
         nb_question = cleaned_data.get("nb_question")
         if nb_question < 1 or nb_question > 50:
-            msg = "Le nombre de question générée doit être entre 1 et 50"
+            msg = "Le nombre de questions générées doit être entre compris 1 et 50"
             self.add_error('nb_question', msg)
 
         return cleaned_data
@@ -70,8 +70,8 @@ class StatisticsForm(GeneratorChoiceForm):
             if (abs(range_to) - abs(range_from)) < 1:
                 msg = "Fournissez un interval de valeurs supérieur ou égal à 1"
                 self.add_error('range_from', msg)
-            if nb < 5:
-                msg = "Le nombre d''élément doit être au minimum de 5"
+            if int(nb) < 5:
+                msg = "Le nombre d'éléments doit être au minimum de 5"
                 self.add_error('nb', msg)
 
 

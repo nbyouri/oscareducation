@@ -42,15 +42,6 @@ class GeneratorPage(Browser):
 
     # Login page actions
 
-    def fill(self, text, *locator):
-        self.driver.find_element(*locator).send_keys(text)
-
-    def click_element(self, *locator):
-        self.driver.find_element(*locator).click()
-
-    def select(self, text, *locator):
-        Select(self.driver.find_element(*locator)).select_by_value(text)
-
     def generate_questions(self):
         self.click_element(*GeneratorPageLocator.GENERATE_BUTTON)
 

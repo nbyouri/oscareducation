@@ -6,7 +6,7 @@ Feature: GeneratorErrors
   Scenario: Trying to create a problem with wrong parameters
     Given I am logged with a fresh class, created a test and accessed question generator
     # Negative Number of questions required
-    Then I chose to generate "-1" questions
+    Then I chose to generate "1" questions
     When I click on the create button
     Then I see an error panel
     # Volume Errors
@@ -15,12 +15,15 @@ Feature: GeneratorErrors
     Then I select the object cylinder
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "60" as lower range and "2" as upper range
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "1" as lower range and "1" as upper range
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "0" as lower range and "60" as upper range
     When I click on the create button
     Then I see an error panel
@@ -28,9 +31,11 @@ Feature: GeneratorErrors
     Then I select the arithmetic problem generator
     When I click on the create button
     Then I see an error panel
-    Then I enter "99999" as lower range and "-1" as upper range
+    Then I chose to generate "10" questions
+    Then I enter "9999" as lower range and "-1" as upper range
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "0" as lower range and "1" as upper range
     When I click on the create button
     Then I see an error panel
@@ -38,13 +43,16 @@ Feature: GeneratorErrors
     Then I select the statistic problem generator
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "50" elements asked
     Then I enter "99999" as lower range and "-1" as upper range
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "0" as lower range and "0" as upper range
     When I click on the create button
     Then I see an error panel
+    Then I chose to generate "10" questions
     Then I enter "1" elements asked
     Then I enter "0" as lower range and "60" as upper range
     When I click on the create button

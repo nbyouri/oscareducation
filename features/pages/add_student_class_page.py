@@ -25,15 +25,6 @@ class AddStudentClassPage(Browser):
 
     # Login page actions
 
-    def fill(self, text, *locator):
-        self.driver.find_element(*locator).send_keys(text)
-
-    def select(self, text, *locator):
-        Select(self.driver.find_element(*locator)).select_by_value(text)
-
-    def click_element(self, *locator):
-        self.driver.find_element(*locator).click()
-
     def fill_student_1_first_name(self, text):
         self.fill(text, *AddStudentClassPageLocator.FIRST_NAME_0_INPUT)
 

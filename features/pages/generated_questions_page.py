@@ -15,12 +15,6 @@ class GeneratedQuestionsPage(Browser):
 
     # Login page actions
 
-    def fill(self, text, *locator):
-        self.driver.find_element(*locator).send_keys(text)
-
-    def click_element(self, *locator):
-        self.driver.find_element(*locator).click()
-
     def currently_on_this_page(self):
         return self.driver.find_element(*GeneratedQuestionsPageLocator.PAGE_TITLE)
 
