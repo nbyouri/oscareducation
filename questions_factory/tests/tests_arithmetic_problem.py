@@ -113,13 +113,31 @@ class ProblemSettings(TestCase):
 # Sub Methods Test
 class AnsWithFracTests(TestCase):
     def test_simplify_false(self):
-        result = ArithmeticPolynomialSecondDegree.ans_with_frac(2,1,False)
+        result = ArithmeticPolynomialSecondDegree.ans_with_frac(2, 1, False)
         assert_that(r"\frac{2}{1}" == result)
 
     def test_simplify_true(self):
         result = ArithmeticPolynomialSecondDegree.ans_with_frac(2, 1, True)
         f = Fraction(2,1)
-        assert_that(r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}" == result)
+        assert_that(str(f.numerator) == result)
+
+    # TODO Test simplify with answer with root
+
+    def test_reduced_sqrt(self):
+        result = ArithmeticPolynomialSecondDegree.reduced_sqrt(28)
+        assert_that(result, equal_to((2, 7)))
+        result = ArithmeticPolynomialSecondDegree.reduced_sqrt(10)
+        assert_that(result, equal_to((1, 10)))
+
+    def test_common_divisor(self):
+        result = ArithmeticPolynomialSecondDegree.common_divisor(4, 6, 2)
+        assert_that(result, equal_to((2, 3, 1)))
+        result = ArithmeticPolynomialSecondDegree.common_divisor(5, 7, 2)
+        assert_that(result, equal_to((5, 7, 2)))
+        result = ArithmeticPolynomialSecondDegree.common_divisor(2, 2, 6)
+        assert_that(result, equal_to((1, 1, 3)))
+        result = ArithmeticPolynomialSecondDegree.common_divisor(10, 2, -12)
+        assert_that(result, equal_to((5, 1, -6)))
 # Utils
 
 

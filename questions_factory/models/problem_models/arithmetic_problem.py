@@ -105,26 +105,15 @@ class ArithmeticPolynomialSecondDegree(Problem):
         if sqrt_rho.is_integer():
             if num_neg % den == 0:
                 ans1 = self.simple_answer(num_neg, den)
-                # ans1 = ans1.format(num_neg / den)
-                # ans1 = latex(sympify(str(num_neg/den)))
             else:
                 ans1 = self.ans_with_frac(num_neg, den, True)
-                # ans1 = ans1.format(num_neg, den)
-                # ans1 = latex(sympify(str(num_neg)+"/"+str(den), evaluate=False))
             if num_pos % den == 0:
                 ans2 = self.simple_answer(num_pos, den)
-                # ans2 = ans2.format(num_pos / den)
-                # ans2 = latex(sympify(str(num_pos/den)))
             else:
                 ans2 = self.ans_with_frac(num_pos, den, True)
-                # ans2 = ans2.format(num_pos, den)
-                # ans2 = latex(sympify(str(num_pos) + "/" + str(den), evaluate=False))
         else:
-            pass
-            ans1 = self.ans_with_root(rho, "-")  # .format(-1 * self.val[1], rho, 2 * self.val[2])
-            ans2 = self.ans_with_root(rho, "+")  # .format(-1 * self.val[1], rho, 2 * self.val[2])
-            # ans1 = latex(sympify("("+"-"+str(self.val[1])+"-"+str(math.sqrt(rho))+")"+"/"+str(den), evaluate=False))
-            # ans2 = latex(sympify("("+"-" + str(self.val[1]) + "+" + str(math.sqrt(rho))+ ")"+ "/" + str(den), evaluate=False))
+            ans1 = self.ans_with_root(rho, "-", True)  # .format(-1 * self.val[1], rho, 2 * self.val[2])
+            ans2 = self.ans_with_root(rho, "+", True)  # .format(-1 * self.val[1], rho, 2 * self.val[2])
         return [ans1 + ',' + ans2, ans2 + ',' + ans1]
 
     def new_question(self, sol):
@@ -180,8 +169,38 @@ class ArithmeticPolynomialSecondDegree(Problem):
     def make_form(post_values):
         return ArithmeticForm(post_values)
 
-    def ans_with_root(self, rho, sign):
-        return r"\frac{" + str(-1 * self.val[1]) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * self.val[2]) + "}"
+    def ans_with_root(self, rho, sign, simplify=False):
+        if not simplify:
+            return r"\frac{" + str(-1 * self.val[1]) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * self.val[0]) + "}"
+        else:
+            (factor_root, reduced) = self.reduced_sqrt(rho)
+            (num_1, num_2, den) = self.common_divisor(-1 * self.val[1], factor_root, 2 * self.val[0])
+
+            if den < 0:
+                num_1 *= -1
+                den *= -1
+                num_2 *= -1
+
+            if num_2 < 0:
+                if sign == "-":
+                    num_2 *= -1
+                    sign = "+"
+                else:
+                    sign = ""
+            else:
+                if sign == "-":
+                    pass
+                else:
+                    pass
+
+            if den == 1 and num_2 == 1:
+                return str(num_1) + sign +"\sqrt{" + str(reduced) + "}"
+            elif num_2 == 1 or num_2 == -1:
+                return r"\frac{" + str(num_1) + sign + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
+            elif den == 1:
+                return str(num_1) + sign +str(num_2) + "\sqrt{" + str(reduced) + "}"
+            else:
+                return r"\frac{" + str(num_1) + sign + str(num_2) + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
 
     @staticmethod
     def ans_with_frac(num, den, simplify=False):
@@ -189,7 +208,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
             return r"\frac{" + str(num) + "}{" + str(den) + "}"
         else:
             f = Fraction(num, den)
-            return r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}"
+            if den == 1:
+                return str(f.numerator)
+            else:
+                return r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}"
 
     @staticmethod
     def simple_answer(num, den):
@@ -203,3 +225,27 @@ class ArithmeticPolynomialSecondDegree(Problem):
         string = re.sub(r"(\+|-|\s)0x*²*(\+|-|\s)", r"\2", string)
         string = re.sub(r"(\+|-|\s)1(x²*)(\+|-|\s)", r"\2\3", string)
         return string
+
+    @staticmethod
+    def reduced_sqrt(n):
+        """Return most reduced form of square root
+        of n as the couple (coefficient, reduced_form)
+        """
+
+        root = int(math.sqrt(n))
+
+        for factor_root in range(root, 1, -1):
+            factor = factor_root * factor_root
+            if n % factor == 0:
+                reduced = n // factor
+                return factor_root, reduced
+
+        return 1, n
+
+    @staticmethod
+    def common_divisor(num_1, num_2, den):
+
+        for div in range(min(abs(num_1), abs(num_2), abs(den)), 1, -1):
+            if num_1 % div == 0 and num_2 % div == 0 and den % div == 0:
+                return num_1 / div, num_2 / div, den / div
+        return num_1, num_2, den
