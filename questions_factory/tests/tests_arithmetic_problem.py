@@ -130,6 +130,11 @@ class SpecificCasesTests(TestCase):
         problem.compute_sol()
         assert_that(True)
 
+    def test_numneg_modulo_debominator_compute_sol(self):
+        val = [1.0, -5.0, 2.25]
+        problem = create_problem("Rational", "Integer", [0, 20], val)
+        problem.compute_sol()
+        assert_that(True)
 # Utils
 
 

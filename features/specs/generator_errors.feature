@@ -21,7 +21,7 @@ Feature: GeneratorErrors
     Then I enter "1" as lower range and "1" as upper range
     When I click on the create button
     Then I see an error panel
-    Then I enter "0" as lower range and "0" as upper range
+    Then I enter "0" as lower range and "60" as upper range
     When I click on the create button
     Then I see an error panel
     # Arithmetics
@@ -45,7 +45,7 @@ Feature: GeneratorErrors
     Then I enter "0" as lower range and "0" as upper range
     When I click on the create button
     Then I see an error panel
-    Then I enter "-1000000" elements asked
+    Then I enter "1" elements asked
     Then I enter "0" as lower range and "60" as upper range
     When I click on the create button
     Then I see an error panel

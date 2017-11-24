@@ -99,7 +99,8 @@ class BadValuesTests(TestCase):
         problem.object_type = "kek"
         with self.assertRaises(ValueError):
             problem.get_sol()
-
+        with self.assertRaises(ValueError):
+            problem.gen_values()
 
 # Utils
 
