@@ -91,8 +91,8 @@ class AreaProblem(Problem):
             side_b = random.randint(self.range_from, self.range_to)
             side_c = random.randint(self.range_from, self.range_to)
             side_d = random.randint(self.range_from, self.range_to)
-            angle_a = random.randint(90, 180)
-            angle_c = random.randint(90, 180)
+            angle_a = random.uniform(math.pi/2, math.pi)
+            angle_c = random.uniform(math.pi/2, math.pi)
             self.figure = [(self.default_quadrilateral[0], side_a),
                            (self.default_quadrilateral[1], side_b),
                            (self.default_quadrilateral[2], side_c),
