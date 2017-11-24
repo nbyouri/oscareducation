@@ -1,12 +1,4 @@
-from decimal import Decimal
 from django.test import TestCase
-from questions_factory.models import *
-import json
-import math
-import os
-from hamcrest import *
-
-from questions_factory.models.triangle_leght_pythagoras_problem import TriangleLeghtPythagorasProblem
 
 """
 class NormalBehaviour(TestCase):

@@ -18,7 +18,7 @@ class SolutionsTests(TestCase):
 
     def test_triangle(self):
         problem = create_problem("triangle")
-        self.assertTrue(problem.get_sol() == (problem.figure[0][1] * problem.figure[1][1] / 2))
+        self.assertTrue(problem.get_sol() == float((problem.figure[0][1]) * problem.figure[1][1] / 2))
 
     def test_circle(self):
         problem = create_problem("circle")
