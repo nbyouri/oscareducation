@@ -36,7 +36,7 @@ class AreaProblem(Problem):
             and object_type != 'circle'\
             and object_type != 'parallelogram' \
             and object_type != 'regular_polygon' \
-                and object_type != 'quadrilateral':
+            and object_type != 'quadrilateral':
                 raise ValueError
         self.object_type = object_type
         self.figure = None
@@ -58,9 +58,8 @@ class AreaProblem(Problem):
         elif self.object_type == 'triangle':
             self.object_name = 'du triangle'
             self.surname = 'triangle'
-            self.figure = [(self.default_triangle[0], random.randint(self.range_from, self.range_to)),  # radius
-                           (self.default_triangle[1], random.randint(self.range_from, self.range_to))
-                           ]
+            self.figure = [(self.default_triangle[0], random.randint(self.range_from, self.range_to)),
+                           (self.default_triangle[1], random.randint(self.range_from, self.range_to))]
         elif self.object_type == 'rhombus':
             self.object_name = 'du losange'
             self.surname = 'rhombus'
@@ -85,7 +84,7 @@ class AreaProblem(Problem):
                            (self.default_trapezium[1], base_p),
                            (self.default_trapezium[2], height)]
         elif self.object_type == 'quadrilateral':
-            self.object_name = 'du quadrilatere'
+            self.object_name = 'du quadrilatère'
             self.surname = 'quadrilateral'
             side_a = random.randint(self.range_from, self.range_to)
             side_b = random.randint(self.range_from, self.range_to)
@@ -106,7 +105,7 @@ class AreaProblem(Problem):
             self.figure = [(self.default_circle[0], radius)]
 
         elif self.object_type == 'parallelogram':
-            self.object_name = 'du parallelogramme'
+            self.object_name = 'du parallélogramme'
             self.surname = 'parallelogram'
             self.figure = [(self.default_parallelogram[0], random.randint(self.range_from, self.range_to)),
                            (self.default_parallelogram[1], random.randint(self.range_from, self.range_to))]
@@ -161,17 +160,19 @@ class AreaProblem(Problem):
         elif self.object_type == 'rectangle':
             return self.figure[0][1] * self.figure[1][1]  # l*L
         elif self.object_type == 'quadrilateral':
-            #TODO formula verif
-            return self.figure[0][1]/2 * self.figure[3][1] * math.sin(self.figure[4][1]) +\
-                   self.figure[1][1]/2 * self.figure[2][1] * math.sin(self.figure[5][1])
+            #TODO formula needs to be verified (doesn't seem to give the correct answer
+            return ((self.figure[0][1] * self.figure[3][1]) / 2) * math.sin(self.figure[4][1]) +\
+                   ((self.figure[1][1] * self.figure[2][1]) / 2) * math.sin(self.figure[5][1])  # (a*d*sin(ab)/2) + (b*c*sin(bc)/2)
+                    # self.figure[0][1]/2 * self.figure[3][1] * math.sin(self.figure[4][1]) + \
+                    # self.figure[1][1]/2 * self.figure[2][1] * math.sin(self.figure[5][1])
         elif self.object_type == 'rhombus':
-            return 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2)) # 2sqr(d^2+D^2)
+            return 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2))  # 2sqr(d^2+D^2)
         elif self.object_type == 'trapezium':
             g_base = self.figure[0][1]
             p_base = self.figure[1][1]
             return (g_base+p_base) * self.figure[2][1] / 2
         elif self.object_type == 'triangle':
-            return float(self.figure[0][1]) * self.figure[1][1] / 2 # a*b / 2
+            return float(self.figure[0][1]) * self.figure[1][1] / 2  # base * hauteur / 2
         elif self.object_type == 'parallelogram':
             return self.figure[0][1] * self.figure[1][1]  # 2 *a+ 2*b
         elif self.object_type == 'regular_polygon':
@@ -215,3 +216,7 @@ class AreaProblem(Problem):
             added_by=None
         )
         return default_context
+
+    @staticmethod
+    def round(number):
+        return float("{0:.2f}".format(number))

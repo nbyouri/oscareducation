@@ -16,7 +16,7 @@ class SolutionsTests(TestCase):
 
     def test_triangle(self):
         problem = create_problem("triangle")
-        self.assertTrue(problem.get_sol() ==problem.figure[0][1]+problem.figure[1][1]+problem.figure[2][1])
+        self.assertTrue(problem.get_sol() == problem.figure[0][1]+problem.figure[1][1]+problem.figure[2][1])
 
     def test_circle(self):
         problem = create_problem("circle")
@@ -42,8 +42,8 @@ class SolutionsTests(TestCase):
         problem = create_problem("regular_polygon")
         self.assertTrue(problem.get_sol() == problem.figure[0][1] * problem.figure[1][1])
 
-class GeneratingQuestionsTests(TestCase):
 
+class GeneratingQuestionsTests(TestCase):
     def setUp(self):
         from test.factories.skill import SkillFactory
         from test.factories.skill import SectionFactory
