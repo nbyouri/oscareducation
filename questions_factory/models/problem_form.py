@@ -44,8 +44,8 @@ class ArithmeticForm(GeneratorChoiceForm):
             if range_from >= range_to:
                 msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
-            if (abs(range_to) - abs(range_from)) < 5:
-                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 5"
+            if (range_to - range_from) < 5:
+                msg = "Fournissez un intervalle de valeur supérieur ou égal à 5"
                 self.add_error('range_from', msg)
 
 class SimpleInterestForm(GeneratorChoiceForm):
@@ -69,8 +69,8 @@ class StatisticsForm(GeneratorChoiceForm):
             if range_from >= range_to:
                 msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
-            if (abs(range_to) - abs(range_from)) < 1:
-                msg = "Fournissez un intervalle de valeur supérieur ou égal à 1"
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
                 self.add_error('range_from', msg)
             if nb < 5:
                 msg = "Le nombre d''éléments doit être au minimum de 5"
