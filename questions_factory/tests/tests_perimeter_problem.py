@@ -124,6 +124,7 @@ class GeneratingQuestionsTests(TestCase):
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
 
+
 class InstanceTests(TestCase):
     def test_of_instantiation_via_generator(self):
         problem = create_problem()

@@ -9,8 +9,7 @@ GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
                     ("StatisticsProblem", "Problèmes de statistiques"),
                     ("VolumeProblem", "Problèmes de volume"),
                     ("PerimeterProblem", "Problèmes de périmètre"),
-                    ("AreaProblem", "Problèmes d'aire")
-                    )
+                    ("AreaProblem", "Problèmes d'aire"))
 
 
 class GeneratorChoiceForm(forms.Form):

@@ -12,8 +12,9 @@ class SolutionsTests(TestCase):
 
     def test_quadrilateral(self):
         problem = create_problem("quadrilateral")
-        self.assertTrue(problem.get_sol() == problem.figure[0][1]/2 * problem.figure[3][1] * math.sin(problem.figure[4][1]) +\
-                   problem.figure[1][1]/2 * problem.figure[2][1] * math.sin(problem.figure[5][1]))
+        self.assertTrue(problem.get_sol() ==
+                        ((problem.figure[0][1])/2 * problem.figure[3][1] * math.sin(problem.figure[4][1]) +
+                         (problem.figure[1][1])/2 * problem.figure[2][1] * math.sin(problem.figure[5][1])))
 
     def test_triangle(self):
         problem = create_problem("triangle")
@@ -42,6 +43,7 @@ class SolutionsTests(TestCase):
     def test_polygon(self):
         problem = create_problem("regular_polygon")
         self.assertTrue(problem.get_sol() == problem.figure[0][1] * (math.pow(problem.figure[1][1], 2)) / (4 * math.tan(math.pi / problem.figure[0][1])))
+
 
 class GeneratingQuestionsTests(TestCase):
 
@@ -124,6 +126,7 @@ class GeneratingQuestionsTests(TestCase):
         for question in questions:
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
+
 
 class InstanceTests(TestCase):
     def test_of_instantiation_via_generator(self):
