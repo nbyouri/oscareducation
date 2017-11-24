@@ -98,7 +98,7 @@ class AreaProblem(Problem):
                            (self.default_quadrilateral[2], side_c),
                            (self.default_quadrilateral[3], side_d),
                            (self.default_quadrilateral[4], angle_a),
-                           (self.default_quadrilateral[5], angle_c),
+                           (self.default_quadrilateral[5], angle_c)
                            ]
         elif self.object_type == 'circle':
             self.object_name = 'du cercle'
