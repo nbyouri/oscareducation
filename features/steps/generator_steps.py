@@ -49,12 +49,12 @@ def step_impl(context):
     context.generator_page.select_rational_domain()
 
 
-@then('I set the time placed to "{time_unit:d}"')
+@then('I set the time placed to "{time_unit}"')
 def step_impl(context, time_unit):
     context.generator_page.set_time_placed_to(time_unit)
 
 
-@then('I set the type of rate to "{time_unit:d}"')
+@then('I set the type of rate to "{time_unit}"')
 def step_impl(context, time_unit):
     context.generator_page.set_type_rate_to(time_unit)
 
