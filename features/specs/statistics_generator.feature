@@ -12,22 +12,3 @@ Feature: StatisticsGenerator
     Then I see a list of generated problems
     Then I choose a generated problem
     Then I click on going back to the test
-
-  Scenario: Trying to create an statistic problem without parameters
-    Given I am logged with a fresh class, created a test and accessed question generator
-
-
-  Scenario: Trying to create an statistic problem with invalid range
-    Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the statistic problem generator
-
-
-  Scenario: Trying to create an statistic problem with too small range
-    Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the statistic problem generator
-
-
-  Scenario: Trying to create an statistic problem with negative amount of elements asked
-    Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the statistic problem generator
-
