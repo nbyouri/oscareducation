@@ -118,7 +118,7 @@ class AnsWithFracTests(TestCase):
 
     def test_simplify_true(self):
         result = ArithmeticPolynomialSecondDegree.ans_with_frac(2, 1, True)
-        f = Fraction(2,1)
+        f = Fraction(2, 1)
         assert_that(str(f.numerator) == result)
 
     # TODO Test simplify with answer with root
@@ -138,20 +138,18 @@ class AnsWithFracTests(TestCase):
         assert_that(result, equal_to((1, 1, 3)))
         result = ArithmeticPolynomialSecondDegree.common_divisor(10, 2, -12)
         assert_that(result, equal_to((5, 1, -6)))
-        assert_that(r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}" == result)
 
 
 class SpecificCasesTests(TestCase):
     def test_last_option_compute_sol(self):
-        # val = [3.0, -5.0, 2.0] buggy values ! @antoinerime
         val = [2.0, -5.0, 3.0]
-        problem = create_problem("Rational", "Integer", [0, 20], val)
+        problem = create_problem("Rational", "Rational", [0, 20], val)
         problem.compute_sol()
         assert_that(True)
 
     def test_numneg_modulo_debominator_compute_sol(self):
         val = [1.0, -5.0, 2.25]
-        problem = create_problem("Rational", "Integer", [0, 20], val)
+        problem = create_problem("Rational", "Rational", [0, 20], val)
         problem.compute_sol()
         assert_that(True)
 # Utils

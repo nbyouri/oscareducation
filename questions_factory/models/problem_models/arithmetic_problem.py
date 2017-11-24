@@ -207,7 +207,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
         if not simplify:
             return r"\frac{" + str(num) + "}{" + str(den) + "}"
         else:
-            f = Fraction(num, den)
+            f = Fraction(int(num), int(den))
             if den == 1:
                 return str(f.numerator)
             else:
