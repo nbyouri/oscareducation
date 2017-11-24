@@ -195,8 +195,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
             if den == 1 and num_2 == 1:
                 return str(num_1) + sign +"\sqrt{" + str(reduced) + "}"
-            elif num_2 == 1 or num_2 == -1:
-                return r"\frac{" + str(num_1) + sign + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
+            elif num_2 == 1:
+                return r"\frac{" + str(num_1) + "+" + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
+            elif num_2 == -1:
+                return r"\frac{" + str(num_1) + "-" + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
             elif den == 1:
                 return str(num_1) + sign +str(num_2) + "\sqrt{" + str(reduced) + "}"
             else:
