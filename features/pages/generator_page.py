@@ -5,6 +5,8 @@ from features import Browser
 
 class GeneratorPageLocator(object):
     # Login page elements locator
+    NB_QUESTIONS_INPUT = (By.ID, "id_nb_question")
+
     PAGE_TITLE = (By.ID, "id_question_generator")
     GENERATOR_TYPE_SELECTOR = (By.ID, "id_generator_name")
     RANGE_FROM_INPUT = (By.ID, "id_range_from")
@@ -57,6 +59,9 @@ class GeneratorPage(Browser):
 
     def error_displayed(self):
         return self.driver.find_element(*GeneratorPageLocator.ERROR)
+
+    def select_number_of_questions(self, number):
+        self.fill(number, *GeneratorPageLocator.NB_QUESTIONS_INPUT)
 
     # Arithmetic Setup
 

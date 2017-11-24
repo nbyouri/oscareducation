@@ -21,23 +21,3 @@ Feature: ArithmeticGenerator
     Then I see a list of generated problems
     Then I choose a generated problem
     Then I click on going back to the test
-
-  Scenario: Trying to create an arithmetic problem without parameters
-    Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the arithmetic problem generator
-    When I click on the create button
-    Then I see an error panel
-
-  Scenario: Trying to create an arithmetic problem with invalid range
-    Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the arithmetic problem generator
-    Then I enter "99999" as lower range and "-1" as upper range
-    When I click on the create button
-    Then I see an error panel
-
-  Scenario: Trying to create an arithmetic problem with too small range
-    Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the arithmetic problem generator
-    Then I enter "0" as lower range and "1" as upper range
-    When I click on the create button
-    Then I see an error panel

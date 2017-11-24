@@ -120,6 +120,16 @@ class AnsWithFracTests(TestCase):
         result = ArithmeticPolynomialSecondDegree.ans_with_frac(2, 1, True)
         f = Fraction(2,1)
         assert_that(r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}" == result)
+
+
+class SpecificCasesTests(TestCase):
+    def test_last_option_compute_sol(self):
+        # val = [3.0, -5.0, 2.0] buggy values ! @antoinerime
+        val = [2.0, -5.0, 3.0]
+        problem = create_problem("Rational", "Integer", [0, 20], val)
+        problem.compute_sol()
+        assert_that(True)
+
 # Utils
 
 

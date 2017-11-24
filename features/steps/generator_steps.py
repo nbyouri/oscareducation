@@ -79,3 +79,8 @@ def step_impl(context):
 @then("I select the volume problem generator")
 def step_impl(context):
     context.generator_page.select_volume_problem_generator()
+
+
+@then('I chose to generate "{number}" questions')
+def step_impl(context, number):
+    context.generator_page.select_number_of_questions(number)

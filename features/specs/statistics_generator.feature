@@ -15,30 +15,19 @@ Feature: StatisticsGenerator
 
   Scenario: Trying to create an statistic problem without parameters
     Given I am logged with a fresh class, created a test and accessed question generator
-    Then I select the statistic problem generator
-    When I click on the create button
-    Then I see an error panel
+
 
   Scenario: Trying to create an statistic problem with invalid range
     Given I am logged with a fresh class, created a test and accessed question generator
     Then I select the statistic problem generator
-    Then I enter "50" elements asked
-    Then I enter "99999" as lower range and "-1" as upper range
-    When I click on the create button
-    Then I see an error panel
+
 
   Scenario: Trying to create an statistic problem with too small range
     Given I am logged with a fresh class, created a test and accessed question generator
     Then I select the statistic problem generator
-    Then I enter "50" elements asked
-    Then I enter "0" as lower range and "0" as upper range
-    When I click on the create button
-    Then I see an error panel
+
 
   Scenario: Trying to create an statistic problem with negative amount of elements asked
     Given I am logged with a fresh class, created a test and accessed question generator
     Then I select the statistic problem generator
-    Then I enter "-1000000" elements asked
-    Then I enter "0" as lower range and "60" as upper range
-    When I click on the create button
-    Then I see an error panel
+

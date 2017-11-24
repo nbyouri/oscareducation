@@ -104,19 +104,19 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
         if sqrt_rho.is_integer():
             if num_neg % den == 0:
-                ans1 = self.simple_answer(num_neg, den)
+                ans1 = self.simple_answer(int(num_neg), int(den))
                 # ans1 = ans1.format(num_neg / den)
                 # ans1 = latex(sympify(str(num_neg/den)))
             else:
-                ans1 = self.ans_with_frac(num_neg, den, True)
+                ans1 = self.ans_with_frac(int(num_neg), int(den), True)
                 # ans1 = ans1.format(num_neg, den)
                 # ans1 = latex(sympify(str(num_neg)+"/"+str(den), evaluate=False))
             if num_pos % den == 0:
-                ans2 = self.simple_answer(num_pos, den)
+                ans2 = self.simple_answer(int(num_pos), int(den))
                 # ans2 = ans2.format(num_pos / den)
                 # ans2 = latex(sympify(str(num_pos/den)))
             else:
-                ans2 = self.ans_with_frac(num_pos, den, True)
+                ans2 = self.ans_with_frac(int(num_pos), int(den), True)
                 # ans2 = ans2.format(num_pos, den)
                 # ans2 = latex(sympify(str(num_pos) + "/" + str(den), evaluate=False))
         else:
