@@ -3,6 +3,7 @@ from questions_factory.models.problem_models.simple_interest_problem import *
 from questions_factory.models.problem_models.statistics_problem import *
 from questions_factory.models.problem_models.volume_problem import *
 from questions_factory.models.problem_models.perimeter_problem import *
+from questions_factory.models.problem_models.area_problem import *
 
 class ProblemGenerator:
 
@@ -27,8 +28,12 @@ class ProblemGenerator:
         elif problem == "PerimeterProblem":
             object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict[
                 "range_to"]
-
             return PerimeterProblem(object_type, range_from, range_to)
+        elif problem == "AreaProblem":
+            object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict[
+                "range_to"]
+            return AreaProblem(object_type, range_from, range_to)
+
         else:
             raise ValueError('Wrong problem type')
 

@@ -8,7 +8,8 @@ GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
                     ("SimpleInterestProblem", "Problèmes d'intêret"),
                     ("StatisticsProblem", "Problèmes de statistiques"),
                     ("VolumeProblem", "Problèmes de volume"),
-                    ("PerimeterProblem", "Problèmes de périmètre")
+                    ("PerimeterProblem", "Problèmes de périmètre"),
+                    ("AreaProblem", "Problèmes d'aire")
                     )
 
 
@@ -121,6 +122,37 @@ class PerimeterProblemForm(GeneratorChoiceForm):
 
     def clean(self):
         cleaned_data = super(PerimeterProblemForm, self).clean()
+        range_from = cleaned_data.get("range_from")
+        range_to = cleaned_data.get("range_to")
+        if isinstance(range_from, float) and isinstance(range_to, float):
+            if range_from <= 0 or range_to <= 0:
+                msg = "Les valeurs doivent être plus grandes que 0."
+                self.add_error('range_from', msg)
+            if range_from >= range_to:
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal au supérieur."
+                self.add_error('range_from', msg)
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
+                self.add_error('range_from', msg)
+
+class AreaProblemForm(GeneratorChoiceForm):
+    OBJECT_TYPE = (('rhombus', 'Losange'),
+                   ('rectangle', 'Rectangle'),
+                   ('square', ' Carré'),
+                   ('triangle', 'Triangle'),
+                   ('trapezium', 'Trapèze'),
+                   ('quadrilateral', 'Quadrilatère'),
+                   ('circle', 'Cercle'),
+                   ('parallelogram', 'Parralélogramme'),
+                   ('regular_polygon', 'Polygone régulier')
+                   )
+
+    object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+
+    def clean(self):
+        cleaned_data = super(AreaProblemForm, self).clean()
         range_from = cleaned_data.get("range_from")
         range_to = cleaned_data.get("range_to")
         if isinstance(range_from, float) and isinstance(range_to, float):

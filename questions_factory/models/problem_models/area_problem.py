@@ -13,15 +13,15 @@ import math
 from skills.models import Skill
 
 
-class PerimeterProblem(Problem):
+class AreaProblem(Problem):
     default_triangle = ['base (b)', 'hauteur (h)']
     default_square = 'cote (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']
     default_rhombus = ['grande diagonale (d1)', 'petite diagonale (d2)']
-    default_quadrilateral = ['cote (a)', 'cote (b)', 'cote (c)', 'cote (d)']
+    default_quadrilateral = ['cote (a)', 'cote (b)', 'cote (c)', 'cote (d)', 'angle(A)', 'angle (C)']
     default_trapezium = ['grande base (B)', 'petite base (b)', 'hauteur (h)']
     default_circle = 'rayon (r)'
-    default_parallelogram = ['grand cote (a)', 'grand cote (b)']
+    default_parallelogram = ['base (b)', 'hauteur (h)']
     default_regular_polygon = ['nombre de cotes (n)', 'cote(c)']
     object_type = None
     object_name = None
@@ -59,12 +59,8 @@ class PerimeterProblem(Problem):
         elif self.object_type == 'triangle':
             self.object_name = 'du triangle'
             self.surname = 'triangle'
-            side_a = random.randint(self.range_from, self.range_to)
-            side_b = random.randint(self.range_from, self.range_to)
-            side_c = random.randint(self.range_from, side_a+side_b-1)
-            self.figure = [(self.default_triangle[0], side_a),  # radius
-                           (self.default_triangle[1], side_b),
-                           (self.default_triangle[2], side_c)
+            self.figure = [(self.default_triangle[0], random.randint(self.range_from, self.range_to)),  # radius
+                           (self.default_triangle[1], random.randint(self.range_from, self.range_to))
                            ]
         elif self.object_type == 'rhombus':
             self.object_name = 'du losange'
@@ -96,10 +92,14 @@ class PerimeterProblem(Problem):
             side_b = random.randint(self.range_from, self.range_to)
             side_c = random.randint(self.range_from, self.range_to)
             side_d = random.randint(self.range_from, self.range_to)
+            angle_a = random.randint(90, 180)
+            angle_c = random.randint(90, 180)
             self.figure = [(self.default_quadrilateral[0], side_a),
                            (self.default_quadrilateral[1], side_b),
                            (self.default_quadrilateral[2], side_c),
-                           (self.default_quadrilateral[2], side_d)
+                           (self.default_quadrilateral[3], side_d),
+                           (self.default_quadrilateral[4], angle_a),
+                           (self.default_quadrilateral[5], angle_c),
                            ]
         elif self.object_type == 'circle':
             self.object_name = 'du cercle'
@@ -110,10 +110,8 @@ class PerimeterProblem(Problem):
         elif self.object_type == 'parallelogram':
             self.object_name = 'du parallelogramme'
             self.surname = 'parallelogram'
-            long_side = random.randint(self.range_from, self.range_to)
-            small_side = random.randint(self.range_from, long_side)
-            self.figure = [(self.default_parallelogram[0], long_side),
-                           (self.default_parallelogram[1], small_side)]
+            self.figure = [(self.default_parallelogram[0], random.randint(self.range_from, self.range_to)),
+                           (self.default_parallelogram[1], random.randint(self.range_from, self.range_to))]
         elif self.object_type == 'regular_polygon':
             num_side = random.randint(5, 10)
             side_size = random.randint(self.range_from, self.range_to)
@@ -152,32 +150,36 @@ class PerimeterProblem(Problem):
 
     @staticmethod
     def make_form(post_values):
-        return PerimeterProblemForm(post_values)
+        return AreaProblemForm(post_values)
 
     def get_desc(self):
         pass
 
     def get_sol(self):
         if self.object_type == 'square':
-            return 4 * self.figure[0][1]  # 4c
+            return self.figure[0][1] * self.figure[0][1]  # c^2
         elif self.object_type == 'circle':
-            return 2 * math.pi * self.figure[0][1]  # 2piR
+            return math.pow(self.figure[0][1],2)*math.pi  # pir^2
         elif self.object_type == 'rectangle':
-            return 2 * self.figure[0][1] + 2 * self.figure[1][1]  # 2l*L
+            return self.figure[0][1] * self.figure[1][1]  # l*L
         elif self.object_type == 'quadrilateral':
-            return self.figure[0][1] + self.figure[1][1] + self.figure[2][1] + self.figure[3][1]
+            #TODO formula verif
+            return self.figure[0][1]/2 * self.figure[3][1] * math.sin(self.figure[4][1]) +\
+                   self.figure[1][1]/2 * self.figure[2][1] * math.sin(self.figure[5][1])
         elif self.object_type == 'rhombus':
             return 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2)) # 2sqr(d^2+D^2)
         elif self.object_type == 'trapezium':
             g_base = self.figure[0][1]
             p_base = self.figure[1][1]
-            return g_base + p_base + math.sqrt(math.pow((g_base-p_base)/2, 2) + math.pow(self.figure[2][1], 2))
+            return (g_base+p_base) * self.figure[2][1] / 2
         elif self.object_type == 'triangle':
-            return self.figure[0][1] + self.figure[1][1] + self.figure[2][1]  # a+b+c
+            return self.figure[0][1] * self.figure[1][1] / 2
         elif self.object_type == 'parallelogram':
-            return 2 * self.figure[0][1] + 2 * self.figure[1][1]  # 2 *a+ 2*b
+            return self.figure[0][1] * self.figure[1][1]  # 2 *a+ 2*b
         elif self.object_type == 'regular_polygon':
-            return self.figure[0][1] * self.figure[1][1]  # n * c
+            number_side = self.figure[0][1]
+            side_size = self.figure[1][1]
+            return number_side * (math.pow(side_size, 2)) / (4 * math.tan(math.pi / number_side))
         else:
             raise ValueError
 
@@ -190,7 +192,7 @@ class PerimeterProblem(Problem):
 
     def new_question(self, sol):
         question_desc = '<img style = "max-width: 600px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + self.surname + '.png\" /><br>'
-        question_desc += 'Calculer le perimetre ' + self.object_name + ' dont les parametres sont:<ul>'
+        question_desc += 'Calculer l\'aire ' + self.object_name + ' dont les parametres sont:<ul>'
         for e in self.figure:
             question_desc += '<br><li>%s = %s</li>' % (e[0], e[1])
         question_desc += '</ul>'
@@ -206,7 +208,7 @@ class PerimeterProblem(Problem):
 
     @staticmethod
     def default_context():
-        description = "Calcul de périmètre"
+        description = "Calcul d'aire"
         skill_id = "T4-U5-A1b" # ??
         default_context = Context.objects.create(
             file_name="generated",

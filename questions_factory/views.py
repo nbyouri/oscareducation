@@ -24,6 +24,8 @@ def get_form(generator_name, request):
         form = VolumeProblem.make_form(request.POST or None)
     elif generator_name == "PerimeterProblem":
         form = PerimeterProblem.make_form(request.POST or None)
+    elif generator_name == "AreaProblem":
+        form = PerimeterProblem.make_form(request.POST or None)
     return form
 
 
