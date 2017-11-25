@@ -36,7 +36,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
                 self.val.append(random.randint(self.range[0], self.range[1]))
         elif self.domain == "Rational":
             for i in range(3):
-                self.val.append(random.uniform(self.range[0], self.range[1]))
+                num, den = random.randint(self.range[0], self.range[1]), random.randint(self.range[0], self.range[1])
+                if den == 0:
+                    den = 1
+                self.val.append(Fraction(num, den))
         else:
             raise ValueError("Wrong value for domain: ", self.domain)
         if self.val[0] == 0:
@@ -73,7 +76,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
         tmp_sol = numpy.roots(self.val).tolist()
         sol = ""
         if self.image == "Rational" or self.image == "Integer":
-            if self.rho() > 0:
+            if self.rho(self.val[0], self.val[1], self.val[2    ]) > 0:
                 sol = (self.compute_sol())
             else:
                 return []
@@ -86,21 +89,26 @@ class ArithmeticPolynomialSecondDegree(Problem):
         #  return self.round(sol)
         return sol
 
-    def rho(self):
-        return self.val[1] ** 2 - 4 * self.val[0] * self.val[2]
+    @staticmethod
+    def rho(a, b, c):
+        return b**2 - 4*a*c
 
     def compute_sol(self):
-        rho = self.rho()
+        # For ax²+bx+c
+        if self.domain == "Rational":
+            a, b, c = self.remove_fract()
+        else:
+            a, b, c = self.val
+        rho = self.rho(a, b, c)
         if rho < 0 and (self.domain == "Integer" or self.domain == "Rational"):
             return None
         sqrt_rho = math.sqrt(rho)
-        num_neg = -1 * self.val[1] - math.sqrt(rho)
-        num_pos = -1 * self.val[1] + math.sqrt(rho)
+        num_neg = -1 * b - math.sqrt(rho)
+        num_pos = -1 * b + math.sqrt(rho)
         if self.domain == "Integer" or self.image == "Integer":
             num_neg = int(num_neg)
             num_pos = int(num_pos)
-        den = 2 * self.val[0]
-        ans1, ans2 = "0", "0"
+        den = 2 * a
 
         if sqrt_rho.is_integer():
             if num_neg % den == 0:
@@ -112,8 +120,8 @@ class ArithmeticPolynomialSecondDegree(Problem):
             else:
                 ans2 = self.ans_with_frac(num_pos, den, True)
         else:
-            ans1 = self.ans_with_root(rho, "-", True)  # .format(-1 * self.val[1], rho, 2 * self.val[2])
-            ans2 = self.ans_with_root(rho, "+", True)  # .format(-1 * self.val[1], rho, 2 * self.val[2])
+            ans1 = self.ans_with_root(rho, "-", a, b, c, True)  # .format(-1 * self.val[1], rho, 2 * self.val[2])
+            ans2 = self.ans_with_root(rho, "+", a, b, c, True)  # .format(-1 * self.val[1], rho, 2 * self.val[2])
         return [ans1 + ',' + ans2, ans2 + ',' + ans1]
 
     def new_question(self, sol):
@@ -121,7 +129,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
         if self.domain == "Integer":
             equation = ("{:-d}x²{:+d}x{:+d}".format(self.val[0], self.val[1], self.val[2]))
         elif self.domain == "Rational":
-            equation = ("{:-0.2f}x²{:+0.2f}x{:+0.2f}".format(self.val[0], self.val[1], self.val[2]))
+            equation = ("({:s})x²+({:s})x+({:s})".format(self.val[0], self.val[1], self.val[2]))
         equation = self.pretty_polynomial_string(equation)
         question_desc += equation
         # if sol.__len__() > 1:
@@ -150,6 +158,13 @@ class ArithmeticPolynomialSecondDegree(Problem):
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
         return default_context
 
+    def remove_fract(self):
+        num_a, den_a = self.val[0].numerator, self.val[0].denominator
+        num_b, den_b = self.val[1].numerator, self.val[1].denominator
+        num_c, den_c = self.val[2].numerator, self.val[2].denominator
+
+        return self.common_divisor(num_a*den_b*den_c, num_b*den_a*den_c, num_c*den_a*den_b)
+
     @staticmethod
     def default_context():
         description = "Calculer les racines $$ x_1, x_2 $$ d'un polyonme du second degré <br/> " \
@@ -169,12 +184,12 @@ class ArithmeticPolynomialSecondDegree(Problem):
     def make_form(post_values):
         return ArithmeticForm(post_values)
 
-    def ans_with_root(self, rho, sign, simplify=False):
+    def ans_with_root(self, rho, sign, a, b, c, simplify=False):
         if not simplify:
-            return r"\frac{" + str(-1 * self.val[1]) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * self.val[0]) + "}"
+            return r"\frac{" + str(-1 * b) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * a) + "}"
         else:
             (factor_root, reduced) = self.reduced_sqrt(rho)
-            (num_1, num_2, den) = self.common_divisor(-1 * self.val[1], factor_root, 2 * self.val[0])
+            (num_1, num_2, den) = self.common_divisor(-1 * b, factor_root, 2 *a)
 
             if den < 0:
                 num_1 *= -1
@@ -251,3 +266,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
                 if num_1 % div == 0 and num_2 % div == 0 and den % div == 0:
                     return num_1 / div, num_2 / div, den / div
         return num_1, num_2, den
+
+    @staticmethod
+    def latex(fraction):
+        if fraction.numerator != 1:
+            return r"\frac{"+str(fraction.numerator())+"}{"+str(fraction.denominator())+"}"
+        else:
+            return str(fraction.numerator)
