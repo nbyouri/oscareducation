@@ -129,7 +129,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
         if self.domain == "Integer":
             equation = ("{:-d}x²{:+d}x{:+d}".format(self.val[0], self.val[1], self.val[2]))
         elif self.domain == "Rational":
-            equation = ("({:s})x²+({:s})x+({:s})".format(self.val[0], self.val[1], self.val[2]))
+            equation = ("({:s})x²+({:s})x+({:s})".format(str(self.val[0]), str(self.val[1]), str(self.val[2])))
         equation = self.pretty_polynomial_string(equation)
         question_desc += equation
         # if sol.__len__() > 1:
