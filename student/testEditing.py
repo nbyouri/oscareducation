@@ -15,15 +15,6 @@ loginProf = "prof"
 pwdProf = "prof"
 
 
-# Simple question
-tests = [{"nomDuTest" : "Test de Pythagore", "enonce" : "Soit un triangle rectangle dont un est des côtés adjacents est de 3cm, et l'autre de 4 cm, combien de cm mesure l'hypothénuse ? (Réponse uniquement en nombres)","answers":"5"}]
-
-# Double question
-tests2 = []
-
-# Placeholders
-tests3 = []
-
 
 class TestEditing(unittest.TestCase):
     def setUp(self):
