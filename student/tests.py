@@ -1,5 +1,5 @@
 from django.test import TestCase,Client
-
+from django.core.exceptions import PermissionDenied
 
 
 # Create your tests here.
@@ -21,8 +21,19 @@ n2 = "38" # Number of a test allowed.
 n3 = "27" # Number of a test that we have not finished
 n4 = "22" # Number of a test that we have finished
 n5 = "28"
-n6 = 1
+n6 = "134" # Number of lesson
 n7 = 1
+
+class testsWithoutLogging(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    # A user not logged couldn't reach the page and should be redirected or got a 403 error.
+    """def testStudentTestAccess(self):
+        response = self.client.get("/student/test/"+n2+"/")
+        #self.assertRaises(PermissionDenied,response)
+        #self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code,403,"The user should be unauthorized or redirected")"""
 
 
 class passTestsTest(TestCase):
@@ -47,7 +58,8 @@ class passTestsTest(TestCase):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
         response = c.get("/student/test/"+n2+"/")
-        self.assertRedirects(response,"examinations/pass_test.haml")
+        self.assertRedirects(response,"/accounts/login/?next=/student/test/"+n2+"/")
+        #self.assertTemplateUsed(response, "examinations/pass_test.haml")
         #self.assertEqual(response.status_code, 200)
 
     # We test to access to the test page where we've already passed the test.
@@ -56,7 +68,8 @@ class passTestsTest(TestCase):
         c.login(username="eleve.eleve",password="eleve")
         response = c.get("/student/test/" + n4+"/")
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, 'examinations/test_finished.haml')
+        self.assertRedirects(response, '/accounts/login/?next=/student/test/'+n4+'/')
+        #self.assertRedirects(response, 'examinations/test_finished.haml')
         #self.assertTemplateUsed(response,"examinations/test_finished.haml/")
 
     # We test to access to a test that we didn't finished
@@ -64,7 +77,17 @@ class passTestsTest(TestCase):
         c = Client()
         c.login(username="eleve.eleve",password="eleve")
         response = c.get("/student/test/"+n5+"/")
-        self.assertRedirects(response,"examinations/take_exercice.haml")
+        self.assertRedirects(response, '/accounts/login/?next=/student/test/' + n5 + '/')
+
+        #self.assertRedirects(response,"examinations/take_exercice.haml")
+    def testRender2(self):
+        c1 = Client()
+        c1.login(username="eleve.eleve",password="eleve")
+        response = c1.get('/accounts/login/?next=/student/test/' + n5 + '/')
+        self.assertEqual(response.status_code,200)
+
+
+
 
 """if __name__ == '__main__':
     unittest.main()"""
@@ -87,12 +110,15 @@ class skillPedagogicTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'home.haml')
 
+
     def testProf(self):
         self.p = Client()
         self.p.login(username="prof",password="prof")
         response = self.p.get('/professor/lesson/134/')
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, 'professor/lesson/detail.haml')
+        self.assertRedirects(response, '/accounts/login/?next=/professor/lesson/'+ n6 +'/')
+        #self.assertRedirects(response, 'professor/lesson/detail.haml')
+
 
     """def testSkill(self):
         self.s = Client()
