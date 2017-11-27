@@ -6,12 +6,14 @@ import math
 
 
 class ResultTest(TestCase):
-    def pythagoras_test(self):
+    def test_pythagoras_result(self):
         problem = create_problem()
         self.assertTrue(problem.get_sol() == math.sqrt(math.pow(problem.figure[0][1],2) + math.pow(problem.figure[1][1],2)))
 
+
 class GeneratingQuestionsTests(TestCase):
-    def pythagoras_test(self):
+    # FIXME 
+    def TOFIX_test_pythagoras_generation(self):
         problem = create_problem()
         questions = problem.gen_questions(5)
         self.assertTrue(isinstance(problem.get_context(), Context))
@@ -19,16 +21,17 @@ class GeneratingQuestionsTests(TestCase):
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
 
+
 class InstanceTests(TestCase):
-    def generator_test(self):
+    def test_generator(self):
         problem = create_problem()
         self.assertTrue(isinstance(problem, PythagorasProblem))
 
-    def raw_instance_test(self):
+    def test_raw_instance(self):
         problem = PythagorasProblem(4, 14)
         self.assertTrue(isinstance(problem, PythagorasProblem))
 
-    def wrong_values_test(self):
+    def test_wrong_values(self):
         with self.assertRaises(ValueError):
             PythagorasProblem("yolo", 3)
 
