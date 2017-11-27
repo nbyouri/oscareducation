@@ -52,10 +52,10 @@ class SimpleInterestProblem(Problem):
     def new_question(self, sol):
         time_unit = "mois" if self.time_placed == "month" else "ans"
         rate_unit = "mois" if self.type_rate == "month" else "ans"
-        question_desc = "Si on place une somme de " + str(self.amount) + " euros à la " \
-            "banque pour une durée de " + str(self.time) + " " + str(time_unit) + " à " \
-            "un taux de " + str(self.rate) + "% par " + str(rate_unit) + ", quelle somme d'intérêts touche-t-on " \
-            "au bout de cette période?"
+        question_desc = "Si nous déposons à la banque une somme s'élevant à " + str(self.amount) + " euros " \
+            "pour une durée de " + str(self.time) + " " + str(time_unit) + " à " \
+            "un taux de " + str(self.rate) + "% par " + str(rate_unit) + ", quelle somme d'intérêts obtiendrons-nous " \
+            "à la fin de cette période ?"
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question

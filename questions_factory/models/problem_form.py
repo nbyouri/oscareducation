@@ -5,9 +5,12 @@ DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
 IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
 
 GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
-                    ("SimpleInterestProblem", "Problème d'intêret"),
-                    ("StatisticsProblem", "Problème de statistiques"),
-                    ("VolumeProblem", "Problèmes de volumes"))
+                    ("SimpleInterestProblem", "Problèmes d'intêret"),
+                    ("StatisticsProblem", "Problèmes de statistiques"),
+                    ("VolumeProblem", "Problèmes de volume"),
+                    ("PerimeterProblem", "Problèmes de périmètre"),
+                    ("AreaProblem", "Problèmes d'aire"),
+                    ("PythagorasProblem", "Théorème de Pythagore"))
 
 
 class GeneratorChoiceForm(forms.Form):
@@ -19,15 +22,14 @@ class GeneratorChoiceForm(forms.Form):
         cleaned_data = super(GeneratorChoiceForm, self).clean()
         nb_question = cleaned_data.get("nb_question")
         if nb_question < 1 or nb_question > 50:
-            msg = "Le nombre de question générée doit être entre 1 et 50"
+            msg = "Le nombre de questions générées doit être compris entre 1 et 50"
             self.add_error('nb_question', msg)
-
         return cleaned_data
 
 
 class ArithmeticForm(GeneratorChoiceForm):
-    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
-    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur')
     domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')
     image = forms.ChoiceField(widget=forms.Select, choices=IMAGE_CHOICES, label='Image')
 
@@ -39,10 +41,10 @@ class ArithmeticForm(GeneratorChoiceForm):
         # Checking instance to avoid problem with 0 values
         if isinstance(range_from, float) and isinstance(range_to, float):
             if range_from >= range_to:
-                msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
-            if (abs(range_to) - abs(range_from)) < 5:
-                msg = "Fournissez un interval de valeurs supérieur ou égal à 5"
+            if (range_to - range_from) < 5:
+                msg = "Fournissez un intervalle de valeur supérieur ou égal à 5"
                 self.add_error('range_from', msg)
 
 
@@ -54,8 +56,8 @@ class SimpleInterestForm(GeneratorChoiceForm):
 
 
 class StatisticsForm(GeneratorChoiceForm):
-    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur des valeurs')
-    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur des valeurs')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur des valeurs')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur des valeurs')
     nb = forms.IntegerField(widget=forms.TextInput, required=True, label='Nombre d''éléments')
 
     def clean(self):
@@ -65,13 +67,13 @@ class StatisticsForm(GeneratorChoiceForm):
         nb = cleaned_data.get("nb")
         if isinstance(range_from, float) and isinstance(range_to, float) and isinstance(nb, int):
             if range_from >= range_to:
-                msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
-            if (abs(range_to) - abs(range_from)) < 1:
-                msg = "Fournissez un interval de valeurs supérieur ou égal à 1"
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un intervalle de valeur supérieur ou égal à 1"
                 self.add_error('range_from', msg)
             if nb < 5:
-                msg = "Le nombre d''élément doit être au minimum de 5"
+                msg = "Le nombre d'éléments doit être au minimum de 5"
                 self.add_error('nb', msg)
 
 
@@ -83,8 +85,8 @@ class VolumeProblemForm(GeneratorChoiceForm):
                    ('cube', 'Cube'))
 
     object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')
-    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Interval inférieur')
-    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Interval supérieur')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur')
 
     def clean(self):
         cleaned_data = super(VolumeProblemForm, self).clean()
@@ -95,8 +97,92 @@ class VolumeProblemForm(GeneratorChoiceForm):
                 msg = "Les valeurs doivent être plus grandes que 0."
                 self.add_error('range_from', msg)
             if range_from >= range_to:
-                msg = "L'interval inférieur ne peut pas être plus grand ou égal au supérieur."
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
                 self.add_error('range_from', msg)
             if (range_to - range_from) < 1:
-                msg = "Fournissez un interval de valeurs supérieur ou égal à 1"
+                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
+                self.add_error('range_from', msg)
+
+
+class PerimeterProblemForm(GeneratorChoiceForm):
+    OBJECT_TYPE = (('rhombus', 'Losange'),
+                   ('rectangle', 'Rectangle'),
+                   ('square', ' Carré'),
+                   ('triangle', 'Triangle'),
+                   ('trapezium', 'Trapèze'),
+                   ('quadrilateral', 'Quadrilatère'),
+                   ('circle', 'Cercle'),
+                   ('parallelogram', 'Parralélogramme'),
+                   ('regular_polygon', 'Polygone régulier')
+                   )
+
+    object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur')
+
+    def clean(self):
+        cleaned_data = super(PerimeterProblemForm, self).clean()
+        range_from = cleaned_data.get("range_from")
+        range_to = cleaned_data.get("range_to")
+        if isinstance(range_from, float) and isinstance(range_to, float):
+            if range_from <= 0 or range_to <= 0:
+                msg = "Les valeurs doivent être plus grandes que 0."
+                self.add_error('range_from', msg)
+            if range_from >= range_to:
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal au supérieur."
+                self.add_error('range_from', msg)
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
+                self.add_error('range_from', msg)
+
+
+class AreaProblemForm(GeneratorChoiceForm):
+    OBJECT_TYPE = (('rhombus', 'Losange'),
+                   ('rectangle', 'Rectangle'),
+                   ('square', ' Carré'),
+                   ('triangle', 'Triangle'),
+                   ('trapezium', 'Trapèze'),
+                   ('quadrilateral', 'Quadrilatère'),
+                   ('circle', 'Cercle'),
+                   ('parallelogram', 'Parralélogramme'),
+                   ('regular_polygon', 'Polygone régulier')
+                   )
+
+    object_type = forms.ChoiceField(widget=forms.Select, choices=OBJECT_TYPE, label='Figure')
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur')
+
+    def clean(self):
+        cleaned_data = super(AreaProblemForm, self).clean()
+        range_from = cleaned_data.get("range_from")
+        range_to = cleaned_data.get("range_to")
+        if isinstance(range_from, float) and isinstance(range_to, float):
+            if range_from <= 0 or range_to <= 0:
+                msg = "Les valeurs doivent être plus grandes que 0."
+                self.add_error('range_from', msg)
+            if range_from >= range_to:
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal au supérieur."
+                self.add_error('range_from', msg)
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
+                self.add_error('range_from', msg)
+
+
+class PythagorasProblemForm(GeneratorChoiceForm):
+    range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur')
+    range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur')
+
+    def clean(self):
+        cleaned_data = super(PythagorasProblemForm, self).clean()
+        range_from = cleaned_data.get("range_from")
+        range_to = cleaned_data.get("range_to")
+        if isinstance(range_from, float) and isinstance(range_to, float):
+            if range_from <= 0 or range_to <= 0:
+                msg = "Les valeurs doivent être plus grandes que 0."
+                self.add_error('range_from', msg)
+            if range_from >= range_to:
+                msg = "L'intervalle inférieur ne peut pas être plus grand ou égal à l'intervalle supérieur."
+                self.add_error('range_from', msg)
+            if (range_to - range_from) < 1:
+                msg = "Fournissez un intervalle de valeurs supérieur ou égal à 1"
                 self.add_error('range_from', msg)

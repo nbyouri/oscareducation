@@ -112,14 +112,62 @@ class ProblemSettings(TestCase):
 
 # Sub Methods Test
 class AnsWithFracTests(TestCase):
-    def test_simplify_false(self):
-        result = ArithmeticPolynomialSecondDegree.ans_with_frac(2,1,False)
+    def test_simplify_fract_false(self):
+        result = ArithmeticPolynomialSecondDegree.ans_with_frac(2, 1, False)
         assert_that(r"\frac{2}{1}" == result)
 
-    def test_simplify_true(self):
+    def test_simplify_fract_true(self):
         result = ArithmeticPolynomialSecondDegree.ans_with_frac(2, 1, True)
-        f = Fraction(2,1)
-        assert_that(r"\frac{" + str(f.numerator) + "}{" + str(f.denominator) + "}" == result)
+        f = Fraction(2, 1)
+        assert_that(str(f.numerator) == result)
+
+    def test_simplify_root_false(self):
+        val = [1, -1, -2]
+        problem = create_problem("Integer", "Rational", [0, 20], val)
+        result = problem.ans_with_root(9, "+", 1, -1, -2, False)
+        assert_that(result, equal_to(r"\frac{1+\sqrt{9}}{2}"))
+
+    def test_simplify_root_true_1(self):
+        val = [-1, -3, 3]
+        problem = create_problem("Integer", "Rational", [0, 20], val)
+        result = problem.ans_with_root(21, "+", -1, -3, 3, True)
+        assert_that(result, equal_to(r"\frac{-3-\sqrt{21}}{2}"))
+
+    def test_simplify_root_true_2(self):
+        val = [2, 39, 12]
+        problem = create_problem("Integer", "Rational", [0, 20], val)
+        result = problem.ans_with_root(problem.rho(2, 39, 12), "-", 2, 39, 12, True)
+        assert_that(result, equal_to(r"\frac{-39-5\sqrt{57}}{4}"))
+
+    def test_reduced_sqrt(self):
+        result = ArithmeticPolynomialSecondDegree.reduced_sqrt(28)
+        assert_that(result, equal_to((2, 7)))
+        result = ArithmeticPolynomialSecondDegree.reduced_sqrt(10)
+        assert_that(result, equal_to((1, 10)))
+
+    def test_common_divisor(self):
+        result = ArithmeticPolynomialSecondDegree.common_divisor(4, 6, 2)
+        assert_that(result, equal_to((2, 3, 1)))
+        result = ArithmeticPolynomialSecondDegree.common_divisor(5, 7, 2)
+        assert_that(result, equal_to((5, 7, 2)))
+        result = ArithmeticPolynomialSecondDegree.common_divisor(2, 2, 6)
+        assert_that(result, equal_to((1, 1, 3)))
+        result = ArithmeticPolynomialSecondDegree.common_divisor(10, 2, -12)
+        assert_that(result, equal_to((5, 1, -6)))
+
+
+class SpecificCasesTests(TestCase):
+    def test_last_option_compute_sol(self):
+        val = [Fraction(4, 2), Fraction(5, 2), Fraction(4, 3)]
+        problem = create_problem("Rational", "Rational", [0, 20], val)
+        problem.compute_sol()
+        assert_that(True)
+
+    def test_numneg_modulo_debominator_compute_sol(self):
+        val = [Fraction(-4, 2), Fraction(5, 2), Fraction(4, 3)]
+        problem = create_problem("Rational", "Rational", [0, 20], val)
+        problem.compute_sol()
+        assert_that(True)
 # Utils
 
 

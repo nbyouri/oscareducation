@@ -22,6 +22,12 @@ def get_form(generator_name, request):
         form = StatisticsProblem.make_form(request.POST or None)
     elif generator_name == "VolumeProblem":
         form = VolumeProblem.make_form(request.POST or None)
+    elif generator_name == "PerimeterProblem":
+        form = PerimeterProblem.make_form(request.POST or None)
+    elif generator_name == "AreaProblem":
+        form = PerimeterProblem.make_form(request.POST or None)
+    elif generator_name == "PythagorasProblem":
+        form = PythagorasProblem.make_form(request.POST or None)
     return form
 
 
@@ -31,8 +37,8 @@ def generator(request, lesson_id, skill_id, test_id):
     valid = True
     if request.POST:
         form = get_form(request.POST["generator_name"], request)
-        if not form:
-            return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
+        #if not form:
+            #return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
         if form.is_valid():
             problem = ProblemGenerator.factory(form.cleaned_data)
             exercise = problem.get_context()
@@ -56,8 +62,8 @@ def generator(request, lesson_id, skill_id, test_id):
 def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
     """Return partial html content"""
     form = get_form(generator_name, request)
-    if not form:
-        return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
+    #if not form:
+        #return HttpResponseNotFound('<h1>Erreur 404 : cannot generate this name of problem</h1>')
     t = loader.get_template("questions_factory/_generator_form.haml")
     c = {'generator_name': generator_name, 'form': form}
     return HttpResponse(t.render(c, request))
@@ -80,5 +86,5 @@ def generator_submit(request, lesson_id, skill_id, test_id):
             )
             link.save()
         return JsonResponse({'msg': 'La question a été ajoutée au test'})
-    else:
-        return HttpResponseNotFound('<h1>Erreur 404</h1>')
+    #else:
+        #return HttpResponseNotFound('<h1>Erreur 404</h1>')

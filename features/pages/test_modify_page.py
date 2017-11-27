@@ -12,11 +12,5 @@ class TestModifyPage(Browser):
         pass
     # Login page actions
 
-    def fill(self, text, *locator):
-        self.driver.find_element(*locator).send_keys(text)
-
-    def click_element(self, *locator):
-        self.driver.find_element(*locator).click()
-
     def click_on_generate_questions(self):
         self.click_element(*TestModifyPageLocator.QUESTION_GENERATOR_BUTTON)
