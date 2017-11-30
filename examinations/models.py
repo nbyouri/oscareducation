@@ -374,16 +374,18 @@ class Answer(models.Model):
     def get_answers_blanks_tab(self):
         """Get the list of answers"""
         ans = json.loads(self.raw_answer)[0]
-        print(ans)
         quest = [None]*len(ans)
         j = 0
+        print(ans)
         for index in ans:
-            # print(ans[index])
             answers = ans[index]['response']
             resp = [None] * len(answers)
             i = 0
             for stu_ans in answers:
-                resp[i] = [int(stu_ans)-int(index), answers[stu_ans]]
+                if (len(answers) > 1): # is of type text_blanks or tab_blanks
+                    resp[i] = [int(stu_ans)-int(index), answers[stu_ans]]
+                else:
+                    None
                 i += 1
             quest[j] = [int(index), resp, int(ans[index]['correct'])]
             j += 1
