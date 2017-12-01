@@ -30,7 +30,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
   			    elem.value = newText //Update input form
   			}
   			question["instructions"] = elem.value; //Update object for DB
-  			elem.focus();//Request focus on text input
+  			elem.focus();//Request focus on text inputfo
             console.log(question)
     };
 
@@ -130,19 +130,24 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     /**
      * when question.type == "fill-table-blanks"
-     * add a row in the table
+     * add a row in the table, max of 10
      *
      * @param table the table object
      */
     $scope.addRowTableBlank = function (table){
+    		ROW_LIMIT = 10;
         nRows = table.length;
         nCols = table[0].length;
-
-        newLine = [];
-        for(var i = 0; i < nCols; i++){
-            newLine.push("")
+				if (nRows < ROW_LIMIT){
+		      newLine = [];
+		      for(var i = 0; i < nCols; i++){
+		          newLine.push("");
+		      }
+		      table.push(newLine);
         }
-        table.push(newLine);
+        else{
+        	alert("Impossible d'avoir plus de " + ROW_LIMIT + " lignes par tableau.");
+        }
     };
 
     /**
@@ -152,16 +157,17 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
      * @param table the table object
      */
     $scope.addColumnTableBlank = function (table){
+    		COLUMN_LIMIT = 10;
         nRows = table.length;
         nCols = table[0].length;
 
-        if(nCols < 10) {
+        if(nCols < COLUMN_LIMIT) {
             for (var i = 0; i < nRows; i++) {
                 table[i].push("");
             }
         }
         else{
-            alert("Impossible d'avoir plus de dix colonnes par tableau")
+            alert("Impossible d'avoir plus de " + COLUMN_LIMIT + " colonnes par tableau");
         }
     };
 
