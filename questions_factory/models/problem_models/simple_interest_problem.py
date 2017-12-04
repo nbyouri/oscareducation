@@ -55,7 +55,7 @@ class SimpleInterestProblem(Problem):
         question_desc = "Si nous déposons à la banque une somme s'élevant à " + str(self.amount) + " euros " \
             "pour une durée de " + str(self.time) + " " + str(time_unit) + " à " \
             "un taux de " + str(self.rate) + "% par " + str(rate_unit) + ", quelle somme d'intérêts obtiendrons-nous " \
-            "à la fin de cette période ?"
+            "à la fin de cette période ? Arrondir à la " + str(self.nb_decimal) + "e décimale."
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
         return question
@@ -66,9 +66,13 @@ class SimpleInterestProblem(Problem):
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
         return default_context
 
+    def round(self, number):
+        return round(number, self.nb_decimal)
+
     @staticmethod
     def default_context():
-        description = "Calcul d'intérêt simple. Calculer un taux d'intérêt pour un placement en banque à taux fixe " \
+        description = "Calcul d'intérêt simple. \n" \
+                      "Calculer un taux d'intérêt pour un placement en banque à taux fixe " \
                       "pour une durée " \
                       "déterminée, sachant que l'intérêt reçu n'est pas repris en compte pour le calcul " \
                       "de la somme d'intérêt suivante."
@@ -81,7 +85,5 @@ class SimpleInterestProblem(Problem):
         )
         return default_context
 
-    @staticmethod
-    def round(number):
-        return float("{0:.2f}".format(number))
+
 
