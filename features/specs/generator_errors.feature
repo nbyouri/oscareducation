@@ -57,3 +57,19 @@ Feature: GeneratorErrors
     Then I enter "0" as lower range and "60" as upper range
     When I click on the create button
     Then I see an error panel
+    # Pythagoras Errors
+    Then I select the pythagoras problem generator
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "99999" as lower range and "-1" as upper range
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "0" as lower range and "0" as upper range
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "-3" as lower range and "60" as upper range
+    When I click on the create button
+    Then I see an error panel
