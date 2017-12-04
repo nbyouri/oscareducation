@@ -185,6 +185,7 @@ def create_problem(domain="Integer", image="Rational", range=[0, 20], val=None):
     dict['range_to'] = range[1]
     if val:
         dict["val"] = val
+    dict["nb_decimal"] = "3"
     problem = ProblemGenerator.factory(dict)
     return problem
 

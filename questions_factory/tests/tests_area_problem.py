@@ -134,12 +134,12 @@ class InstanceTests(TestCase):
         self.assertTrue(isinstance(problem, AreaProblem))
 
     def test_of_raw_instantiation(self):
-        problem = AreaProblem("square", 1, 2)
+        problem = AreaProblem("square", 1, 2, 2)
         self.assertTrue(isinstance(problem, AreaProblem))
 
     def test_of_instantiation_with_wrong_values(self):
         with self.assertRaises(ValueError):
-            AreaProblem("wrong", 1, 2)
+            AreaProblem("wrong", 1, 2, 3)
 
 
 # Utils
@@ -151,6 +151,7 @@ def create_problem(object_type="square", range_from=1, range_to=10):
     values["object_type"] = object_type
     values["range_from"] = range_from
     values["range_to"] = range_to
+    values["nb_decimal"] = "3"
     problem = ProblemGenerator.factory(values)
     return problem
 

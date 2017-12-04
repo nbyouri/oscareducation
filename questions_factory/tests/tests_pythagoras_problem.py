@@ -48,5 +48,6 @@ def create_problem(range_from=1, range_to=20):
     values["generator_name"] = "PythagorasProblem"
     values["range_from"] = range_from
     values["range_to"] = range_to
+    values["nb_decimal"] = "3"
     problem = ProblemGenerator.factory(values)
     return problem

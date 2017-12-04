@@ -148,6 +148,7 @@ def create_problem(object_type="square", range_from=1, range_to=10):
     values["object_type"] = object_type
     values["range_from"] = range_from
     values["range_to"] = range_to
+    values["nb_decimal"] = "3"
     problem = ProblemGenerator.factory(values)
     return problem
 
