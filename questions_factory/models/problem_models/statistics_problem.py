@@ -24,11 +24,11 @@ class StatisticsProblem(Problem) :
 
     def get_sol(self):
         sol = list()
-        average = round(self.get_average(), int(self.nb_decimal))
+        average = self.round(self.get_average())
         sol.append(average)
-        median = round(self.get_median(), int(self.nb_decimal))
+        median = self.round(self.get_median())
         sol.append(median)
-        standard_deviation = round(self.get_standard_deviation(), int(self.nb_decimal))
+        standard_deviation = self.round(self.get_standard_deviation())
         sol.append(standard_deviation)
         return sol
 
