@@ -81,6 +81,21 @@ def step_impl(context):
     context.generator_page.select_volume_problem_generator()
 
 
+@then("I select the perimeter problem generator")
+def step_impl(context):
+    context.generator_page.select_perimeter_problem_generator()
+
+
+@then("I select the area problem generator")
+def step_impl(context):
+    context.generator_page.select_area_problem_generator()
+
+
+@then("I select the pythagoras problem generator")
+def step_impl(context):
+    context.generator_page.select_pythagoras_problem_generator()
+
+
 @then('I chose to generate "{number:d}" questions')
 def step_impl(context, number):
     context.generator_page.select_number_of_questions(number)

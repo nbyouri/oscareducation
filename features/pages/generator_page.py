@@ -123,6 +123,11 @@ class GeneratorPage(Browser):
     def select_volume_object_cube(self):
         self.select(GeneratorPageLocator.CUBE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
 
+    # Pythagoras
+
+    def select_pythagoras_problem_generator(self):
+        self.select(GeneratorPageLocator.PYTHAGORAS_PROBLEM_GENERATOR, *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
+
     # Area and perimeter
     def select_perimeter_problem_generator(self):
         self.select(GeneratorPageLocator.PERIMETER_PROBLEM_GENERATOR, *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
