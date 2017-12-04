@@ -36,6 +36,6 @@ class StudentFactory(factory.django.DjangoModelFactory):
         model = Student
         django_get_or_create = ('is_pending', 'code',)
 
-    user = factory.SubFactory(UserFactory)
+    user = factory.SubFactory(UserFactory())
     is_pending = False
     code = 96

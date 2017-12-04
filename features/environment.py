@@ -1,6 +1,9 @@
 # coding=utf-8
 import django
 import time
+
+from django.contrib.auth.hashers import make_password
+from django.db import transaction
 from django.test.runner import DiscoverRunner
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.shortcuts import resolve_url
@@ -81,6 +84,10 @@ def populate_db():
     from test.factories.stage import StageFactory
     from test.factories.skill import SkillFactory
     from test.factories.skill import SectionFactory
+    from test.factories.lesson import LessonFactory
+    from test.factories.test import TestFactory, QuestionFactory, ListQuestionsFactory, ContextFactory, TestExerciceFactory
+    from test.factories.user import ProfessorFactory, StudentFactory
+    from test.factories.studentskill import StudentSkillFactory
 
     SectionFactory.create(id=28, name="UAA5: Deuxième degré").save()
 
@@ -106,8 +113,10 @@ def populate_db():
                         previous_stage_id=18).save()
     StageFactory.create(id=12, name="3e année transition", short_name="3t", level=4,
                         previous_stage_id=3).save()
-    StageFactory.create(id=13, name="4e année transition", short_name="4t", level=5,
-                        previous_stage_id=12, skills=(skilla,)).save()
+    mystage = StageFactory.create(id=13, name="4e année transition", short_name="4t", level=5,
+                        previous_stage_id=12, skills=(skilla,))
+    mystage.save()
+
     StageFactory.create(id=14, name="5e année transition (mathématiques de base)", short_name="5tb", level=6,
                         previous_stage_id=13).save()
     StageFactory.create(id=15, name="6e année transition (mathématiques de base)", short_name="6tb", level=7,
@@ -116,3 +125,40 @@ def populate_db():
                         previous_stage_id=13).save()
     StageFactory.create(id=17, name="6e année transition (mathématiques générales)", short_name="6tg", level=7,
                         previous_stage_id=16).save()
+
+    prof = ProfessorFactory.create(user__username="username", user__password=make_password("password"))
+    prof.save()
+
+    studenta = StudentFactory.create(user__username="studenta", user__password=make_password("studenta"))
+    studentb = StudentFactory.create(user__username="studentb", user__password=make_password("studentb"))
+    studenta.save()
+    studentb.save()
+    StudentSkillFactory(student=studenta, skill=skilla).save()
+    StudentSkillFactory(student=studentb, skill=skilla).save()
+
+    lesson = LessonFactory.create(id=9999, name="Classe fooo", stage_id=mystage.id, students=(studenta, studentb,), professors=(prof,))
+    lesson.save()
+
+    test = TestFactory.create(id=35, name="testifoo", lesson_id=lesson.id)
+    test.fully_testable_online = True
+    test.save()
+    test.generate_skills_test()
+
+    question = QuestionFactory.create(description='foooo', answer="kekk")
+    question.save()
+
+    context = ContextFactory.create(skill_id=skilla.id)
+    context.save()
+
+    testexe = TestExerciceFactory.create(test_id=test.id, exercice=context, skill_id=skilla.id)
+    testexe.save()
+
+    list_question = ListQuestionsFactory.create(context_id=testexe.exercice.id, question_id=question.id)
+    list_question.save()
+
+    with transaction.atomic():
+        testexe.exercice = context
+        if context.testable_online:
+            testexe.testable_online = True
+            testexe.test.fully_testable_online = True
+        testexe.save()

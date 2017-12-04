@@ -32,21 +32,9 @@ def step_impl(context):
     context.login_page.submit()
 
 
-@given('I am an existing non logged student')
-def step_impl(context):
-    from test.factories.user import StudentFactory
-    u = StudentFactory.create()
-    u.save()
-
-
 @then('I am redirected to the professor home page')
 def step_impl(context):
     assert context.professor_dashboard_page.currently_on_this_page()
-
-
-@then('I am redirected to the student home page')
-def step_impl(context):
-    assert context.student_dashboard_page.currently_on_this_page()
 
 
 @then('I enter an invalid username')
