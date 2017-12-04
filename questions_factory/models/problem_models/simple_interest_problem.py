@@ -12,8 +12,8 @@ from skills.models import Skill
 
 class SimpleInterestProblem(Problem):
 
-    def __init__(self, time_placed, type_rate):
-        Problem.__init__(self)
+    def __init__(self, time_placed, type_rate, nb_decimal=2):
+        super(SimpleInterestProblem, self).__init__(nb_decimal)
         if time_placed != "year" and time_placed != "month":
             raise ValueError
         if type_rate != "year" and type_rate != "month":

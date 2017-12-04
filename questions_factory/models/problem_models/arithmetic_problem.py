@@ -13,8 +13,8 @@ from skills.models import Skill
 
 
 class ArithmeticPolynomialSecondDegree(Problem):
-    def __init__(self, domain, image, range=(0, 20), val=None):
-        Problem.__init__(self)
+    def __init__(self, domain, image, range=(0, 20), val=None, nb_decimal=2):
+        super(ArithmeticPolynomialSecondDegree, self).__init__(nb_decimal)
         self.desc = "Polynomial second degree"
         self.domain = domain
         self.image = image
@@ -76,7 +76,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
         tmp_sol = numpy.roots(self.val).tolist()
         sol = ""
         if self.image == "Rational" or self.image == "Integer":
-            if self.rho(self.val[0], self.val[1], self.val[2    ]) > 0:
+            if self.rho(self.val[0], self.val[1], self.val[2]) > 0:
                 sol = (self.compute_sol())
             else:
                 return []
@@ -91,7 +91,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def rho(a, b, c):
-        return b**2 - 4*a*c
+        return b ** 2 - 4 * a * c
 
     def compute_sol(self):
         # For ax²+bx+c
@@ -163,7 +163,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
         num_b, den_b = self.val[1].numerator, self.val[1].denominator
         num_c, den_c = self.val[2].numerator, self.val[2].denominator
 
-        return self.common_divisor(num_a*den_b*den_c, num_b*den_a*den_c, num_c*den_a*den_b)
+        return self.common_divisor(num_a * den_b * den_c, num_b * den_a * den_c, num_c * den_a * den_b)
 
     @staticmethod
     def default_context():
@@ -189,7 +189,7 @@ class ArithmeticPolynomialSecondDegree(Problem):
             return r"\frac{" + str(-1 * b) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * a) + "}"
         else:
             (factor_root, reduced) = self.reduced_sqrt(rho)
-            (num_1, num_2, den) = self.common_divisor(-1 * b, factor_root, 2 *a)
+            (num_1, num_2, den) = self.common_divisor(-1 * b, factor_root, 2 * a)
 
             if den < 0:
                 num_1 *= -1
@@ -209,13 +209,13 @@ class ArithmeticPolynomialSecondDegree(Problem):
                     pass
 
             if den == 1 and num_2 == 1:
-                return str(num_1) + sign +"\sqrt{" + str(reduced) + "}"
+                return str(num_1) + sign + "\sqrt{" + str(reduced) + "}"
             elif num_2 == 1:
                 return r"\frac{" + str(num_1) + "+" + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
             elif num_2 == -1:
                 return r"\frac{" + str(num_1) + "-" + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
             elif den == 1:
-                return str(num_1) + sign +str(num_2) + "\sqrt{" + str(reduced) + "}"
+                return str(num_1) + sign + str(num_2) + "\sqrt{" + str(reduced) + "}"
             else:
                 return r"\frac{" + str(num_1) + sign + str(num_2) + "\sqrt{" + str(reduced) + "}}{" + str(den) + "}"
 
@@ -270,6 +270,6 @@ class ArithmeticPolynomialSecondDegree(Problem):
     @staticmethod
     def latex(fraction):
         if fraction.numerator != 1:
-            return r"\frac{"+str(fraction.numerator())+"}{"+str(fraction.denominator())+"}"
+            return r"\frac{" + str(fraction.numerator()) + "}{" + str(fraction.denominator()) + "}"
         else:
             return str(fraction.numerator)
