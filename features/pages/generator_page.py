@@ -19,6 +19,9 @@ class GeneratorPageLocator(object):
     SIMPLE_INTEREST_PROBLEM_GENERATOR = "SimpleInterestProblem"
     STATISTIC_PROBLEM_GENERATOR = "StatisticsProblem"
     VOLUME_PROBLEM_GENERATOR = "VolumeProblem"
+    PERIMETER_PROBLEM_GENERATOR = "PerimeterProblem"
+    AREA_PROBLEM_GENERATOR = "AreaProblem"
+    PYTHAGORAS_PROBLEM_GENERATOR = "PythagorasProblem"
 
     # Interest form
     TIME_PLACED_SELECTOR = (By.ID, "id_time_placed")
@@ -34,6 +37,18 @@ class GeneratorPageLocator(object):
     PRISM_SELECT_OPTION = 'prism'
     CUBE_SELECT_OPTION = 'cube'
     CONE_SELECT_OPTION = 'cone'
+
+    # Perimeter and area options
+    OBJECT_PERIM_AREA_SELECTOR = (By.ID, "id_object_type")
+    RHOMBUS_SELECT_OPTION = 'rhombus'
+    RECTANGLE_SELECT_OPTION = 'rectangle'
+    SQUARE_SELECT_OPTION = 'square'
+    TRIANGLE_SELECT_OPTION = 'triangle'
+    TRAPEZIUM_SELECT_OPTION = 'trapezium'
+    QUADRILATERAL_SELECT_OPTION = 'quadrilateral'
+    CIRCLE_SELECT_OPTION = 'circle'
+    PARALLELOGRAM_SELECT_OPTION = 'parallelogram'
+    REGULAR_POLYGON_SELECT_OPTION = 'regular_polygon'
 
 
 class GeneratorPage(Browser):
@@ -108,3 +123,36 @@ class GeneratorPage(Browser):
     def select_volume_object_cube(self):
         self.select(GeneratorPageLocator.CUBE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_VOLUME_SELECTOR)
 
+    # Area and perimeter
+    def select_perimeter_problem_generator(self):
+        self.select(GeneratorPageLocator.PERIMETER_PROBLEM_GENERATOR, *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
+
+    def select_area_problem_generator(self):
+        self.select(GeneratorPageLocator.AREA_PROBLEM_GENERATOR, *GeneratorPageLocator.GENERATOR_TYPE_SELECTOR)
+
+    def select_perim_area_object_rhombus(self):
+        self.select(GeneratorPageLocator.RHOMBUS_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_rectangle(self):
+        self.select(GeneratorPageLocator.RECTANGLE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_square(self):
+        self.select(GeneratorPageLocator.SQUARE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_triangle(self):
+        self.select(GeneratorPageLocator.TRIANGLE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_trapezium(self):
+        self.select(GeneratorPageLocator.TRAPEZIUM_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_quadrilateral(self):
+        self.select(GeneratorPageLocator.QUADRILATERAL_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_circle(self):
+        self.select(GeneratorPageLocator.CIRCLE_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_parallelogram(self):
+        self.select(GeneratorPageLocator.PARALLELOGRAM_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
+
+    def select_perim_area_object_regular_polygon(self):
+        self.select(GeneratorPageLocator.REGULAR_POLYGON_SELECT_OPTION, *GeneratorPageLocator.OBJECT_PERIM_AREA_SELECTOR)
