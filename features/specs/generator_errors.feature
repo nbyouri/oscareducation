@@ -73,3 +73,35 @@ Feature: GeneratorErrors
     Then I enter "-3" as lower range and "60" as upper range
     When I click on the create button
     Then I see an error panel
+    # Area errors
+    Then I select the area problem generator
+    Then I chose to generate "10" questions
+    Then I select the object rhombus
+    Then I see an error panel
+    Then I enter "99999" as lower range and "-1" as upper range
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "0" as lower range and "0" as upper range
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "-3" as lower range and "60" as upper range
+    When I click on the create button
+    Then I see an error panel
+    # Perimeter errors
+    Then I select the perimeter problem generator
+    Then I chose to generate "10" questions
+    Then I select the object rhombus
+    Then I see an error panel
+    Then I enter "99999" as lower range and "-1" as upper range
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "0" as lower range and "0" as upper range
+    When I click on the create button
+    Then I see an error panel
+    Then I chose to generate "10" questions
+    Then I enter "-3" as lower range and "60" as upper range
+    When I click on the create button
+    Then I see an error panel
