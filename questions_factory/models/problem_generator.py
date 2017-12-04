@@ -6,6 +6,7 @@ from questions_factory.models.problem_models.perimeter_problem import *
 from questions_factory.models.problem_models.area_problem import *
 from questions_factory.models.problem_models.pythagoras_problem import *
 
+
 class ProblemGenerator:
 
     def __init__(self):
@@ -13,30 +14,33 @@ class ProblemGenerator:
 
     def factory(input_dict):
         problem = input_dict["generator_name"]
+        nb_decimal = input_dict["nb_decimal"]
         if problem == "ArithmeticProblem":
-            domain, range, image = input_dict["domain"], (input_dict["range_from"], input_dict["range_to"]), input_dict["image"]
+            domain, range, image = input_dict["domain"], (input_dict["range_from"], input_dict["range_to"]), input_dict[
+                "image"]
             values = input_dict.get("val", None)
-            return ArithmeticPolynomialSecondDegree(domain, image, range, values)
+            return ArithmeticPolynomialSecondDegree(domain, image, range, values, nb_decimal=nb_decimal)
         elif problem == "SimpleInterestProblem":
             time_placed, type_rate = input_dict["time_placed"], input_dict["type_rate"]
-            return SimpleInterestProblem(time_placed, type_rate)
+            return SimpleInterestProblem(time_placed, type_rate, nb_decimal=nb_decimal)
         elif problem == "StatisticsProblem":
             range, nb = (input_dict["range_from"], input_dict["range_to"]), input_dict["nb"]
-            return StatisticsProblem(nb, range)
+            return StatisticsProblem(nb, range, nb_decimal=nb_decimal)
         elif problem == "VolumeProblem":
-            object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict["range_to"]
-            return VolumeProblem(object_type, range_from, range_to)
+            object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict[
+                "range_to"]
+            return VolumeProblem(object_type, range_from, range_to, nb_decimal=nb_decimal)
         elif problem == "PerimeterProblem":
             object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict[
                 "range_to"]
-            return PerimeterProblem(object_type, range_from, range_to)
+            return PerimeterProblem(object_type, range_from, range_to, nb_decimal=nb_decimal)
         elif problem == "AreaProblem":
             object_type, range_from, range_to = input_dict["object_type"], input_dict["range_from"], input_dict[
                 "range_to"]
-            return AreaProblem(object_type, range_from, range_to)
+            return AreaProblem(object_type, range_from, range_to, nb_decimal=nb_decimal)
         elif problem == "PythagorasProblem":
             range_from, range_to = input_dict["range_from"], input_dict["range_to"]
-            return PythagorasProblem(range_from, range_to)
+            return PythagorasProblem(range_from, range_to, nb_decimal=nb_decimal)
         else:
             raise ValueError('Wrong problem type')
 

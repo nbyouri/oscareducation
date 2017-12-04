@@ -14,15 +14,23 @@ GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
 
 
 class GeneratorChoiceForm(forms.Form):
+    LIST_NAME_FIELD = ["generator_name", "nb_question", "nb_decimal"]
+
     generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
     nb_question = forms.FloatField(widget=forms.TextInput, required=True, initial=5,
                                    label='Nombre de question')
+    nb_decimal = forms.FloatField(widget=forms.TextInput, required=True, initial=2,
+                                  label='Nombre de décimal')
 
     def clean(self):
         cleaned_data = super(GeneratorChoiceForm, self).clean()
         nb_question = cleaned_data.get("nb_question")
+        nb_decimal = cleaned_data.get("nb_decimal")
         if nb_question < 1 or nb_question > 50:
             msg = "Le nombre de questions générées doit être compris entre 1 et 50"
+            self.add_error('nb_question', msg)
+        if nb_decimal < 1 or nb_decimal > 8:
+            msg = "Le nombre de décimales générées doit être compris entre 1 et 8"
             self.add_error('nb_question', msg)
         return cleaned_data
 

@@ -19,7 +19,7 @@
         -csrf_token
 
         -for field in form
-          -if field.name == "generator_name" or field.name == "nb_question"
+          -if field.name in mask_field
             .form-group
               =field.label_tag
               =field

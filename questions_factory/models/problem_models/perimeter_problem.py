@@ -26,8 +26,8 @@ class PerimeterProblem(Problem):
     object_type = None
     object_name = None
 
-    def __init__(self, object_type, range_from, range_to):
-        Problem.__init__(self)
+    def __init__(self, object_type, range_from, range_to, nb_decimal=2):
+        super(PerimeterProblem, self).__init__(nb_decimal)
         if object_type != 'triangle'            \
             and object_type != 'square'   \
             and object_type != 'rectangle'      \

@@ -21,8 +21,8 @@ class TriangleLeghtPythagorasProblem(TrianglePerimeterProblem):
     def make_form(self):
         pass
 
-    def __init__(self):
-        TrianglePerimeterProblem.__init__(self)
+    def __init__(self, nb_decimal=2):
+        super(TrianglePerimeterProblem, self).__init__(nb_decimal)
         sides = self.init_sides()
         self.side_a = sides[0]
         self.side_b = sides[1]

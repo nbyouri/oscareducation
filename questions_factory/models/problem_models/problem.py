@@ -1,8 +1,9 @@
 import abc
 
 
-class Problem:
-    def __init__(self):
+class Problem(object):
+    def __init__(self, nb_decimal=2):
+        self.nb_decimal = nb_decimal
         pass
 
     @abc.abstractmethod

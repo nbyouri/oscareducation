@@ -19,8 +19,8 @@ class PythagorasProblem(Problem):
     object_name = 'du triangle rectangle'
     surname = 'right_triangle'
 
-    def __init__(self, range_from, range_to):
-        Problem.__init__(self)
+    def __init__(self, range_from, range_to, nb_decimal=2):
+        super(PythagorasProblem, self).__init__(nb_decimal)
         self.figure = None
         self.range_from = range_from
         self.range_to = range_to
