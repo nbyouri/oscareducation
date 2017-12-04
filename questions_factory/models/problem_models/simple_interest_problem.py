@@ -66,9 +66,6 @@ class SimpleInterestProblem(Problem):
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
         return default_context
 
-    def round(self, number):
-        return round(number, self.nb_decimal)
-
     @staticmethod
     def default_context():
         description = "Calcul d'intérêt simple. \n" \

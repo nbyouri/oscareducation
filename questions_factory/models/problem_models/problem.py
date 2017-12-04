@@ -6,6 +6,9 @@ class Problem(object):
         self.nb_decimal = int(nb_decimal)
         pass
 
+    def round(self, number):
+        return round(number, self.nb_decimal)
+
     @abc.abstractmethod
     def get_sol(self):
         """Return the solution of the problem"""
