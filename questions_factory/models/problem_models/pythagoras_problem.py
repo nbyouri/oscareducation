@@ -74,7 +74,7 @@ class PythagorasProblem(Problem):
     @staticmethod
     def default_context():
         description = "Calcul de l'hypothénus d'un triangle rectangle"
-        skill_id = "T4-U5-A1b" # ??
+        skill_id = "T4-U5-A1b" # needs a corresponding skill id
         default_context = Context.objects.create(
             file_name="generated",
             skill=Skill.objects.get(code=skill_id),
