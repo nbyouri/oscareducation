@@ -124,6 +124,12 @@ class GeneratingQuestionsTests(TestCase):
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
 
+    def test_unrecognized_type(self):
+        problem = create_problem("regular_polygon")
+        problem.object_type = "fizz"
+        with self.assertRaises(ValueError):
+            problem.get_sol()
+
 
 class InstanceTests(TestCase):
     def test_of_instantiation_via_generator(self):
@@ -137,6 +143,17 @@ class InstanceTests(TestCase):
     def test_of_instantiation_with_wrong_values(self):
         with self.assertRaises(ValueError):
             PerimeterProblem("wrong", 1, 2)
+
+    def test_hexagon(self):
+        problem = create_problem_polygon()
+        self.assertTrue(problem.surname == 'hexagon')
+
+
+class MethodTests(TestCase):
+    def test_get_description(self):
+        problem = create_problem()
+        result = problem.get_desc()
+        self.assertTrue(result is None)
 
 
 # Utils
@@ -152,6 +169,16 @@ def create_problem(object_type="square", range_from=1, range_to=10):
     problem = ProblemGenerator.factory(values)
     return problem
 
+
+def create_problem_polygon(object_type="regular_polygon",  range_from=6, range_to=6):
+    values = new_perimeter_values()
+    values["generator_name"] = "PerimeterProblem"
+    values["object_type"] = object_type
+    values["range_from"] = range_from
+    values["range_to"] = range_to
+    values["nb_decimal"] = "3"
+    problem = ProblemGenerator.factory(values)
+    return problem
 
 def new_perimeter_values():
     return {"problem": "Perimeter_Problem"}
