@@ -41,8 +41,9 @@ class SolutionsTests(TestCase):
         self.assertTrue(problem.get_sol() == problem.round(problem.figure[0][1] * problem.figure[1][1]))
 
     def test_polygon(self):
-        problem = create_problem("regular_polygon")
-        self.assertTrue(problem.get_sol() == problem.round(problem.figure[0][1] * (math.pow(problem.figure[1][1], 2)) / (4 * math.tan(math.pi / problem.figure[0][1]))))
+        for i in range(0,100):
+            problem = create_problem("regular_polygon")
+            self.assertTrue(problem.get_sol() == problem.round(problem.figure[0][1] * (math.pow(problem.figure[1][1], 2)) / (4 * math.tan(math.pi / problem.figure[0][1]))))
 
 
 class GeneratingQuestionsTests(TestCase):
@@ -127,6 +128,12 @@ class GeneratingQuestionsTests(TestCase):
             self.assertTrue(isinstance(question, Question))
             self.assertTrue(question.description is not None)
 
+    def test_unrecognized_type(self):
+        problem = create_problem("regular_polygon")
+        problem.object_type = "fizz"
+        with self.assertRaises(ValueError):
+            problem.get_sol()
+
 
 class InstanceTests(TestCase):
     def test_of_instantiation_via_generator(self):
@@ -140,6 +147,13 @@ class InstanceTests(TestCase):
     def test_of_instantiation_with_wrong_values(self):
         with self.assertRaises(ValueError):
             AreaProblem("wrong", 1, 2, 3)
+
+
+class MethodTests(TestCase):
+    def test_get_description(self):
+        problem = create_problem()
+        result = problem.get_desc()
+        self.assertTrue(result is None)
 
 
 # Utils

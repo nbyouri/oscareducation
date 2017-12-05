@@ -39,8 +39,9 @@ class SolutionsTests(TestCase):
         self.assertTrue(problem.get_sol() == problem.round(2 * problem.figure[0][1] + 2 * problem.figure[1][1]))
 
     def test_polygon(self):
-        problem = create_problem("regular_polygon")
-        self.assertTrue(problem.get_sol() == problem.round(problem.figure[0][1] * problem.figure[1][1]))
+        for i in range(0, 100):
+            problem = create_problem("regular_polygon")
+            self.assertTrue(problem.get_sol() == problem.round(problem.figure[0][1] * problem.figure[1][1]))
 
 
 class GeneratingQuestionsTests(TestCase):
@@ -144,10 +145,6 @@ class InstanceTests(TestCase):
         with self.assertRaises(ValueError):
             PerimeterProblem("wrong", 1, 2)
 
-    def test_hexagon(self):
-        problem = create_problem_polygon()
-        self.assertTrue(problem.surname == 'hexagon')
-
 
 class MethodTests(TestCase):
     def test_get_description(self):
@@ -169,16 +166,6 @@ def create_problem(object_type="square", range_from=1, range_to=10):
     problem = ProblemGenerator.factory(values)
     return problem
 
-
-def create_problem_polygon(object_type="regular_polygon",  range_from=6, range_to=6):
-    values = new_perimeter_values()
-    values["generator_name"] = "PerimeterProblem"
-    values["object_type"] = object_type
-    values["range_from"] = range_from
-    values["range_to"] = range_to
-    values["nb_decimal"] = "3"
-    problem = ProblemGenerator.factory(values)
-    return problem
 
 def new_perimeter_values():
     return {"problem": "Perimeter_Problem"}
