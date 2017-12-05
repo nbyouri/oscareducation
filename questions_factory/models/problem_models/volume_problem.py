@@ -73,15 +73,15 @@ class VolumeProblem(Problem):
 
     def get_sol(self):
         if self.object_type == 'cube':
-            return pow(self.figure[0][1], 3)
+            return round(pow(self.figure[0][1], 3))
         elif self.object_type == 'cylinder':
-            return math.pi * pow(self.figure[0][1], 2) * self.figure[1][1]
+            return round(math.pi * pow(self.figure[0][1], 2) * self.figure[1][1])
         elif self.object_type == 'prism':
-            return 0.5 * self.figure[0][1] * self.figure[1][1] * self.figure[2][1]
+            return round(0.5 * self.figure[0][1] * self.figure[1][1] * self.figure[2][1])
         elif self.object_type == 'cone':
-            return math.pi * pow(self.figure[0][1], 2) * (self.figure[1][1] / 3)
+            return round(math.pi * pow(self.figure[0][1], 2) * (self.figure[1][1] / 3))
         elif self.object_type == 'pyramid':
-            return (self.figure[0][1] * self.figure[1][1] * self.figure[2][1]) / 3
+            return round((self.figure[0][1] * self.figure[1][1] * self.figure[2][1]) / 3)
         else:
             raise ValueError
 

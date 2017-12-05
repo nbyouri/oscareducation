@@ -158,25 +158,25 @@ class PerimeterProblem(Problem):
 
     def get_sol(self):
         if self.object_type == 'square':
-            return 4 * self.figure[0][1]  # 4c
+            return self.round(4 * self.figure[0][1])  # 4c
         elif self.object_type == 'circle':
-            return 2 * math.pi * self.figure[0][1]  # 2piR
+            return self.round(2 * math.pi * self.figure[0][1])  # 2piR
         elif self.object_type == 'rectangle':
-            return 2 * self.figure[0][1] + 2 * self.figure[1][1]  # 2l*L
+            return self.round(2 * self.figure[0][1] + 2 * self.figure[1][1])  # 2l*L
         elif self.object_type == 'quadrilateral':
-            return self.figure[0][1] + self.figure[1][1] + self.figure[2][1] + self.figure[3][1]
+            return self.round(self.figure[0][1] + self.figure[1][1] + self.figure[2][1] + self.figure[3][1])
         elif self.object_type == 'rhombus':
-            return 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2)) # 2sqr(d^2+D^2)
+            return self.round(2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2))) # 2sqr(d^2+D^2)
         elif self.object_type == 'trapezium':
             g_base = self.figure[0][1]
             p_base = self.figure[1][1]
-            return g_base + p_base + math.sqrt(math.pow((g_base-p_base)/2, 2) + math.pow(self.figure[2][1], 2))
+            return self.round(g_base + p_base + math.sqrt(math.pow((g_base-p_base)/2, 2) + math.pow(self.figure[2][1], 2)))
         elif self.object_type == 'triangle':
-            return self.figure[0][1] + self.figure[1][1] + self.figure[2][1]  # a+b+c
+            return self.round(self.figure[0][1] + self.figure[1][1] + self.figure[2][1])  # a+b+c
         elif self.object_type == 'parallelogram':
-            return 2 * self.figure[0][1] + 2 * self.figure[1][1]  # 2 *a+ 2*b
+            return self.round(2 * self.figure[0][1] + 2 * self.figure[1][1])  # 2 *a+ 2*b
         elif self.object_type == 'regular_polygon':
-            return self.figure[0][1] * self.figure[1][1]  # n * c
+            return self.round(self.figure[0][1] * self.figure[1][1])  # n * c
         else:
             raise ValueError
 

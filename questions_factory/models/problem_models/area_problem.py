@@ -154,29 +154,29 @@ class AreaProblem(Problem):
 
     def get_sol(self):
         if self.object_type == 'square':
-            return self.figure[0][1] * self.figure[0][1]  # c^2
+            return self.round(self.figure[0][1] * self.figure[0][1])  # c^2
         elif self.object_type == 'circle':
-            return math.pow(self.figure[0][1],2)*math.pi  # pir^2
+            return self.round(math.pow(self.figure[0][1],2)*math.pi)  # pir^2
         elif self.object_type == 'rectangle':
-            return self.figure[0][1] * self.figure[1][1]  # l*L
+            return self.round(self.figure[0][1] * self.figure[1][1])  # l*L
         elif self.object_type == 'quadrilateral':
-            return (0.5 * self.figure[0][1] * self.figure[3][1] * math.sin(math.radians(self.figure[4][1]))) + \
-                    (0.5 * self.figure[1][1] * self.figure[2][1] * math.sin(math.radians(self.figure[5][1])))
+            return self.round((0.5 * self.figure[0][1] * self.figure[3][1] * math.sin(math.radians(self.figure[4][1]))) + \
+                    (0.5 * self.figure[1][1] * self.figure[2][1] * math.sin(math.radians(self.figure[5][1]))))
             # (a*d*sin(ab)/2) + (b*c*sin(bc)/2)
         elif self.object_type == 'rhombus':
-            return 2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2))  # 2sqr(d^2+D^2)
+            return self.round(2 * math.sqrt(math.pow(self.figure[0][1], 2) + math.pow(self.figure[1][1], 2)))  # 2sqr(d^2+D^2)
         elif self.object_type == 'trapezium':
             g_base = self.figure[0][1]
             p_base = self.figure[1][1]
-            return (g_base+p_base) * self.figure[2][1] / 2
+            return round((g_base+p_base) * self.figure[2][1] / 2)
         elif self.object_type == 'triangle':
-            return float(self.figure[0][1]) * self.figure[1][1] / 2  # base * hauteur / 2
+            return round(float(self.figure[0][1]) * self.figure[1][1] / 2)  # base * hauteur / 2
         elif self.object_type == 'parallelogram':
-            return self.figure[0][1] * self.figure[1][1]  # 2 *a+ 2*b
+            return round(self.figure[0][1] * self.figure[1][1])  # 2 *a+ 2*b
         elif self.object_type == 'regular_polygon':
             number_side = self.figure[0][1]
             side_size = self.figure[1][1]
-            return number_side * (math.pow(side_size, 2)) / (4 * math.tan(math.pi / number_side))
+            return round(number_side * (math.pow(side_size, 2)) / (4 * math.tan(math.pi / number_side)))
         else:
             raise ValueError
 
@@ -214,7 +214,3 @@ class AreaProblem(Problem):
             added_by=None
         )
         return default_context
-
-    @staticmethod
-    def round(number):
-        return float("{0:.2f}".format(number))
