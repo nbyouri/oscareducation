@@ -38,9 +38,24 @@ class InstanceTests(TestCase):
         problem = PythagorasProblem(4, 14)
         self.assertTrue(isinstance(problem, PythagorasProblem))
 
-    def test_wrong_values(self):
+    def test_wrong_values_instanciation(self):
         with self.assertRaises(ValueError):
             PythagorasProblem("yolo", 3)
+
+
+class ErrorTests(TestCase):
+    def test_get_sol_with_wrong_object_type(self):
+        problem = create_problem()
+        problem.object_type = "Fizz"
+        with self.assertRaises(ValueError):
+            problem.get_sol()
+
+
+class MethodTests(TestCase):
+    def test_get_description(self):
+        problem = create_problem()
+        result = problem.get_desc()
+        self.assertTrue(result is None)
 
 
 def create_problem(range_from=1, range_to=20):
