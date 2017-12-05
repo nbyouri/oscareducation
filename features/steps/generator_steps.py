@@ -99,3 +99,8 @@ def step_impl(context):
 @then('I chose to generate "{number:d}" questions')
 def step_impl(context, number):
     context.generator_page.select_number_of_questions(number)
+
+
+@then('I chose "{number:d}" decimals')
+def step_impl(context, number):
+    context.generator_page.select_number_of_decimals(number)

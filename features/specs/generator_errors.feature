@@ -5,7 +5,12 @@ Feature: GeneratorErrors
 
   Scenario: Trying to create a problem with wrong parameters
     Given I am logged with a fresh class, created a test and accessed question generator
+    # Incorrect number of decimals
+    Then I chose "-10" decimals
+    When I click on the create button
+    Then I see an error panel
     # Negative Number of questions required
+    Then I chose "2" decimals
     Then I chose to generate "-10" questions
     When I click on the create button
     Then I see an error panel

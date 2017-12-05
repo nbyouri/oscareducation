@@ -6,6 +6,7 @@ from features import Browser
 class GeneratorPageLocator(object):
     # Login page elements locator
     NB_QUESTIONS_INPUT = (By.ID, "id_nb_question")
+    NB_DECIMAL_INPUT = (By.ID, "id_nb_decimal")
 
     PAGE_TITLE = (By.ID, "id_question_generator")
     GENERATOR_TYPE_SELECTOR = (By.ID, "id_generator_name")
@@ -68,6 +69,9 @@ class GeneratorPage(Browser):
 
     def select_number_of_questions(self, number):
         self.fill(number, *GeneratorPageLocator.NB_QUESTIONS_INPUT)
+
+    def select_number_of_decimals(self, number):
+        self.fill(number, *GeneratorPageLocator.NB_DECIMAL_INPUT)
 
     # Arithmetic Setup
 
