@@ -33,6 +33,17 @@ def get_form(generator_name, request):
 
 @user_is_professor
 def generator(request, lesson_id, skill_id, test_id):
+    """
+    In Get :
+    Render the basic form of generator settings
+    In Post :
+    Verify the settings depending of the generator name
+    :param request:
+    :param lesson_id:
+    :param skill_id:
+    :param test_id:
+    :return:
+    """
     form = GeneratorChoiceForm(None)
     valid = True
     if request.POST:
@@ -59,7 +70,15 @@ def generator(request, lesson_id, skill_id, test_id):
 
 @user_is_professor
 def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
-    """Return partial html content"""
+    """
+    Return partial html : The second part of the settings form depending the generator name
+    :param request:
+    :param lesson_id: Not use
+    :param skill_id: Not use (Just for keep the same base url)
+    :param test_id: Not use
+    :param generator_name: Name of generator to retrieve the form associated
+    :return:
+    """
     form = get_form(generator_name, request)
     if form is None:
         return HttpResponseNotFound('<h1>Erreur 404 : Cannot generate this name of problem</h1>')
@@ -70,6 +89,14 @@ def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
 
 @user_is_professor
 def generator_submit(request, lesson_id, skill_id, test_id):
+    """
+    Add one question into the context with ajax request (return a success message as json object)
+    :param request:
+    :param lesson_id:
+    :param skill_id:
+    :param test_id:
+    :return:
+    """
     if request.POST:
         test_exercise = get_object_or_404(TestExercice, pk=int(request.POST["exercise_id"]))
         question_desc = request.POST["question_description"]

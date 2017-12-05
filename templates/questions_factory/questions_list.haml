@@ -32,13 +32,19 @@
     $(function() {
       $('form').submit(function(event){
         event.preventDefault();
+        $(this).find(':input[type=submit]').prop('disabled', true);
         var divForm = $(this).parent();
         $.ajax({
           type: 'post',
           url: 'submit/',
           data: $(this).serialize(),
           success: function (data) {
-            divForm.fadeOut();
+            divForm.animate({
+              height: "0px"
+            }, 500, function() {
+              // Animation complete.
+              divForm.remove();
+            });
           }
         });
       });
