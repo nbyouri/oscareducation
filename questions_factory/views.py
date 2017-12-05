@@ -14,19 +14,19 @@ from promotions.utils import user_is_professor
 
 def get_form(generator_name, request):
     form = None
-    if generator_name == "ArithmeticProblem":
+    if generator_name == ArithmeticPolynomialSecondDegree.NAME:
         form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)
-    elif generator_name == "SimpleInterestProblem":
+    elif generator_name == SimpleInterestProblem.NAME:
         form = SimpleInterestProblem.make_form(request.POST or None)
-    elif generator_name == "StatisticsProblem":
+    elif generator_name == StatisticsProblem.NAME:
         form = StatisticsProblem.make_form(request.POST or None)
-    elif generator_name == "VolumeProblem":
+    elif generator_name == VolumeProblem.NAME:
         form = VolumeProblem.make_form(request.POST or None)
-    elif generator_name == "PerimeterProblem":
+    elif generator_name == PerimeterProblem.NAME:
         form = PerimeterProblem.make_form(request.POST or None)
-    elif generator_name == "AreaProblem":
-        form = PerimeterProblem.make_form(request.POST or None)
-    elif generator_name == "PythagorasProblem":
+    elif generator_name == AreaProblem.NAME:
+        form = AreaProblem.make_form(request.POST or None)
+    elif generator_name == PythagorasProblem.NAME:
         form = PythagorasProblem.make_form(request.POST or None)
     return form
 

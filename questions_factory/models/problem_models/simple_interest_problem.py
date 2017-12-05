@@ -12,6 +12,8 @@ from skills.models import Skill
 
 class SimpleInterestProblem(Problem):
 
+    NAME = "SimpleInterestProblem"
+
     def __init__(self, time_placed, type_rate, nb_decimal=2):
         super(SimpleInterestProblem, self).__init__(nb_decimal)
         if time_placed != "year" and time_placed != "month":

@@ -7,12 +7,15 @@ import numpy
 import math
 
 from examinations.models import *
-from questions_factory.models.problem_form import ArithmeticForm
+from questions_factory.models.problem_form import *
 from questions_factory.models.problem_models.problem import *
 from skills.models import Skill
 
 
 class ArithmeticPolynomialSecondDegree(Problem):
+
+    NAME = "ArithmeticProblem"
+
     def __init__(self, domain, image, range=(0, 20), val=None, nb_decimal=2):
         super(ArithmeticPolynomialSecondDegree, self).__init__(nb_decimal)
         self.desc = "Polynomial second degree"

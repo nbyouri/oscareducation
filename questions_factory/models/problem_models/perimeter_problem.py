@@ -14,6 +14,9 @@ from skills.models import Skill
 
 
 class PerimeterProblem(Problem):
+
+    NAME = "PerimeterProblem"
+
     default_triangle = ['côté (a)', 'côté (b)', 'côté (c)']
     default_square = 'côté (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']
