@@ -44,7 +44,7 @@ class PythagorasProblem(Problem):
 
     def get_sol(self):
         if self.object_type == 'triangle_rectangle':
-            return math.sqrt(math.pow(self.figure[0][1],2) + math.pow(self.figure[1][1],2))  # c = sqrt(a^2+b^2)
+            return round(math.sqrt(math.pow(self.figure[0][1],2) + math.pow(self.figure[1][1],2)))  # c = sqrt(a^2+b^2)
         else:
             raise ValueError
 
@@ -74,7 +74,7 @@ class PythagorasProblem(Problem):
     @staticmethod
     def default_context():
         description = "Calcul de l'hypothénus d'un triangle rectangle"
-        skill_id = "T4-U5-A1b" # ??
+        skill_id = "T4-U5-A1b" # needs a corresponding skill id
         default_context = Context.objects.create(
             file_name="generated",
             skill=Skill.objects.get(code=skill_id),

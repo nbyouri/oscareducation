@@ -25,6 +25,7 @@ def problem_settings(problem, problem_description, domain, image, range, val):
         "domain": domain,
         "image": image,
         "range": range,
-        "val": val
+        "val": val,
+        "nb_decimal": "3"
     }
     return settings

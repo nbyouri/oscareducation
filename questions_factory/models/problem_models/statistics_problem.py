@@ -24,12 +24,12 @@ class StatisticsProblem(Problem) :
 
     def get_sol(self):
         sol = list()
-        average = self.get_average()
-        sol.append(float("{0:.2f}".format(average)))
-        median = self.get_median()
-        sol.append(float("{0:.2f}".format(median)))
-        standard_deviation = self.get_standard_deviation()
-        sol.append(float("{0:.2f}".format(standard_deviation)))
+        average = self.round(self.get_average())
+        sol.append(average)
+        median = self.round(self.get_median())
+        sol.append(median)
+        standard_deviation = self.round(self.get_standard_deviation())
+        sol.append(standard_deviation)
         return sol
 
     def gen_questions(self, number_of_questions):
@@ -63,11 +63,11 @@ class StatisticsProblem(Problem) :
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
         return default_context
 
-    @staticmethod
-    def default_context():
+
+    def default_context(self):
         description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> " \
                       "<b> Attention : </b> les réponses doivent être sous la forme " \
-                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne, Médiane, Ecart-Type avec 2 chiffres après la virgule et non arrondis"
+                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne, Médiane, Ecart-Type avec " + str(self.nb_decimal) +" chiffres après la virgule"
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",

@@ -3,8 +3,11 @@ import abc
 
 class Problem(object):
     def __init__(self, nb_decimal=2):
-        self.nb_decimal = nb_decimal
+        self.nb_decimal = int(nb_decimal)
         pass
+
+    def round(self, number):
+        return round(number, self.nb_decimal)
 
     @abc.abstractmethod
     def get_sol(self):

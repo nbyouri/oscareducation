@@ -12,6 +12,7 @@ class ClassPageLocator(object):
     CLASS_TESTS_BUTTON = (By.ID, "id_my_tests_button")
     CLASS_ADD_TEST_BUTTON = (By.ID, "id_add_test_button")
     CLASS_ADD_TEST_ONLINE_BUTTON = (By.ID, "id_add_test_online_button")
+    MODIFY_TEST_BUTTON = (By.XPATH, "//a[@data-purpose='modify-test']")
 
 
 class ClassPage(Browser):
@@ -37,3 +38,6 @@ class ClassPage(Browser):
 
     def add_online_test(self):
         self.click_element(*ClassPageLocator.CLASS_ADD_TEST_ONLINE_BUTTON)
+
+    def modify_existing_test(self):
+        self.click_element(*ClassPageLocator.MODIFY_TEST_BUTTON)

@@ -8,23 +8,23 @@ import math
 class SolutionsTests(TestCase):
     def test_cube(self):
         problem = create_problem("cube")
-        self.assertTrue(problem.get_sol() == pow(problem.figure[0][1], 3))
+        self.assertTrue(problem.get_sol() == round(pow(problem.figure[0][1], 3)))
 
     def test_cylinder(self):
         problem = create_problem("cylinder")
-        self.assertTrue(problem.get_sol() == math.pi * pow(problem.figure[0][1], 2) * problem.figure[1][1])
+        self.assertTrue(problem.get_sol() == round(math.pi * pow(problem.figure[0][1], 2) * problem.figure[1][1]))
 
     def test_prism(self):
         problem = create_problem("prism")
-        self.assertTrue(problem.get_sol() == 0.5 * problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1])
+        self.assertTrue(problem.get_sol() == round(0.5 * problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]))
 
     def test_cone(self):
         problem = create_problem("cone")
-        self.assertTrue(problem.get_sol() == math.pi * pow(problem.figure[0][1], 2) * (problem.figure[1][1] / 3))
+        self.assertTrue(problem.get_sol() == round(math.pi * pow(problem.figure[0][1], 2) * (problem.figure[1][1] / 3)))
 
     def test_pyramid(self):
         problem = create_problem("pyramid")
-        self.assertTrue(problem.get_sol() == (problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]) / 3)
+        self.assertTrue(problem.get_sol() == round((problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]) / 3))
 
 
 class GeneratingQuestionsTests(TestCase):
@@ -84,17 +84,17 @@ class InstanceTests(TestCase):
         self.assertTrue(isinstance(problem, VolumeProblem))
 
     def test_of_raw_instantiation(self):
-        problem = VolumeProblem("cube", 1, 2)
+        problem = VolumeProblem("cube", 1, 2, 3)
         self.assertTrue(isinstance(problem, VolumeProblem))
 
     def test_of_instantiation_with_wrong_values(self):
         with self.assertRaises(ValueError):
-            VolumeProblem("wrong", 1, 2)
+            VolumeProblem("wrong", 1, 2, -9)
 
 
 class BadValuesTests(TestCase):
     def test_wrong_type_object(self):
-        problem = VolumeProblem("cube", 1, 2)
+        problem = VolumeProblem("cube", 1, 2, 3)
         problem.object_type = "kek"
         with self.assertRaises(ValueError):
             problem.get_sol()
@@ -110,6 +110,7 @@ def create_problem(object_type="cube", range_from=1, range_to=10):
     values["object_type"] = object_type
     values["range_from"] = range_from
     values["range_to"] = range_to
+    values["nb_decimal"] = "3"
     problem = ProblemGenerator.factory(values)
     return problem
 

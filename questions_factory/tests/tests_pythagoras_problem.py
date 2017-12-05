@@ -12,8 +12,15 @@ class ResultTest(TestCase):
 
 
 class GeneratingQuestionsTests(TestCase):
-    # FIXME 
-    def TOFIX_test_pythagoras_generation(self):
+    def setUp(self):
+        from test.factories.skill import SkillFactory
+        from test.factories.skill import SectionFactory
+        SectionFactory.create(id=28, name="UAA5: Deuxième degré").save()
+        SkillFactory.create(id=342, code="T4-U5-A1b",
+                            name="", description="",
+                            image="area-chart", oscar_synthese=None, modified_by_id=None, section_id=28)
+
+    def test_pythagoras_generation(self):
         problem = create_problem()
         questions = problem.gen_questions(5)
         self.assertTrue(isinstance(problem.get_context(), Context))
@@ -37,9 +44,10 @@ class InstanceTests(TestCase):
 
 
 def create_problem(range_from=1, range_to=20):
-    values = {"problem": "Pythgoras_Problem"}
+    values = {"problem": "PythagorasProblem"}
     values["generator_name"] = "PythagorasProblem"
     values["range_from"] = range_from
     values["range_to"] = range_to
+    values["nb_decimal"] = "3"
     problem = ProblemGenerator.factory(values)
     return problem
