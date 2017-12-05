@@ -12,7 +12,7 @@ from skills.models import Skill
 
 class StatisticsProblem(Problem):
 
-    NAME = "VolumeProblem"
+    NAME = "StatisticsProblem"
 
     def __init__(self, nb=10, range=(0, 20), nb_decimal=2):
         super(StatisticsProblem, self).__init__(nb_decimal)
