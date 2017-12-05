@@ -13,11 +13,11 @@ class GeneratorChoiceForm(forms.Form):
 
     LIST_NAME_FIELD = ["generator_name", "nb_question", "nb_decimal"]
 
-    generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
+    generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Problème à générer')
     nb_question = forms.FloatField(widget=forms.TextInput, required=True, initial=5,
-                                   label='Nombre de question')
+                                   label='Nombre de questions')
     nb_decimal = forms.FloatField(widget=forms.TextInput, required=True, initial=2,
-                                  label='Nombre de décimal')
+                                  label='Nombre de décimales')
 
     def clean(self):
         cleaned_data = super(GeneratorChoiceForm, self).clean()
