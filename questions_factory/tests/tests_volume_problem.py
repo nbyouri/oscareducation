@@ -8,23 +8,23 @@ import math
 class SolutionsTests(TestCase):
     def test_cube(self):
         problem = create_problem("cube")
-        self.assertTrue(problem.get_sol() == round(pow(problem.figure[0][1], 3)))
+        self.assertTrue(problem.get_sol() == problem.round(pow(problem.figure[0][1], 3)))
 
     def test_cylinder(self):
         problem = create_problem("cylinder")
-        self.assertTrue(problem.get_sol() == round(math.pi * pow(problem.figure[0][1], 2) * problem.figure[1][1]))
+        self.assertTrue(problem.get_sol() == problem.round(math.pi * pow(problem.figure[0][1], 2) * problem.figure[1][1]))
 
     def test_prism(self):
         problem = create_problem("prism")
-        self.assertTrue(problem.get_sol() == round(0.5 * problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]))
+        self.assertTrue(problem.get_sol() == problem.round(0.5 * problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]))
 
     def test_cone(self):
         problem = create_problem("cone")
-        self.assertTrue(problem.get_sol() == round(math.pi * pow(problem.figure[0][1], 2) * (problem.figure[1][1] / 3)))
+        self.assertTrue(problem.get_sol() == problem.round(math.pi * pow(problem.figure[0][1], 2) * (problem.figure[1][1] / 3)))
 
     def test_pyramid(self):
         problem = create_problem("pyramid")
-        self.assertTrue(problem.get_sol() == round((problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]) / 3))
+        self.assertTrue(problem.get_sol() == problem.round((problem.figure[0][1] * problem.figure[1][1] * problem.figure[2][1]) / 3))
 
 
 class GeneratingQuestionsTests(TestCase):

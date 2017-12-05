@@ -44,7 +44,7 @@ class PythagorasProblem(Problem):
 
     def get_sol(self):
         if self.object_type == 'triangle_rectangle':
-            return round(math.sqrt(math.pow(self.figure[0][1],2) + math.pow(self.figure[1][1],2)))  # c = sqrt(a^2+b^2)
+            return self.round(math.sqrt(math.pow(self.figure[0][1],2) + math.pow(self.figure[1][1],2)))  # c = sqrt(a^2+b^2)
         else:
             raise ValueError
 

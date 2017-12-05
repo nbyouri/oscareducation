@@ -8,7 +8,7 @@ import math
 class ResultTest(TestCase):
     def test_pythagoras_result(self):
         problem = create_problem()
-        self.assertTrue(problem.get_sol() == math.sqrt(math.pow(problem.figure[0][1],2) + math.pow(problem.figure[1][1],2)))
+        self.assertTrue(problem.get_sol() == problem.round(math.sqrt(math.pow(problem.figure[0][1],2) + math.pow(problem.figure[1][1],2))))
 
 
 class GeneratingQuestionsTests(TestCase):
