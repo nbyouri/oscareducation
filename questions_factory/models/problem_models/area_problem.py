@@ -14,6 +14,9 @@ from skills.models import Skill
 
 
 class AreaProblem(Problem):
+
+    NAME = "AreaProblem"
+
     default_triangle = ['base (b)', 'hauteur (h)']
     default_square = 'côté (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']

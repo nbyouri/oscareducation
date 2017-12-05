@@ -14,6 +14,9 @@ from skills.models import Skill
 
 
 class PythagorasProblem(Problem):
+
+    NAME = "PythagorasProblem"
+
     default_triangle_rectangle = ['côté (a)', 'côté (b)']
     object_type = 'triangle_rectangle'
     object_name = 'du triangle rectangle'

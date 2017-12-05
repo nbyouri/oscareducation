@@ -14,6 +14,9 @@ from skills.models import Skill
 
 
 class VolumeProblem(Problem):
+
+    NAME = "VolumeProblem"
+
     default_cube = 'cote (a)'
     default_cylinder = ['rayon de la base (r)', 'hauteur (h)']
     default_prism = ['base (b)', 'hauteur de la base (h)', 'hauteur (l)']

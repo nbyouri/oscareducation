@@ -1,19 +1,16 @@
 # coding=utf-8
 from django import forms
 
-DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
-IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
-
-GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
-                    ("SimpleInterestProblem", "Problèmes d'intêret"),
-                    ("StatisticsProblem", "Problèmes de statistiques"),
-                    ("VolumeProblem", "Problèmes de volume"),
-                    ("PerimeterProblem", "Problèmes de périmètre"),
-                    ("AreaProblem", "Problèmes d'aire"),
-                    ("PythagorasProblem", "Théorème de Pythagore"))
-
 
 class GeneratorChoiceForm(forms.Form):
+    GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
+                        ("SimpleInterestProblem", "Problèmes d'intêret"),
+                        ("StatisticsProblem", "Problèmes de statistiques"),
+                        ("VolumeProblem", "Problèmes de volume"),
+                        ("PerimeterProblem", "Problèmes de périmètre"),
+                        ("AreaProblem", "Problèmes d'aire"),
+                        ("PythagorasProblem", "Théorème de Pythagore"))
+
     LIST_NAME_FIELD = ["generator_name", "nb_question", "nb_decimal"]
 
     generator_name = forms.ChoiceField(widget=forms.Select, choices=GENERATOR_CHOICE, label='Nom du générateur')
@@ -36,6 +33,9 @@ class GeneratorChoiceForm(forms.Form):
 
 
 class ArithmeticForm(GeneratorChoiceForm):
+    DOMAIN_CHOICES = (('Integer', 'Entiers'), ('Rational', 'Rationnels'))
+    IMAGE_CHOICES = (('Rational', 'Rationnels'), ('Complex', 'Complexes'), ('Integer', 'Entiers'))
+
     range_from = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle inférieur')
     range_to = forms.FloatField(widget=forms.TextInput, required=True, label='Intervalle supérieur')
     domain = forms.ChoiceField(widget=forms.Select, choices=DOMAIN_CHOICES, label='Domaine')

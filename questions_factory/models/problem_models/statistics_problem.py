@@ -10,7 +10,9 @@ from questions_factory.models.problem_models.problem import *
 from skills.models import Skill
 
 
-class StatisticsProblem(Problem) :
+class StatisticsProblem(Problem):
+
+    NAME = "StatisticsProblem"
 
     def __init__(self, nb=10, range=(0, 20), nb_decimal=2):
         super(StatisticsProblem, self).__init__(nb_decimal)
@@ -20,7 +22,7 @@ class StatisticsProblem(Problem) :
         self.gen_values()
 
     def gen_values(self):
-        self.values = [random.randint(self.range[0],self.range[1]) for _ in range(self.nb)]
+        self.values = [random.randint(self.range[0], self.range[1]) for _ in range(self.nb)]
 
     def get_sol(self):
         sol = list()
@@ -40,14 +42,15 @@ class StatisticsProblem(Problem) :
         return questions
 
     def new_question(self, sol):
-        question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(self.nb) + " jours : <br/>" \
-                        "<div align=""center"" style=""overflow-x:auto;""><table style=""width:100%;"", style=""height: 100%;"", border=1px, text-align=""center""> <tr> <td align=""center""><b>Numéros de Journée </b></th> <td align=""center""> <b>Valeurs </b></th></tr>"
+        question_desc = "Voici une série de données recueillies pour chaque jour écoulée durant " + str(
+            self.nb) + " jours : <br/>" \
+                       "<div align=""center"" style=""overflow-x:auto;""><table style=""width:100%;"", style=""height: 100%;"", border=1px, text-align=""center""> <tr> <td align=""center""><b>Numéros de Journée </b></th> <td align=""center""> <b>Valeurs </b></th></tr>"
         n = 1
         for v in self.values:
             question_desc += "<tr><td> journée numéro " + str(n) + "</td>"
-            question_desc +=  "<td align=""center"">" + str(v) + "</td></tr>"
+            question_desc += "<td align=""center"">" + str(v) + "</td></tr>"
             n += 1
-        question_desc +="</table> </div>"
+        question_desc += "</table> </div>"
 
         answers = yaml.dump(OrderedDict([("answers", [sol]), ("type", "text")]))
         question = Question(description=question_desc, answer=answers, source="Génerée automatiquement")
@@ -63,11 +66,11 @@ class StatisticsProblem(Problem) :
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
         return default_context
 
-
     def default_context(self):
         description = "Calculer la moyennne, la médiane et l'écart-type des valeurs données<br/> " \
                       "<b> Attention : </b> les réponses doivent être sous la forme " \
-                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne, Médiane, Ecart-Type avec " + str(self.nb_decimal) +" chiffres après la virgule"
+                      "$$ [x_1, x_2, x_3] $$ dans l'ordre suivant : Moyenne, Médiane, Ecart-Type avec " + str(
+            self.nb_decimal) + " chiffres après la virgule"
         skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",
@@ -88,4 +91,3 @@ class StatisticsProblem(Problem) :
     def get_standard_deviation(self):
         sd = numpy.std(self.values)
         return sd
-
