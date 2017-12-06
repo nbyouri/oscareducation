@@ -102,6 +102,10 @@ class ComputeSol(TestCase):
         problem.val[2] = 4
         assert_that(problem.compute_sol() is None)
 
+    def test_fraction_sol(self):
+        problem = create_problem("Integer", "Rational", [-20, 20], [-4, 8, -3])
+        assert_that(problem.compute_sol(), equal_to(['\\frac{3}{2},\\frac{1}{2}', '\\frac{1}{2},\\frac{3}{2}']))
+
 
 class ProblemSettings(TestCase):
     def test_get_problem_description(self):
@@ -155,6 +159,10 @@ class AnsWithFracTests(TestCase):
         result = ArithmeticPolynomialSecondDegree.common_divisor(10, 2, -12)
         assert_that(result, equal_to((5, 1, -6)))
 
+    def test_den_not_one(self):
+        ans = ArithmeticPolynomialSecondDegree.ans_with_frac(4, 5, True)
+        assert_that(ans, equal_to(r'\frac{4}{5}'))
+
 
 class SpecificCasesTests(TestCase):
     def test_last_option_compute_sol(self):
@@ -168,6 +176,8 @@ class SpecificCasesTests(TestCase):
         problem = create_problem("Rational", "Rational", [0, 20], val)
         problem.compute_sol()
         assert_that(True)
+
+
 # Utils
 
 

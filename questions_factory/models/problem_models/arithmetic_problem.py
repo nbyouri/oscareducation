@@ -270,9 +270,9 @@ class ArithmeticPolynomialSecondDegree(Problem):
                     return num_1 / div, num_2 / div, den / div
         return num_1, num_2, den
 
-    @staticmethod
-    def latex(fraction):
-        if fraction.numerator != 1:
-            return r"\frac{" + str(fraction.numerator()) + "}{" + str(fraction.denominator()) + "}"
-        else:
-            return str(fraction.numerator)
+    # @staticmethod
+    # def latex(fraction):
+    #     if fraction.numerator != 1:
+    #         return r"\frac{" + str(fraction.numerator()) + "}{" + str(fraction.denominator()) + "}"
+    #     else:
+    #         return str(fraction.numerator)
