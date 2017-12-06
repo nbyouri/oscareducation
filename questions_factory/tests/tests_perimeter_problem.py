@@ -130,6 +130,8 @@ class GeneratingQuestionsTests(TestCase):
         problem.object_type = "fizz"
         with self.assertRaises(ValueError):
             problem.get_sol()
+        with self.assertRaises(ValueError):
+            problem.gen_values()
 
 
 class InstanceTests(TestCase):

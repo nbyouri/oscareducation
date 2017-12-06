@@ -71,11 +71,11 @@ def generator(request, lesson_id, skill_id, test_id):
 @user_is_professor
 def generator_choice(request, lesson_id, skill_id, test_id, generator_name):
     """
-    Return partial html : The second part of the settings form depending the generator name
+    Return partial html : The second part of the settings form, depending the generator name
     :param request:
-    :param lesson_id: Not use
-    :param skill_id: Not use (Just for keep the same base url)
-    :param test_id: Not use
+    :param lesson_id: Not used
+    :param skill_id: Not used (Just for keep the same base url)
+    :param test_id: Not used
     :param generator_name: Name of generator to retrieve the form associated
     :return:
     """
