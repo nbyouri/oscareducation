@@ -14,9 +14,13 @@ from skills.models import Skill
 
 
 class VolumeProblem(Problem):
+    """
+    Represents a Volume problem
+    """
 
     NAME = "VolumeProblem"
 
+    # Variables used to create the exercice statement
     default_cube = 'cote (a)'
     default_cylinder = ['rayon de la base (r)', 'hauteur (h)']
     default_prism = ['base (b)', 'hauteur de la base (h)', 'hauteur (l)']
@@ -40,8 +44,9 @@ class VolumeProblem(Problem):
         self.gen_values()
 
     def gen_values(self):
-        # round values XXX
-        # units XXX
+        """
+        Generates random values for the problem's attributes
+        """
         base_length = random.randint(self.range_from, self.range_to)
         base_width = random.randint(self.range_from, self.range_to)
         height = random.randint(self.range_from, self.range_to)
@@ -75,6 +80,9 @@ class VolumeProblem(Problem):
         return VolumeProblemForm(post_values)
 
     def get_sol(self):
+        """
+        Get the solution of the problem instance
+        """
         if self.object_type == 'cube':
             return self.round(pow(self.figure[0][1], 3))
         elif self.object_type == 'cylinder':
@@ -89,6 +97,10 @@ class VolumeProblem(Problem):
             raise ValueError
 
     def gen_questions(self, number_of_questions):
+        """
+        Generate multiple questions depending of the desired number
+        :return: n Questions
+        """
         questions = list()
         for _ in range(number_of_questions):
             questions.append((self.new_question(self.get_sol())))
@@ -96,6 +108,9 @@ class VolumeProblem(Problem):
         return questions
 
     def new_question(self, sol):
+        """
+        :return: Question with the solution and problem description
+        """
         question_desc = '<img src=\"' + str(STATIC_URL) + 'img/Figures/' + self.object_type + '.png\" /><br>'
         question_desc += 'Calculer le volume ' + self.object_name + ' dont les parametres sont:<ul>'
         for e in self.figure:
@@ -106,6 +121,9 @@ class VolumeProblem(Problem):
         return question
 
     def get_context(self):
+        """
+        :return: Returns the default Context
+        """
         default_context = self.default_context()
         # TODO Get from db if already Context already exist
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
@@ -113,6 +131,9 @@ class VolumeProblem(Problem):
 
     @staticmethod
     def default_context():
+        """
+        :return: Context for linking the Question and ease display
+        """
         description = "Calcul de volume dans des figures en trois dimensions"
         skill_id = "T4-U5-A1b" # ??
         default_context = Context.objects.create(

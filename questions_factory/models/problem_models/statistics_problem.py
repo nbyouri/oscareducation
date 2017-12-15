@@ -11,14 +11,17 @@ from skills.models import Skill
 
 
 class StatisticsProblem(Problem):
+    """
+    Represents a Statistic problem
+    """
 
     NAME = "StatisticsProblem"
 
     def __init__(self, nb=10, range=(0, 20), nb_decimal=2):
         super(StatisticsProblem, self).__init__(nb_decimal)
-        self.range = range
+        self.range = range  # Range of the solution of the problem
         self.values = None
-        self.nb = nb
+        self.nb = nb #
         self.gen_values()
 
     def gen_values(self):
