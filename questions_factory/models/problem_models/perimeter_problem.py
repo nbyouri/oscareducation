@@ -14,9 +14,13 @@ from skills.models import Skill
 
 
 class PerimeterProblem(Problem):
+    """
+        Represents a Perimeter problem
+    """
 
     NAME = "PerimeterProblem"
 
+    # Variables used to create the exercice statement
     default_triangle = ['côté (a)', 'côté (b)', 'côté (c)']
     default_square = 'côté (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']
@@ -45,52 +49,48 @@ class PerimeterProblem(Problem):
         self.figure = None
         self.range_from = range_from
         self.range_to = range_to
-        # self.unit = unit
         self.surname = ''
         self.gen_values()
 
-
     def gen_values(self):
-        # round values XXX
-        # units XXX
         if self.object_type == 'square':
             self.object_name = 'du carre'
             self.surname = 'square'
             side_a = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_square, side_a)]
+            self.figure = [(self.default_square, side_a)]  # side
         elif self.object_type == 'triangle':
             self.object_name = 'du triangle'
             self.surname = 'triangle'
             side_a = random.randint(self.range_from, self.range_to)
             side_b = random.randint(self.range_from, self.range_to)
             side_c = random.randint(self.range_from, side_a+side_b-1)
-            self.figure = [(self.default_triangle[0], side_a),  # radius
-                           (self.default_triangle[1], side_b),
-                           (self.default_triangle[2], side_c)
+            self.figure = [(self.default_triangle[0], side_a),  # side a
+                           (self.default_triangle[1], side_b),  # side b
+                           (self.default_triangle[2], side_c)  # side c
                            ]
         elif self.object_type == 'rhombus':
             self.object_name = 'du losange'
             self.surname = 'rhombus'
             diagonal_g = random.randint(self.range_from, self.range_to)
             diagonal_p = random.randint(self.range_from, diagonal_g)
-            self.figure = [(self.default_rhombus[0], diagonal_g),
-                           (self.default_rhombus[1], diagonal_p)]
+            self.figure = [(self.default_rhombus[0], diagonal_g),  # big diagonal
+                           (self.default_rhombus[1], diagonal_p)]  # small diagonal
         elif self.object_type == 'rectangle':
             self.object_name = 'du rectangle'
             self.surname = 'rectangle'
             length = random.randint(self.range_from, self.range_to)
             width = random.randint(self.range_from, length)
-            self.figure = [(self.default_rectangle[0], length),
-                           (self.default_rectangle[1], width)]
+            self.figure = [(self.default_rectangle[0], length),  # length
+                           (self.default_rectangle[1], width)]  # width
         elif self.object_type == 'trapezium':
             self.object_name = 'du trapeze'
             self.surname = 'trapezium'
             base_g = random.randint(self.range_from, self.range_to)
             base_p = random.randint(self.range_from, base_g)
             height = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_trapezium[0], base_g),
-                           (self.default_trapezium[1], base_p),
-                           (self.default_trapezium[2], height)]
+            self.figure = [(self.default_trapezium[0], base_g),  # big base
+                           (self.default_trapezium[1], base_p),  # small base
+                           (self.default_trapezium[2], height)]  # height
         elif self.object_type == 'quadrilateral':
             self.object_name = 'du quadrilatere'
             self.surname = 'quadrilateral'
@@ -98,68 +98,74 @@ class PerimeterProblem(Problem):
             side_b = random.randint(self.range_from, self.range_to)
             side_c = random.randint(self.range_from, self.range_to)
             side_d = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_quadrilateral[0], side_a),
-                           (self.default_quadrilateral[1], side_b),
-                           (self.default_quadrilateral[2], side_c),
-                           (self.default_quadrilateral[2], side_d)
+            self.figure = [(self.default_quadrilateral[0], side_a),  # side a
+                           (self.default_quadrilateral[1], side_b),  # side b
+                           (self.default_quadrilateral[2], side_c),  # side c
+                           (self.default_quadrilateral[2], side_d)  # side d
                            ]
         elif self.object_type == 'circle':
             self.object_name = 'du cercle'
             self.surname = 'circle'
             radius = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_circle[0], radius)]
+            self.figure = [(self.default_circle[0], radius)]  # radius
 
         elif self.object_type == 'parallelogram':
             self.object_name = 'du parallelogramme'
             self.surname = 'parallelogram'
             long_side = random.randint(self.range_from, self.range_to)
             small_side = random.randint(self.range_from, long_side)
-            self.figure = [(self.default_parallelogram[0], long_side),
-                           (self.default_parallelogram[1], small_side)]
+            self.figure = [(self.default_parallelogram[0], long_side),  # long side
+                           (self.default_parallelogram[1], small_side)]  # small side
         elif self.object_type == 'regular_polygon':
             num_side = random.randint(5, 10)
             side_size = random.randint(self.range_from, self.range_to)
             if num_side == 5:
                 self.surname = 'pentagon'
                 self.object_name = 'du pentagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of sides
             if num_side == 6:
                 self.surname = 'hexagon'
                 self.object_name = 'de l\'hexagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of sides
             if num_side == 7:
                 self.surname = 'heptagon'
                 self.object_name = 'de l\'heptagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of sides
             if num_side == 8:
                 self.surname = 'octogon'
                 self.object_name = 'de l\' octogon'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of sides
             if num_side == 9:
                 self.surname ='enneagon'
                 self.object_name = 'de l\'enneagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of sides
             if num_side == 10:
                 self.surname ='decagon'
                 self.object_name = 'du decagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of sides
         else:
             raise ValueError
 
     @staticmethod
     def make_form(post_values):
+        """
+        Takes in a POST request or None and returns a corresponding form
+        :param post_values:
+        :return: form
+        """
         return PerimeterProblemForm(post_values)
 
-    def get_desc(self):
-        pass
-
     def get_sol(self):
+        """
+        Generating the solution from a generated class
+        :return: a numeric solution of the problem
+        """
         if self.object_type == 'square':
             return self.round(4 * self.figure[0][1])  # 4c
         elif self.object_type == 'circle':
@@ -184,6 +190,11 @@ class PerimeterProblem(Problem):
             raise ValueError
 
     def gen_questions(self, number_of_questions):
+        """
+        Generation of a list of questions
+        :param number_of_questions: between 1 and 50
+        :return: a list of [number_of_questions] questions based on area problem
+        """
         questions = list()
         for _ in range(number_of_questions):
             questions.append((self.new_question(self.get_sol())))
@@ -191,6 +202,11 @@ class PerimeterProblem(Problem):
         return questions
 
     def new_question(self, sol):
+        """
+        Generation of a new question
+        :param sol: solution of the question
+        :return: a new question
+        """
         question_desc = '<img style = "max-width: 300px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + self.surname + '.png\" /><br>'
         question_desc += 'Calculer le perimetre ' + self.object_name + ' dont les parametres sont:<ul>'
         for e in self.figure:
@@ -201,6 +217,9 @@ class PerimeterProblem(Problem):
         return question
 
     def get_context(self):
+        """
+        :return: Return the context
+        """
         default_context = self.default_context()
         # TODO Get from db if already Context already exist
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
@@ -208,6 +227,10 @@ class PerimeterProblem(Problem):
 
     @staticmethod
     def default_context():
+        """
+        Default_context when the question isn't linked to a skill
+        :return:
+        """
         description = "Calcul de périmètre"
         skill_id = "T4-U5-A1b" # ??
         default_context = Context.objects.create(

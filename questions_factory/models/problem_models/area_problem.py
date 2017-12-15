@@ -20,6 +20,7 @@ class AreaProblem(Problem):
 
     NAME = "AreaProblem"
 
+    # Variables used to create the exercice statement
     default_triangle = ['base (b)', 'hauteur (h)']
     default_square = 'côté (c)'
     default_rectangle = ['longueur (L)', 'largeur (l)']
@@ -48,49 +49,46 @@ class AreaProblem(Problem):
         self.figure = None
         self.range_from = range_from
         self.range_to = range_to
-        # self.unit = unit
-        self.surname = ''
+        self.surname = ''  # name of the picture in the database
         self.gen_values()
 
     def gen_values(self):
         """
-        Generates random values for the problem attributes
+        Generates random values for the problem attributes, depending on the object_type
         """
-        # round values XXX
-        # units XXX
         if self.object_type == 'square':
             self.object_name = 'du carre'
             self.surname = 'square'
             side_a = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_square, side_a)]
+            self.figure = [(self.default_square, side_a)]  # side
         elif self.object_type == 'triangle':
             self.object_name = 'du triangle'
             self.surname = 'triangle'
-            self.figure = [(self.default_triangle[0], random.randint(self.range_from, self.range_to)),
-                           (self.default_triangle[1], random.randint(self.range_from, self.range_to))]
+            self.figure = [(self.default_triangle[0], random.randint(self.range_from, self.range_to)),  # base
+                           (self.default_triangle[1], random.randint(self.range_from, self.range_to))]  # height
         elif self.object_type == 'rhombus':
             self.object_name = 'du losange'
             self.surname = 'rhombus'
             diagonal_g = random.randint(self.range_from, self.range_to)
             diagonal_p = random.randint(self.range_from, diagonal_g)
-            self.figure = [(self.default_rhombus[0], diagonal_g),
-                           (self.default_rhombus[1], diagonal_p)]
+            self.figure = [(self.default_rhombus[0], diagonal_g),  # big diagonal
+                           (self.default_rhombus[1], diagonal_p)]  # small diagonal
         elif self.object_type == 'rectangle':
             self.object_name = 'du rectangle'
             self.surname = 'rectangle'
             length = random.randint(self.range_from, self.range_to)
             width = random.randint(self.range_from, length)
-            self.figure = [(self.default_rectangle[0], length),
-                           (self.default_rectangle[1], width)]
+            self.figure = [(self.default_rectangle[0], length),  # length
+                           (self.default_rectangle[1], width)]  # width
         elif self.object_type == 'trapezium':
             self.object_name = 'du trapeze'
             self.surname = 'trapezium'
             base_g = random.randint(self.range_from, self.range_to)
             base_p = random.randint(self.range_from, base_g)
             height = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_trapezium[0], base_g),
-                           (self.default_trapezium[1], base_p),
-                           (self.default_trapezium[2], height)]
+            self.figure = [(self.default_trapezium[0], base_g),  # big base
+                           (self.default_trapezium[1], base_p),  # small base
+                           (self.default_trapezium[2], height)]  # height
         elif self.object_type == 'quadrilateral':
             self.object_name = 'du quadrilatère'
             self.surname = 'quadrilateral'
@@ -100,56 +98,56 @@ class AreaProblem(Problem):
             side_d = random.randint(self.range_from, self.range_to)
             angle_a = self.round(random.uniform(math.pi / 2, math.pi))
             angle_c = self.round(random.uniform(math.pi / 2, math.pi))
-            self.figure = [(self.default_quadrilateral[0], side_a),
-                           (self.default_quadrilateral[1], side_b),
-                           (self.default_quadrilateral[2], side_c),
-                           (self.default_quadrilateral[3], side_d),
-                           (self.default_quadrilateral[4], angle_a),
-                           (self.default_quadrilateral[5], angle_c)]
+            self.figure = [(self.default_quadrilateral[0], side_a),  # side a
+                           (self.default_quadrilateral[1], side_b),  # side b
+                           (self.default_quadrilateral[2], side_c),  # side c
+                           (self.default_quadrilateral[3], side_d),  # side d
+                           (self.default_quadrilateral[4], angle_a),  # angle a
+                           (self.default_quadrilateral[5], angle_c)]  # angle c
         elif self.object_type == 'circle':
             self.object_name = 'du cercle'
             self.surname = 'circle'
             radius = random.randint(self.range_from, self.range_to)
-            self.figure = [(self.default_circle[0], radius)]
+            self.figure = [(self.default_circle[0], radius)]  # radius
 
         elif self.object_type == 'parallelogram':
             self.object_name = 'du parallélogramme'
             self.surname = 'parallelogram'
-            self.figure = [(self.default_parallelogram[0], random.randint(self.range_from, self.range_to)),
-                           (self.default_parallelogram[1], random.randint(self.range_from, self.range_to))]
+            self.figure = [(self.default_parallelogram[0], random.randint(self.range_from, self.range_to)),  # base
+                           (self.default_parallelogram[1], random.randint(self.range_from, self.range_to))]  # height
         elif self.object_type == 'regular_polygon':
             num_side = random.randint(5, 10)
             side_size = random.randint(self.range_from, self.range_to)
             if num_side == 5:
                 self.surname = 'pentagon'
                 self.object_name = 'du pentagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of the sides
             if num_side == 6:
                 self.surname = 'hexagon'
                 self.object_name = 'de l\'hexagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of the sides
             if num_side == 7:
                 self.surname = 'heptagon'
                 self.object_name = 'de l\'heptagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of the sides
             if num_side == 8:
                 self.surname = 'octogon'
                 self.object_name = 'de l\' octogon'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of the sides
             if num_side == 9:
                 self.surname ='enneagon'
                 self.object_name = 'de l\'enneagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of the sides
             if num_side == 10:
                 self.surname ='decagon'
                 self.object_name = 'du decagone'
-                self.figure = [(self.default_regular_polygon[0], num_side),
-                               (self.default_regular_polygon[1], side_size)]
+                self.figure = [(self.default_regular_polygon[0], num_side),  # number of sides
+                               (self.default_regular_polygon[1], side_size)]  # size of the sides
         else:
             raise ValueError
 
@@ -162,18 +160,16 @@ class AreaProblem(Problem):
         """
         return AreaProblemForm(post_values)
 
-    def get_desc(self):
-        pass
-
     def get_sol(self):
         """
         Generating the solution from a generated class
         :return: a numeric solution of the problem
         """
+
         if self.object_type == 'square':
             return self.round(self.figure[0][1] * self.figure[0][1])  # c^2
         elif self.object_type == 'circle':
-            return self.round(math.pow(self.figure[0][1],2)*math.pi)  # pir^2
+            return self.round(math.pow(self.figure[0][1], 2)*math.pi)  # pir^2
         elif self.object_type == 'rectangle':
             return self.round(self.figure[0][1] * self.figure[1][1])  # l*L
         elif self.object_type == 'quadrilateral':
@@ -198,6 +194,11 @@ class AreaProblem(Problem):
             raise ValueError
 
     def gen_questions(self, number_of_questions):
+        """
+        Generation of a list of questions
+        :param number_of_questions: between 1 and 50
+        :return: a list of [number_of_questions] questions based on area problem
+        """
         questions = list()
         for _ in range(number_of_questions):
             questions.append((self.new_question(self.get_sol())))
@@ -205,7 +206,13 @@ class AreaProblem(Problem):
         return questions
 
     def new_question(self, sol):
-        question_desc = '<img style = "max-width: 600px;" src=\"' + str(STATIC_URL) + 'img/Figures/' + self.surname + '.png\" /><br>'
+        """
+        Generation of a new question
+        :param sol: solution of the question
+        :return: a new question
+        """
+        question_desc = '<img style = "max-width: 600px;" src=\"' + str(STATIC_URL) \
+                        + 'img/Figures/' + self.surname + '.png\" /><br>'
         question_desc += 'Calculer l\'aire ' + self.object_name + ' dont les parametres sont:<ul>'
         for e in self.figure:
             question_desc += '<br><li>%s = %s</li>' % (e[0], e[1])
@@ -215,6 +222,9 @@ class AreaProblem(Problem):
         return question
 
     def get_context(self):
+        """
+        :return: Return the context
+        """
         default_context = self.default_context()
         # TODO Get from db if already Context already exist
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
@@ -222,8 +232,12 @@ class AreaProblem(Problem):
 
     @staticmethod
     def default_context():
+        """
+        Default_context when the question isn't linked to a skill
+        :return:
+        """
         description = "Calcul d'aire"
-        skill_id = "T4-U5-A1b" # ??
+        skill_id = "T4-U5-A1b"
         default_context = Context.objects.create(
             file_name="generated",
             skill=Skill.objects.get(code=skill_id),

@@ -14,9 +14,13 @@ from skills.models import Skill
 
 
 class VolumeProblem(Problem):
+    """
+        Represents a Volume problem
+    """
 
     NAME = "VolumeProblem"
 
+    # Variables used to create the exercice statement
     default_cube = 'cote (a)'
     default_cylinder = ['rayon de la base (r)', 'hauteur (h)']
     default_prism = ['base (b)', 'hauteur de la base (h)', 'hauteur (l)']
@@ -40,8 +44,6 @@ class VolumeProblem(Problem):
         self.gen_values()
 
     def gen_values(self):
-        # round values XXX
-        # units XXX
         base_length = random.randint(self.range_from, self.range_to)
         base_width = random.randint(self.range_from, self.range_to)
         height = random.randint(self.range_from, self.range_to)
