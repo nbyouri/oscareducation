@@ -59,7 +59,8 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     def gen_values_from_sol(self):
         """
-        Generates values from an existing solution
+
+        Generates values from an existing solution.
         """
         # Max_val for value is rng_range³
         # TODO What range should we put ?
@@ -115,9 +116,20 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def rho(a, b, c):
+        """
+        Compute the value rho of the polynomial
+        :return: rho
+        """
         return b ** 2 - 4 * a * c
 
     def compute_sol(self):
+        """
+        Determine the roots of the polynom.
+        Each solution is given in it simplest form by checking:
+            - if sqr is an Integer
+            - if the fraction is an Integer
+        :return: A string containing the roots in their simplest form
+        """
         # For ax²+bx+c
         if self.domain == "Rational":
             a, b, c = self.remove_fract()
@@ -149,6 +161,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return [ans1 + ',' + ans2, ans2 + ',' + ans1]
 
     def new_question(self, sol):
+        """
+        Generate a new instance of Question according to the model defined.
+        :return: Question
+        """
         question_desc = "Calculer les racines de: "
         if self.domain == "Integer":
             equation = ("{:-d}x²{:+d}x{:+d}".format(self.val[0], self.val[1], self.val[2]))
@@ -165,6 +181,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return question
 
     def gen_questions(self, number_of_questions):
+        """
+        Generate a list of questions
+        :return: list question
+        """
         questions = list()
         for _ in range(number_of_questions):
             # We only want problems having a solution
@@ -177,12 +197,20 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return questions
 
     def get_context(self):
+        """
+
+        :return: Default context
+        """
         default_context = self.default_context()
         # TODO Get from db if already Context already exist
         # context, created = Context.objects.get_or_create(defaults=default_context, file_name="generated")
         return default_context
 
     def remove_fract(self):
+        """
+        Search the common divisor of a fractions
+        :return: common_divisor
+        """
         num_a, den_a = self.val[0].numerator, self.val[0].denominator
         num_b, den_b = self.val[1].numerator, self.val[1].denominator
         num_c, den_c = self.val[2].numerator, self.val[2].denominator
@@ -191,6 +219,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def default_context():
+        """
+
+        :return: Default context
+        """
         description = "Calculer les racines $$ x_1, x_2 $$ d'un polyonme du second degré <br/> " \
                       "<b> Attention : </b> les réponses doivent être sous la forme " \
                       "$$ x_1, x_2 $$ les réponses sous formes de fractions doivent être simplifiés au maximum <br/>" \
@@ -209,6 +241,11 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return ArithmeticForm(post_values)
 
     def ans_with_root(self, rho, sign, a, b, c, simplify=False):
+        """
+        Return the roots of the polynom when sqrt cannont be simplified in latex format.
+        If simplify=True try to simplify the solution
+        :return: answer
+        """
         if not simplify:
             return r"\frac{" + str(-1 * b) + sign + "\sqrt{" + str(rho) + "}}{" + str(2 * a) + "}"
         else:
@@ -245,6 +282,11 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def ans_with_frac(num, den, simplify=False):
+        """
+        Return the roots of the polynom when sqrt cannont be simplified in latex format.
+        If simplify=True try to simplify the solution
+        :return: answer
+        """
         if not simplify:
             return r"\frac{" + str(num) + "}{" + str(den) + "}"
         else:
@@ -269,8 +311,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def reduced_sqrt(n):
-        """Return most reduced form of square root
+        """
+        Return most reduced form of square root
         of n as the couple (coefficient, reduced_form)
+        :return: (coefficient, reduced_form)
         """
         if isinstance(n, int):
             root = int(math.sqrt(n))
@@ -285,6 +329,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def common_divisor(num_1, num_2, den):
+        """
+        Search the common divisor of a fractions
+        :return: common_divisor
+        """
         if isinstance(num_1, int) and isinstance(num_2, int) and isinstance(den, int):
             for div in range(min(abs(num_1), abs(num_2), abs(den)), 1, -1):
                 if num_1 % div == 0 and num_2 % div == 0 and den % div == 0:
