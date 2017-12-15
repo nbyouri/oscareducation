@@ -9,7 +9,7 @@ class GeneratorChoiceForm(forms.Form):
     to extend it and add their specific inputs choices
     """
     GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
-                        ("SimpleInterestProblem", "Problèmes d'intêret"),
+                        ("SimpleInterestProblem", "Problèmes d'intêret simple"),
                         ("StatisticsProblem", "Problèmes de statistiques"),
                         ("VolumeProblem", "Problèmes de volume"),
                         ("PerimeterProblem", "Problèmes de périmètre"),
