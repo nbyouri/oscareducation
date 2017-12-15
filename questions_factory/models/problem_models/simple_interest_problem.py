@@ -11,6 +11,9 @@ from skills.models import Skill
 
 
 class SimpleInterestProblem(Problem):
+    """
+    Represents a Simple Interest problem
+    """
 
     NAME = "SimpleInterestProblem"
 
@@ -28,15 +31,25 @@ class SimpleInterestProblem(Problem):
         self.gen_values()
 
     def gen_values(self):
+        """
+        Generates random values for the problem's attributes
+        """
         self.amount = random.randint(5, 200000)
         self.rate = self.round(random.random())
         self.time = random.randint(1, 30)
 
     @staticmethod
     def make_form(post_values):
+        """
+        :param post_values:
+        :return: Pristine form if post_values are None, cleaned form in the other case
+        """
         return SimpleInterestForm(post_values)
 
     def get_sol(self):
+        """
+        :return: Solution of the problem
+        """
         if self.time_placed == self.type_rate:
             return self.round(self.amount * self.time * self.rate)
         elif self.time_placed == "month" and self.type_rate == "year":
@@ -45,6 +58,11 @@ class SimpleInterestProblem(Problem):
             return self.round((self.amount * (self.time*12.0) * self.rate))
 
     def gen_questions(self, number_of_questions):
+        """
+        Generates multiple questions from multiple generated problems
+        :param number_of_questions:
+        :return:
+        """
         questions = list()
         for _ in range(number_of_questions):
             questions.append((self.new_question(self.get_sol())))
@@ -52,6 +70,11 @@ class SimpleInterestProblem(Problem):
         return questions
 
     def new_question(self, sol):
+        """
+        Creates a new Question instance from the problem
+        :param sol:
+        :return: question instance
+        """
         time_unit = "mois" if self.time_placed == "month" else "ans"
         rate_unit = "mois" if self.type_rate == "month" else "ans"
         question_desc = "Si nous déposons à la banque une somme s'élevant à " + str(self.amount) + " euros " \
@@ -70,6 +93,9 @@ class SimpleInterestProblem(Problem):
 
     @staticmethod
     def default_context():
+        """
+        :return: A context to link the question with in DB and ease display
+        """
         description = "Calcul d'intérêt simple. \n" \
                       "Calculer un taux d'intérêt pour un placement en banque à taux fixe " \
                       "pour une durée " \

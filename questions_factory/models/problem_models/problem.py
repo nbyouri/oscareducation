@@ -7,20 +7,32 @@ class Problem(object):
         pass
 
     def round(self, number):
+        """
+        :param number:
+        :return: rounds a number using the defined decimal
+        """
         return round(number, self.nb_decimal)
 
     @abc.abstractmethod
     def get_sol(self):
-        """Return the solution of the problem"""
+        """
+        Return the solution of the problem
+        """
 
     @abc.abstractmethod
     def gen_values(self):
-        """Generate new random values for the problem"""
+        """
+        Generate new random values for the problem
+        """
 
     @abc.abstractmethod
     def gen_questions(self, number_of_questions):
-        """Generate questions for use in context"""
+        """
+        Generate questions for use in context
+        """
 
     @abc.abstractmethod
     def make_form(self):
-        """Generate the associated form"""
+        """
+        Generate the associated form
+        """
