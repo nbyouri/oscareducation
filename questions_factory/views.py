@@ -13,6 +13,13 @@ from promotions.utils import user_is_professor
 
 
 def get_form(generator_name, request):
+    """
+    Takes a generator name and the request, and then outputs the corresponding form.
+    If the request is POST, the generator is treated for cleaning.
+    :param generator_name:
+    :param request:
+    :return:
+    """
     form = None
     if generator_name == ArithmeticPolynomialSecondDegree.NAME:
         form = ArithmeticPolynomialSecondDegree.make_form(request.POST or None)

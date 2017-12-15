@@ -28,7 +28,6 @@ class SolutionsTests(TestCase):
 
 
 class GeneratingQuestionsTests(TestCase):
-
     def setUp(self):
         from test.factories.skill import SkillFactory
         from test.factories.skill import SectionFactory

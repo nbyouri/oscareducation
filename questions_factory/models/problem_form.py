@@ -3,6 +3,11 @@ from django import forms
 
 
 class GeneratorChoiceForm(forms.Form):
+    """
+    Base form for the generator
+    Specific form classes inherit from this class
+    to extend it and add their specific inputs choices
+    """
     GENERATOR_CHOICE = (("ArithmeticProblem", "Equation du second degrée"),
                         ("SimpleInterestProblem", "Problèmes d'intêret"),
                         ("StatisticsProblem", "Problèmes de statistiques"),

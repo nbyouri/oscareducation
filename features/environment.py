@@ -10,10 +10,6 @@ import os
 from pages import *
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 
-"""
-
-"""
-
 
 def before_all(context):
     """
@@ -50,6 +46,10 @@ class BehaviorDrivenTestCase(StaticLiveServerTestCase):
 
 
 def before_scenario(context, _):
+    """
+    Preparing the context before each scenario
+    Also, populating the test database with dummy values
+    """
     context.test = BehaviorDrivenTestCase()
     context.test.setUpClass()
     context.test()  # this starts a transaction
@@ -68,6 +68,9 @@ def after_scenario(context, _):
 
 
 def after_all(context):
+    """
+    After all, close the browser and delete test database
+    """
     # Explicitly quits the browser, otherwise it won't once tests are done
     context.browser.quit()
     context.test_runner.teardown_databases(context.old_db_config)
@@ -84,11 +87,18 @@ def before_step(context, step):
 
 # After a single step
 def after_step(context, step):
+    """
+    After each step, if the step failed we save a screenshot and dump
+    the html for debugging
+    """
     if step.status == 'failed':
         context.browser.save_screen_shot(context, step)
 
 
 def populate_db():
+    """
+    Prepares the test database with working values
+    """
     from test.factories.stage import StageFactory
     from test.factories.skill import SkillFactory
     from test.factories.skill import SectionFactory

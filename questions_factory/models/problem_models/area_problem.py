@@ -14,6 +14,9 @@ from skills.models import Skill
 
 
 class AreaProblem(Problem):
+    """
+    Represents an Area problem
+    """
 
     NAME = "AreaProblem"
 
@@ -49,8 +52,10 @@ class AreaProblem(Problem):
         self.surname = ''
         self.gen_values()
 
-
     def gen_values(self):
+        """
+        Generates random values for the problem attributes
+        """
         # round values XXX
         # units XXX
         if self.object_type == 'square':
@@ -150,12 +155,21 @@ class AreaProblem(Problem):
 
     @staticmethod
     def make_form(post_values):
+        """
+        Takes in a POST request or None and returns a corresponding form
+        :param post_values:
+        :return: form
+        """
         return AreaProblemForm(post_values)
 
     def get_desc(self):
         pass
 
     def get_sol(self):
+        """
+        Generating the solution from a generated class
+        :return: a numeric solution of the problem
+        """
         if self.object_type == 'square':
             return self.round(self.figure[0][1] * self.figure[0][1])  # c^2
         elif self.object_type == 'circle':
