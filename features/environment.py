@@ -1,7 +1,6 @@
 # coding=utf-8
 import django
 import time
-
 from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from django.test.runner import DiscoverRunner
@@ -11,8 +10,17 @@ import os
 from pages import *
 os.environ['DJANGO_SETTINGS_MODULE'] = 'oscar.settings'
 
+"""
+
+"""
+
 
 def before_all(context):
+    """
+    Defines what should be done before any step, scenario, feature
+    in the tests execution.
+    Page Objects are linked, and the browser definition from browser.py is instantiated
+    """
     django.setup()
     context.test_runner = DiscoverRunner()
     context.old_db_config = context.test_runner.setup_databases()

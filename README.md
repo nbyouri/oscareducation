@@ -119,6 +119,47 @@ configuration for the `sphinx` tool.
 - Add a configuration selecting "Behave"
 - If you want to run the tests in PyCharm, go in Settings/Language & Framework/BDD and select Behave
 
+## Feature testing
+
+Here is a small explanation of the feature testing environment
+
+### Framework and tools
+
+Behave has been selected as the feature testing framework. It lets you define
+testing scenarios from desired user stories.
+For example, you chose a simple login user stories, and then define
+a scenario for a user logging in with "Given, Then, When" keywords.
+
+In order to run those test, we use Selenium and the headless browser PhantomJS.
+This way, the test are ran in background and you're not bothered with a browser popping
+on your computer and executing the tests.
+
+### How the tests are written and organized
+
+- *environment.py* file defines some parameters of the test environment, such as what happen
+between two tests, before each steps, etc...
+- *browser.py* file defines the characteristics of the browser, such as the size of the screen,
+some methods to let us take screenshots and dump an html file in case of test fail, and other things
+- *specs/*.features* files are the scenarios. Each features represents a user story, with multiple
+scenarios linked to this user story. For example we have the login user story, with the scenario of a
+successful login, unsuccessful login, etc.
+Each scenario is divided in *steps*, each step representing an action.
+- *steps/* files. These files are just the implementation of each steps we talked before
+using the framework. For example, in the login scenario we used the "*Then I enter my username*" step. That
+step will then use the login page object to really input the username in the test instance of the website.
+- *pages/* files are internal representation of the website pages using a Domain Specific Language. Again,
+for our login page, we will define a page object that knows that the real login page has two inputs for
+username and password and also a submit button, and will provide methods to interact with theses.
+
+To summarize the execution flow :
+
+- The framework reads each scenario
+- For each steps, it looks up in the steps files for its definition
+- Each steps use a page object to execute the action on the website test instance
+- If it fails, the scenarios stops and the browser saves a screenshot and dumps an html file
+of where the test failed so you can debug easier
+- If it succeeds, the framework goes on the next step and so on
+
 ## Usage
 
 Just run your tests with Behave within Pycharm or run `behave` in your terminal in the project's root.
