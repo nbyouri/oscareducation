@@ -13,6 +13,11 @@ class ProblemGenerator:
         pass
 
     def factory(input_dict):
+        """
+        Given a set of values, generates the corresponding problem through its class
+        :param input_dict:
+        :return: problem
+        """
         problem = input_dict["generator_name"]
         nb_decimal = input_dict["nb_decimal"]
         if problem == ArithmeticPolynomialSecondDegree.NAME:
