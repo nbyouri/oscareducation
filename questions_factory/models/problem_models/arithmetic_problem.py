@@ -13,6 +13,9 @@ from skills.models import Skill
 
 
 class ArithmeticPolynomialSecondDegree(Problem):
+    """
+    Represents an arithmetic polynomial second degree problem
+    """
 
     NAME = "ArithmeticProblem"
 
@@ -28,10 +31,16 @@ class ArithmeticPolynomialSecondDegree(Problem):
             self.gen_new_values()
 
     def gen_new_values(self):
+        """
+        Generate random values for problem's attributes
+        """
         self.val = list()
         self.gen_values()
 
     def gen_values(self):
+        """
+        Generate random values for problem's attributes
+        """
         if self.image == "Integer":
             self.gen_values_from_sol()
         elif self.domain == "Integer":
@@ -49,6 +58,9 @@ class ArithmeticPolynomialSecondDegree(Problem):
             self.val[0] = 1
 
     def gen_values_from_sol(self):
+        """
+        Generates values from an existing solution
+        """
         # Max_val for value is rng_range³
         # TODO What range should we put ?
         sol = [random.randint(-5, 5), random.randint(-5, 5)]
@@ -67,6 +79,11 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     @staticmethod
     def round(list):
+        """
+        Generate rounded values, depending on the domain of the problem
+        :param list:
+        :return: Rounded values
+        """
         new_list = []
         for x in list:
             if isinstance(x, complex):
@@ -76,6 +93,10 @@ class ArithmeticPolynomialSecondDegree(Problem):
         return new_list
 
     def get_sol(self):
+        """
+        Get the solution of the problem according to it's parameters
+        :return: solution(s)
+        """
         tmp_sol = numpy.roots(self.val).tolist()
         sol = ""
         if self.image == "Rational" or self.image == "Integer":
