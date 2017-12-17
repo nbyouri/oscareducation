@@ -30,8 +30,6 @@ class PythagorasProblem(Problem):
         self.figure = None
         self.range_from = range_from
         self.range_to = range_to
-        # self.unit = unit
-        #self.surname = ''
         self.gen_values()
 
     def gen_values(self):
@@ -50,9 +48,6 @@ class PythagorasProblem(Problem):
         :return: form, cleaned if request is POST with filled form, pristine if not
         """
         return PythagorasProblemForm(post_values)
-
-    def get_desc(self):
-        pass
 
     def get_sol(self):
         """

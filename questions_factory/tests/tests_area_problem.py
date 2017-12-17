@@ -151,13 +151,6 @@ class InstanceTests(TestCase):
             AreaProblem("wrong", 1, 2, 3)
 
 
-class MethodTests(TestCase):
-    def test_get_description(self):
-        problem = create_problem()
-        result = problem.get_desc()
-        self.assertTrue(result is None)
-
-
 # Utils
 
 

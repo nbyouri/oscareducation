@@ -51,13 +51,6 @@ class ErrorTests(TestCase):
             problem.get_sol()
 
 
-class MethodTests(TestCase):
-    def test_get_description(self):
-        problem = create_problem()
-        result = problem.get_desc()
-        self.assertTrue(result is None)
-
-
 def create_problem(range_from=1, range_to=20):
     values = {"problem": "PythagorasProblem"}
     values["generator_name"] = "PythagorasProblem"

@@ -107,13 +107,6 @@ class ComputeSol(TestCase):
         assert_that(problem.compute_sol(), equal_to(['\\frac{3}{2},\\frac{1}{2}', '\\frac{1}{2},\\frac{3}{2}']))
 
 
-class ProblemSettings(TestCase):
-    def test_get_problem_description(self):
-        val = [1, -3, 2]
-        problem = create_problem("Integer", "Rational", [0, 20], val)
-        assert_that("Polynomial second degree", equal_to(problem.get_desc()))
-
-
 # Sub Methods Test
 class AnsWithFracTests(TestCase):
     def test_simplify_fract_false(self):

@@ -21,7 +21,6 @@ class ArithmeticPolynomialSecondDegree(Problem):
 
     def __init__(self, domain, image, range=(0, 20), val=None, nb_decimal=2):
         super(ArithmeticPolynomialSecondDegree, self).__init__(nb_decimal)
-        self.desc = "Polynomial second degree"
         self.domain = domain
         self.image = image
         self.range = range
@@ -71,9 +70,6 @@ class ArithmeticPolynomialSecondDegree(Problem):
         b = -1 * sum * a
         c = prod * a
         self.val = [a, b, c]
-
-    def get_desc(self):
-        return self.desc
 
     def get_val(self):
         return self.val

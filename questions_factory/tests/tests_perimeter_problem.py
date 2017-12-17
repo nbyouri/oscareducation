@@ -148,13 +148,6 @@ class InstanceTests(TestCase):
             PerimeterProblem("wrong", 1, 2)
 
 
-class MethodTests(TestCase):
-    def test_get_description(self):
-        problem = create_problem()
-        result = problem.get_desc()
-        self.assertTrue(result is None)
-
-
 # Utils
 
 
